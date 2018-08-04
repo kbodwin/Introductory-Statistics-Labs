@@ -1,0 +1,6 @@
+install.packages("tidyverse")
+library(tidyverse)
+install.packages("shiny")
+library(shiny)
+install.packages("learnr")
+library(learnr)
