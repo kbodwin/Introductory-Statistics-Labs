@@ -1,6 +1,9 @@
 ---
 title: "Pre-Lab 1: Summarizing and Visualizing Data"
 output: learnr::tutorial
+tutorial:
+  id: "Pre-Lab 1"
+  version: 1.0
 runtime: shiny_prerendered
 ---
 

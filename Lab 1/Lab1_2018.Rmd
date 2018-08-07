@@ -1,6 +1,9 @@
 ---
 title: "Lab 1: Summarizing and Visualizing Data"
 output: learnr::tutorial
+tutorial:
+  id: "Lab 1"
+  version: 1.0
 runtime: shiny_prerendered
 ---
 
@@ -156,4 +159,4 @@ textAreaInput("a_4_1",
 
 ## Save your work
 
-(await update)
+Choose File > Save Page As.  An HTML file will download to your computer.  Upload this to the assignment on PolyLearn.
