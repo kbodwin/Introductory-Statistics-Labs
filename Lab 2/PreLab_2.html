@@ -62,11 +62,11 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <pre id="output_1_1" class="shiny-text-output noplaceholder"></pre>
 <p>It is not very common that we are interested in the probability of some exact number of successes. More often, we want to quantify evidence by finding the probability of some number <strong>or more</strong>. For this, we will use <em>pbinom()</em>. By default, <code>pbinom()</code> finds the probability of getting <strong>less than or equal to</strong> the given number. Try it below.</p>
 <p><div class="form-group shiny-input-container" style="width: 80%;">
-<label for="n">How many tries do you have?</label>
-<input id="n" type="text" class="form-control" value=""/>
+<label for="n2">How many tries do you have?</label>
+<input id="n2" type="text" class="form-control" value=""/>
 </div><div class="form-group shiny-input-container" style="width: 80%;">
-<label for="p">What is the probability of success at each try?</label>
-<input id="p" type="text" class="form-control" value=""/>
+<label for="p2">What is the probability of success at each try?</label>
+<input id="p2" type="text" class="form-control" value=""/>
 </div><div class="form-group shiny-input-container" style="width: 80%;">
 <label for="k">We are interested in the probability of less than or equal to how many successes?</label>
 <input id="k" type="text" class="form-control" value=""/>
@@ -77,11 +77,11 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <p>Finally, sometimes we want to ask probability questions “in reverse”. For example, we might ask “If I flip 100 coins, I can be 95% sure that I will get at least how many tails?”. We could answer this via guess-and-check with <code>pbinom()</code>, but fortunately, there is a function for it in <strong>R</strong> called <code>qbinom()</code>.</p>
 <p>It is not very common that we are interested in the probability of some exact number of successes. More often, we want to quantify evidence by finding the probability of some number <strong>or more</strong>. For this, we will use <em>pbinom()</em>. By default, <code>pbinom()</code> finds the probability of getting <strong>less than or equal to</strong> the given number. Try it below.</p>
 <p><div class="form-group shiny-input-container" style="width: 80%;">
-<label for="n">How many tries do you have?</label>
-<input id="n" type="text" class="form-control" value=""/>
+<label for="n3">How many tries do you have?</label>
+<input id="n3" type="text" class="form-control" value=""/>
 </div><div class="form-group shiny-input-container" style="width: 80%;">
-<label for="p">What is the probability of success at each try?</label>
-<input id="p" type="text" class="form-control" value=""/>
+<label for="p3">What is the probability of success at each try?</label>
+<input id="p3" type="text" class="form-control" value=""/>
 </div><div class="form-group shiny-input-container" style="width: 80%;">
 <label for="q">We want to find the number of successes that has a probability of ____ below it.</label>
 <input id="q" type="text" class="form-control" value=""/>
@@ -113,6 +113,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h3>Practice predicting code</h3>
 <p>A good habit to get into when coding is to “translate” your code to English in your head, and try to predict what the output will be. This is how to figure out if you are truly asking the computer to calculate what you hoped. (Remember - computers will almost always output <em>something</em>! It is your responsibility as the scientist to make sure you have asked the right question.)</p>
 <p>For the following, try to guess what the output would be. Do <strong>not</strong> run the code; instead, try to read it as a probability question and think through the answer.</p>
+<p><em>Give answers to 2 decimals, and make sure to put a 0 in front, e.g., 0.67 not .6</em></p>
 <p><div class="form-group shiny-input-container" style="width: 80%;">
 <label for="a_2.1">dbinom(1, size = 1, prob = 0.7)</label>
 <input id="a_2.1" type="text" class="form-control" value=""/>
@@ -134,7 +135,9 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="section-normal-probabilities" class="section level2">
 <h2>Normal Probabilities</h2>
 <p>Now that you are an expert and <code>dbinom()</code>, <code>pbinom()</code>, and <code>qbinom()</code>, the next part is easy! We can also calculate Normal probabilities in <strong>R</strong>, using <code>pnorm()</code> and <code>qnorm()</code>.</p>
-<p>Before we even run any code, see if you can predict what the following will calculate. (HINT: DRAW A PICTURE!!!!)</p>
+<p>Before we even run any code, see if you can predict what the following will calculate.</p>
+<p><em>Give answers to 2 decimals, and make sure to put a 0 in front, e.g., 0.67 not .6</em></p>
+<p>(HINT: On a separate piece of paper, <strong>DRAW A PICTURE!!!!</strong>)</p>
 <p><div class="form-group shiny-input-container" style="width: 80%;">
 <label for="a_3.1">pnorm(0, mean = 0, sd = 1)</label>
 <input id="a_3.1" type="text" class="form-control" value=""/>
@@ -212,7 +215,7 @@ output$code_1_2 <- renderText(
         makePrintText(
           base_string = bs_1_2(),
           old_input = c(),
-          new_input = c(input$k, input$n, input$p)
+          new_input = c(input$k, input$n2, input$p2)
         )
   )
 
@@ -221,7 +224,7 @@ output$output_1_2 <- renderPrint({
     makeEvalText(
       base_string = bs_1_2(), 
       old_input = c(),
-      new_input = c(input$k, input$n, input$p)
+      new_input = c(input$k, input$n2, input$p2)
     )
    ))
 })
@@ -234,7 +237,7 @@ output$code_1_3 <- renderText(
         makePrintText(
           base_string = bs_1_3(),
           old_input = c(),
-          new_input = c(input$q, input$n, input$p)
+          new_input = c(input$q, input$n3, input$p3)
         )
   )
 
@@ -243,7 +246,7 @@ output$output_1_3 <- renderPrint({
     makeEvalText(
       base_string = bs_1_3(), 
       old_input = c(),
-      new_input = c(input$q, input$n, input$p)
+      new_input = c(input$q, input$n3, input$p3)
     )
    ))
 })
@@ -260,7 +263,7 @@ output$`tutorial-exercise-ex_1.1-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 
 output$check_1.1 <- renderText(
-  if(input$a_1.1 == round(dbinom(50, 100, .5), 2)){
+  if(round(input$a_1.1,2) == round(dbinom(50, 100, .5), 2)){
       correct
   }else if(input$a_1.1 == ""){
      ""
@@ -270,7 +273,7 @@ output$check_1.1 <- renderText(
 )
 
 output$check_1.2 <- renderText(
-  if(input$a_1.2 == round(pbinom(50, 100, .5), 2)){
+  if(round(input$a_1.2,2) == round(pbinom(44, 100, .5), 2)){
       correct
   }else if(input$a_1.2 == ""){
      ""
@@ -280,7 +283,7 @@ output$check_1.2 <- renderText(
 )
 
 output$check_1.3 <- renderText(
-  if(input$a_1.3 == round(1-pbinom(7, 43, .1), 2)){
+  if(round(input$a_1.3,2) == round(1-pbinom(7, 43, .1), 2)){
       correct
   }else if(input$a_1.3 == ""){
      ""
@@ -290,7 +293,7 @@ output$check_1.3 <- renderText(
 )
 
 output$check_1.4 <- renderText(
-  if(input$a_1.4 == round(qbinom(.8, 20, .1), 2)){
+  if(round(input$a_1.4,2) == round(qbinom(.8, 20, .1), 2)){
       correct
   }else if(input$a_1.4 == ""){
      ""
@@ -370,7 +373,7 @@ output$check_3.1 <- renderText(
 )
 
 output$check_3.2 <- renderText(
-  if(input$a_3.2 == .16){
+  if(input$a_3.2 == 0.16){
       correct
   }else if(input$a_3.2 == ""){
      ""
@@ -380,7 +383,7 @@ output$check_3.2 <- renderText(
 )
 
 output$check_3.3 <- renderText(
-  if(input$a_3.3 == .84){
+  if(input$a_3.3 == 9){
       correct
   }else if(input$a_3.3 == ""){
      ""
@@ -390,7 +393,7 @@ output$check_3.3 <- renderText(
 )
 
 output$check_3.4 <- renderText(
-  if(input$a_3.4 == 9){
+  if(input$a_3.4 == 0.84){
       correct
   }else if(input$a_3.4 == ""){
      ""

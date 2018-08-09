@@ -8,12 +8,11 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
-library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 bball = read.csv("http://calpoly.edu/~kbodwin/data/bball.csv")
 bball = bball[,-1]
 source("http://calpoly.edu/~kbodwin/scripts/makeStrings.R")
-library(tidyverse)
+source("http://calpoly.edu/~kbodwin/scripts/packageHelpers.R")
 ```
 
 ## The Data

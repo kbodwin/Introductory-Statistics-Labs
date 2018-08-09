@@ -171,12 +171,11 @@ summary(ucla)</code></pre>
 </div>
 Choose <code>File &gt; Print</code> and save the output as a pdf. Upload this page only to PolyLearn. 
 <script type="application/shiny-prerendered" data-context="server-start">
-library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 bball = read.csv("http://calpoly.edu/~kbodwin/data/bball.csv")
 bball = bball[,-1]
 source("http://calpoly.edu/~kbodwin/scripts/makeStrings.R")
-library(tidyverse)
+source("http://calpoly.edu/~kbodwin/scripts/packageHelpers.R")
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
