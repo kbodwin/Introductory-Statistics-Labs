@@ -86,13 +86,13 @@ verbatimTextOutput("output_1_1")
 It is not very common that we are interested in the probability of some exact number of successes.  More often, we want to quantify evidence by finding the probability of some number **or more**.  For this, we will use *pbinom()*.  By default, `pbinom()` finds the probability of getting **less than or equal to** the given number.  Try it below.
 
 ```{r pbinom}
-textInput("n",
+textInput("n2",
           "How many tries do you have?",
           value = "",
           width = '80%', placeholder = NULL)
 
 
-textInput("p",
+textInput("p2",
           "What is the probability of success at each try?",
           value = "",
           width = '80%', placeholder = NULL)
@@ -112,7 +112,7 @@ output$code_1_2 <- renderText(
         makePrintText(
           base_string = bs_1_2(),
           old_input = c(),
-          new_input = c(input$k, input$n, input$p)
+          new_input = c(input$k, input$n2, input$p2)
         )
   )
 
@@ -121,7 +121,7 @@ output$output_1_2 <- renderPrint({
     makeEvalText(
       base_string = bs_1_2(), 
       old_input = c(),
-      new_input = c(input$k, input$n, input$p)
+      new_input = c(input$k, input$n2, input$p2)
     )
    ))
 })
@@ -143,13 +143,13 @@ Finally, sometimes we want to ask probability questions "in reverse".  For examp
 It is not very common that we are interested in the probability of some exact number of successes.  More often, we want to quantify evidence by finding the probability of some number **or more**.  For this, we will use *pbinom()*.  By default, `pbinom()` finds the probability of getting **less than or equal to** the given number.  Try it below.
 
 ```{r qbinom}
-textInput("n",
+textInput("n3",
           "How many tries do you have?",
           value = "",
           width = '80%', placeholder = NULL)
 
 
-textInput("p",
+textInput("p3",
           "What is the probability of success at each try?",
           value = "",
           width = '80%', placeholder = NULL)
@@ -169,7 +169,7 @@ output$code_1_3 <- renderText(
         makePrintText(
           base_string = bs_1_3(),
           old_input = c(),
-          new_input = c(input$q, input$n, input$p)
+          new_input = c(input$q, input$n3, input$p3)
         )
   )
 
@@ -178,7 +178,7 @@ output$output_1_3 <- renderPrint({
     makeEvalText(
       base_string = bs_1_3(), 
       old_input = c(),
-      new_input = c(input$q, input$n, input$p)
+      new_input = c(input$q, input$n3, input$p3)
     )
    ))
 })
@@ -235,7 +235,7 @@ htmlOutput("check_1.4")
 ```{r, context = "server"}
 
 output$check_1.1 <- renderText(
-  if(input$a_1.1 == round(dbinom(50, 100, .5), 2)){
+  if(round(input$a_1.1,2) == round(dbinom(50, 100, .5), 2)){
       correct
   }else if(input$a_1.1 == ""){
      ""
@@ -245,7 +245,7 @@ output$check_1.1 <- renderText(
 )
 
 output$check_1.2 <- renderText(
-  if(input$a_1.2 == round(pbinom(50, 100, .5), 2)){
+  if(round(input$a_1.2,2) == round(pbinom(44, 100, .5), 2)){
       correct
   }else if(input$a_1.2 == ""){
      ""
@@ -255,7 +255,7 @@ output$check_1.2 <- renderText(
 )
 
 output$check_1.3 <- renderText(
-  if(input$a_1.3 == round(1-pbinom(7, 43, .1), 2)){
+  if(round(input$a_1.3,2) == round(1-pbinom(7, 43, .1), 2)){
       correct
   }else if(input$a_1.3 == ""){
      ""
@@ -265,7 +265,7 @@ output$check_1.3 <- renderText(
 )
 
 output$check_1.4 <- renderText(
-  if(input$a_1.4 == round(qbinom(.8, 20, .1), 2)){
+  if(round(input$a_1.4,2) == round(qbinom(.8, 20, .1), 2)){
       correct
   }else if(input$a_1.4 == ""){
      ""
@@ -283,6 +283,9 @@ output$check_1.4 <- renderText(
 A good habit to get into when coding is to "translate" your code to English in your head, and try to predict what the output will be.  This is how to figure out if you are truly asking the computer to calculate what you hoped.  (Remember - computers will almost always output *something*!  It is your responsibility as the scientist to make sure you have asked the right question.)
 
 For the following, try to guess what the output would be.  Do **not** run the code; instead, try to read it as a probability question and think through the answer.
+
+
+*Give answers to 2 decimals, and make sure to put a 0 in front, e.g., 0.67 not .6*
 
 
 ```{r q_2}
@@ -382,7 +385,11 @@ output$check_2.5 <- renderText(
 
 Now that you are an expert and `dbinom()`, `pbinom()`, and `qbinom()`, the next part is easy!  We can also calculate Normal probabilities in **R**, using `pnorm()` and `qnorm()`.
 
-Before we even run any code, see if you can predict what the following will calculate.  (HINT: DRAW A PICTURE!!!!)
+Before we even run any code, see if you can predict what the following will calculate.  
+
+*Give answers to 2 decimals, and make sure to put a 0 in front, e.g., 0.67 not .6*
+
+(HINT: On a separate piece of paper, **DRAW A PICTURE!!!!**)
 
 
 ```{r q_3}
@@ -430,7 +437,7 @@ output$check_3.1 <- renderText(
 )
 
 output$check_3.2 <- renderText(
-  if(input$a_3.2 == .16){
+  if(input$a_3.2 == 0.16){
       correct
   }else if(input$a_3.2 == ""){
      ""
@@ -440,7 +447,7 @@ output$check_3.2 <- renderText(
 )
 
 output$check_3.3 <- renderText(
-  if(input$a_3.3 == .84){
+  if(input$a_3.3 == 9){
       correct
   }else if(input$a_3.3 == ""){
      ""
@@ -450,7 +457,7 @@ output$check_3.3 <- renderText(
 )
 
 output$check_3.4 <- renderText(
-  if(input$a_3.4 == 9){
+  if(input$a_3.4 == 0.84){
       correct
   }else if(input$a_3.4 == ""){
      ""
