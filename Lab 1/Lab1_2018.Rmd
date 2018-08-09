@@ -3,7 +3,7 @@ title: "Lab 1: Summarizing and Visualizing Data"
 output: learnr::tutorial
 tutorial:
   id: "Lab 1"
-  version: 1.0
+  version: 2.0
 runtime: shiny_prerendered
 ---
 
