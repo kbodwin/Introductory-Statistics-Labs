@@ -1,3 +1,8 @@
+if(!require(learnr)){
+  install.packages("learnr")
+  library(learnr)
+}
+
 if(!require(tidyverse)){
 	install.packages("tidyverse")
 	library(tidyverse)
@@ -6,11 +11,6 @@ if(!require(tidyverse)){
 if(!require(shiny)){
 	install.packages("shiny")
 	library(shiny)
-}
-
-if(!require(learnr)){
-	install.packages("learnr")
-	library(learnr)
 }
 
 if(!require(httpuv)){
