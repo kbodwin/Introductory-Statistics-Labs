@@ -1,0 +1,470 @@
+"Name","State","Type","Avg.SAT","Size","Acceptance.Rate","Tuition"
+"Alaska Pacific University","AK","Private",972,249,0.756476683937823,7560
+"University of Alaska at Fairbanks","AK","Public",961,3885,0.770518358531317,5226
+"University of Alaska at Anchorage","AK","Public",881,6209,0.773849878934624,5226
+"Auburn University-Main Campus","AL","Public",1076,16262,0.899708532061475,6300
+"Birmingham-Southern College","AL","Private",1100,1376,0.730434782608695,11660
+"Huntingdon College","AL","Private",959,538,0.855263157894736,8080
+"Oakwood College","AL","Private",760,1316,0.637513171759749,6639
+"Spring Hill College","AL","Private",990,942,0.897800776196634,11478
+"Troy State University at Troy","AL","Public",980,4343,0.870836165873555,2883
+"University of Alabama at Huntsville","AL","Public",1010,2727,0.69549418604651,4960
+"University of Arkansas at Pine Bluff","AR","Public",694,2993,0.937931034482754,3216
+"Hendrix College","AR","Private",1089,954,0.876063183475092,8800
+"John Brown University","AR","Private",993,961,0.669421487603305,6398
+"Harding University","AR","Private",1020,3128,0.620569436374202,5504
+"Grand Canyon University","AZ","Private",926,1364,0.790744466800803,6870
+"Arizona State University Main campus","AZ","Public",974,22593,0.80474666250293,7434
+"Northern Arizona University","AZ","Public",939,11249,0.837039551858769,6746
+"University of Arizona","AZ","Public",983,21664,0.869237872007957,7434
+"Prescott College","AZ","Private",1000,693,0.707165109034268,9800
+"Azusa Pacific University","CA","Private",902,2032,0.877777777777781,15500
+"Biola University","CA","Private",940,2058,0.801431127012521,11388
+"California Baptist College","CA","Private",836,592,0.85064935064935,6370
+"California Lutheran University","CA","Private",931,1427,0.438721136767317,12950
+"California State Univ. at Fullerton","CA","Public",871,12147,0.746169220519654,8990
+"California Polytechnic-San Luis","CA","Public",1002,12911,0.488669824606324,7380
+"California State University at Chico","CA","Public",899,11822,0.814368770764122,5904
+"Humboldt State University","CA","Public",956,5637,0.631670031727719,9979
+"San Diego State University","CA","Public",851,16407,0.746649649010848,8384
+"California State University at Northridge","CA","Public",809,15567,0.694864442127218,5904
+"San Francisco State University","CA","Public",816,13165,0.65719591457753,8964
+"San Jose State University","CA","Public",838,14392,0.785796545105568,8820
+"Sonoma State University","CA","Public",968,4239,0.360234776228906,7830
+"California State University at Stanislaus","CA","Public",849,2895,0.796545105566217,8868
+"United States International University","CA","Private",895,237,0.521739130434782,11760
+"Chapman University","CA","Private",957,1662,0.803962460896767,16624
+"Claremont McKenna College","CA","Private",1270,887,0.412365591397849,17000
+"Pitzer College","CA","Private",1150,750,0.556045895851721,17688
+"Pomona College","CA","Private",1340,1500,0.372077708264734,17720
+"Scripps College","CA","Private",1150,569,0.739181286549709,17238
+"La Sierra University","CA","Private",888,1067,0.804248861911991,12180
+"University of La Verne","CA","Private",903,1431,0.606762680025046,13540
+"Menlo College","CA","Private",829,553,0.87301587301587,13975
+"Mills College","CA","Private",1050,781,0.782608695652173,14100
+"Mount St. Mary's College","CA","Private",972,1039,0.817351598173515,12474
+"Pacific Christian College","CA","Private",900,414,0.850299401197604,6500
+"Fresno Pacific College","CA","Private",1008,704,0.791907514450865,9900
+"Point Loma Nazarene College","CA","Private",897,1889,0.849196538936961,10178
+"Pepperdine University","CA","Private",1099,2488,0.533106516618687,18200
+"Southern California College","CA","Private",909,784,0.883116883116884,9520
+"Stanford University","CA","Private",1401,6573,0.215020576131687,18669
+"University of California at Davis","CA","Public",1070,15429,0.697485161842989,7699
+"University of California at Riverside","CA","Public",982,6922,0.772198407838333,7699
+"University of California at San Diego","CA","Public",1131,13738,0.59018164977101,7699
+"University of San Francisco","CA","Private",977,4309,0.746313963573289,13226
+"University of Southern California","CA","Private",1090,13259,0.694905552375499,17230
+"Westmont College","CA","Public",1051,1276,0.750526315789472,14320
+"Woodbury University","CA","Private",822,765,0.89684813753582,13020
+"Concordia University","CA","Private",905,641,0.722383720930233,10800
+"University of Northern Colorado","CO","Public",920,8463,0.724593128390596,7731
+"Colorado State University","CO","Public",1024,15646,0.665963283393119,8412
+"Mesa State College","CO","Public",851,3471,0.919191919191917,5016
+"Metropolitan State College","CO","Public",855,9544,0.847095671981778,5790
+"University of Southern Colorado","CO","Public",908,3716,0.884368308351175,7100
+"University of Denver","CO","Private",1010,2666,0.672831203765971,15192
+"Western State College of Colorado","CO","Public",890,2315,0.600666173205032,5918
+"University of Colorado at Denver","CO","Public",1007,3805,0.468723936613846,9244
+"Colorado Christian University","CO","Private",867,1001,0.793197278911563,6720
+"Albertus Magnus College","CT","Private",890,416,0.963172804532575,13290
+"Fairfield University","CT","Private",1058,2984,0.699414715719064,15000
+"Wesleyan University","CT","Private",1280,2714,0.413453478625314,19130
+"Howard University","DC","Private",883,6705,0.323649754500818,7128
+"Mount Vernon College","DC","Private",842,203,0.469798657718121,13780
+"Trinity College","DC","Private",950,309,0.765182186234816,11412
+"Barry University","FL","Private",900,1811,0.79191919191919,11290
+"Bethune Cookman College","FL","Private",775,2128,0.698663426488455,5188
+"St. Thomas University","FL","Private",830,1125,0.752032520325203,9600
+"Clearwater Christian College","FL","Private",875,409,0.968944099378884,5200
+"Embry Riddle Aeronautical University","FL","Private",994,4772,0.820057124722313,7800
+"Florida Atlantic University","FL","Public",990,6035,0.656711725872365,6700
+"Eckerd College","FL","Private",1076,1363,0.779887482419127,15360
+"Florida Southern College","FL","Private",912,1506,0.753077480086891,8025
+"Lynn University","FL","Private",890,1250,0.739938080495358,13900
+"Rollins College","FL","Private",1059,1668,0.647720877884076,16425
+"St. Leo College","FL","Private",853,3400,0.689898989898991,9150
+"University of South Florida","FL","Public",1045,14770,0.61615496112795,6760
+"Webber College","FL","Private",807,327,0.510714285714285,5590
+"University of Central Florida","FL","Public",997,12330,0.423561408531348,6618
+"University of West Florida","FL","Public",948,3754,0.804878048780489,6172
+"Flagler College","FL","Private",989,1345,0.504593639575973,5120
+"Warner Southern College","FL","Private",762,397,0.699999999999999,6200
+"Palm Beach Atlantic College","FL","Private",947,1432,0.857338820301783,7900
+"Florida International University","FL","Public",1019,10208,0.628856624319419,6597
+"University of North Florida","FL","Public",1017,3876,0.696111111111112,6634
+"Clark Atlanta University","GA","Private",804,2844,0.554642381163928,7908
+"Emory University","GA","Private",1220,5544,0.490007053844346,17600
+"Southern College of Technology","GA","Public",940,2229,0.771472392638039,4023
+"Georgia Southwestern College","GA","Public",850,1703,0.832558139534887,4158
+"Mercer University","GA","Private",1002,2943,0.72965879265092,11985
+"Morehouse College","GA","Private",1026,2852,0.452535059331175,7050
+"Oglethorpe University","GA","Private",1119,769,0.819444444444443,12900
+"Savannah State College","GA","Public",709,2726,0.850763807285549,3200
+"Spelman College","GA","Private",1002,1971,0.333153784002154,7000
+"Valdosta State University","GA","Public",841,5982,0.883777898747958,4617
+"Wesleyan College","GA","Private",1013,382,0.94098360655738,11500
+"Georgia College","GA","Public",811,3467,0.957173447537471,4457
+"Covenant College","GA","Private",1048,468,0.778869778869779,9700
+"Savannah Coll. of Art and Design","GA","Private",1005,1897,0.620378719567179,8325
+"Chaminade University of Honolulu","HI","Private",850,766,0.879227053140095,10600
+"Hawaii Pacific University","HI","Private",955,4312,0.771209633278599,6300
+"Briar Cliff College","IA","Private",795,738,0.895408163265303,10260
+"Buena Vista College","IA","Private",1019,1928,0.8,13306
+"Coe College","IA","Private",1060,1127,0.737574552683896,13925
+"Cornell College","IA","Private",1070,1140,0.864109232769834,15248
+"Drake University","IA","Private",1030,3322,0.919256877456236,13420
+"Graceland College","IA","Private",949,996,0.745945945945945,9100
+"Grinnell College","IA","Private",1244,1333,0.681216282491418,15688
+"Luther College","IA","Private",1110,2269,0.898644286636539,13240
+"University of Dubuque","IA","Private",910,662,0.968749999999999,10430
+"Wartburg College","IA","Private",1035,1295,0.872461413484969,11600
+"Boise State University","ID","Public",899,7948,0.851063829787234,2093
+"Albertson College","ID","Private",1011,678,0.816013628620104,13500
+"Lewis-Clark State College","ID","Public",842,1970,0.550449550449552,5120
+"University of Idaho","ID","Public",980,7242,0.893392914139803,5962
+"Bradley University","IL","Private",1120,4531,0.90629147863021,10870
+"DePaul University","IL","Private",1065,6069,0.73748701973001,11214
+"Illinois College","IL","Private",1015,909,0.880313199105149,8050
+"Illinois Institute of Technology","IL","Private",1102,1911,0.774487471526193,14550
+"Illinois Wesleyan University","IL","Private",1151,1818,0.440000000000001,14360
+"Kendall College","IL","Private",870,338,1,6900
+"Knox College","IL","Private",1100,967,0.812500000000001,15747
+"Loyola University Chicago","IL","Private",1011,5244,0.826767253422742,11500
+"Millikin University","IL","Private",1052,1788,0.873268698060945,11910
+"Monmouth College","IL","Private",940,671,0.836938435940101,13000
+"North Central College","IL","Private",1039,1310,0.784383318544812,11718
+"North Park College","IL","Private",992,879,0.776344086021505,12580
+"Northwestern University","IL","Private",1270,7450,0.423142647896493,16404
+"Quincy University","IL","Private",1024,1070,0.689756097560976,10100
+"University of Illinois - Urbana","IL","Public",1139,25422,0.779971885668383,7560
+"Anderson University","IN","Private",885,1819,0.746710526315789,10100
+"Ball State University","IN","Public",895,16148,0.844995192821277,7244
+"Bethel College","IN","Private",943,733,0.838383838383838,9300
+"Butler University","IN","Private",1028,2607,0.862404741744288,13130
+"Earlham College","IN","Private",1120,1028,0.74079528718704,15036
+"Franklin College","IN","Private",1013,840,0.786069651741292,10390
+"Hanover College","IN","Private",1040,1024,0.832007952286285,8200
+"Huntington College","IN","Private",902,488,0.955555555555553,9950
+"University of Indianapolis","IN","Private",919,1417,0.858103564223267,11120
+"Indiana Institute of Technology","IN","Private",937,477,0.769961977186309,8120
+"University of Southern Indiana","IN","Public",813,4283,0.896595208070619,4973
+"Indiana University at Bloomington","IN","Public",996,24763,0.79839633447881,9766
+"Indiana Univ.-Purdue Univ. at Indianapolis","IN","Public",816,9216,0.789416846652269,8490
+"Manchester College","IN","Private",950,909,0.798804780876492,10440
+"Indiana Wesleyan University","IN","Private",863,2448,0.575510204081633,9210
+"Purdue University at West Lafayette","IN","Public",998,26213,0.859658778205833,9556
+"Rose-Hulman Institute of Technology","IN","Private",1210,1320,0.554216867469878,13380
+"Saint Francis College","IN","Private",860,513,0.779342723004696,8670
+"Saint Joseph's College","IN","Private",917,815,0.743478260869566,11200
+"Saint Mary-of-the-Woods College","IN","Private",814,341,0.86666666666667,10300
+"Saint Mary's College","IN","Private",1026,1433,0.826576576576575,12730
+"Taylor University","IN","Private",1092,1757,0.617297908422838,10965
+"Tri-State University","IN","Private",911,978,0.873217115689382,9456
+"Indiana State University","IN","Public",825,8596,0.84131471991518,6892
+"Sterling College","KS","Private",843,631,0.778705636743213,8280
+"Asbury College","KY","Private",989,1110,0.791601866251943,8988
+"Bellarmine College","KY","Private",989,1198,0.876084262701364,8840
+"Centre College","KY","Private",1109,943,0.876604146100688,11850
+"Cumberland College","KY","Private",890,1306,0.792964824120602,6230
+"Kentucky Wesleyan College","KY","Private",860,662,0.85102739726027,8000
+"Transylvania University","KY","Private",1096,867,0.960474308300391,10900
+"Union College","KY","Private",830,634,0.793388429752064,7800
+"Thomas More College","KY","Private",964,756,0.735148514851485,9490
+"Centenary College of Louisiana","LA","Private",1060,775,0.876767676767673,8950
+"Louisiana State University at Baton Rouge","LA","Public",997,16269,0.832721814543027,5925
+"University of New Orleans","LA","Public",947,8158,0.889027431421444,5154
+"Loyola University","LA","Private",1050,2740,0.897937599153888,11100
+"Xavier University of Louisiana","LA","Private",890,2793,0.913209346685743,6900
+"Amherst College","MA","Private",1324,1593,0.230590423059042,19760
+"Boston University","MA","Private",1150,14971,0.644166006339143,18420
+"Massachusetts Institute of Technology","MA","Private",1381,4481,0.33380127905163,20100
+"Mount Holyoke College","MA","Private",1120,1891,0.73,19300
+"Northeastern University","MA","Private",998,11160,0.713553482900596,13380
+"Pine Manor College","MA","Private",764,372,0.912429378531076,15190
+"Simmons College","MA","Private",940,1144,0.779661016949155,16160
+"Wheaton College","MA","Private",1080,1335,0.789988492520139,18460
+"Worcester Polytechnic Institute","MA","Private",1200,2802,0.835982658959538,15884
+"Coppin State College","MD","Public",763,1863,0.489174560216508,5000
+"Hood College","MD","Private",994,710,0.80829756795422,13960
+"Johns Hopkins University","MD","Private",1292,3566,0.406655652584376,18800
+"Salisbury State University","MD","Public",1045,4296,0.543168880455407,5130
+"University of Maryland at Baltimore County","MD","Public",1083,6476,0.607636448817052,8594
+"Colby College","ME","Private",1170,1720,0.46313202247191,18930
+"Calvin College","MI","Private",1072,3401,0.847533632286995,10230
+"Eastern Michigan University","MI","Public",896,13142,0.810249514418047,6360
+"Hillsdale College","MI","Private",1070,1133,0.809782608695652,11090
+"Kalamazoo College","MI","Private",1201,1218,0.899509803921565,16179
+"Michigan State University","MI","Public",982,26640,0.833388539251406,10658
+"Michigan Technological University","MI","Public",1132,5524,0.873949579831932,8127
+"University of Detroit Mercy","MI","Private",937,2149,0.78856526429342,11130
+"Northwood University","MI","Private",820,1650,0.913083257090579,9450
+"University of Michigan at Ann Arbor","MI","Public",1177,22045,0.675647451963243,15732
+"Augsburg College","MN","Private",1040,2074,0.774924471299095,11902
+"College of Saint Benedict","MN","Private",1010,1715,0.921108742004263,12247
+"College of Saint Catherine","MN","Private",951,1692,0.804305283757339,12224
+"College of St. Scholastica","MN","Private",930,1350,0.886904761904762,11844
+"University of St. Thomas","MN","Private",994,4106,0.878463782207096,11712
+"Concordia College-Moorhead","MN","Private",910,2917,0.90084703537618,10110
+"Gustavus Adolphus College","MN","Private",1105,2281,0.810415447630194,14125
+"Hamline University","MN","Private",1110,1362,0.820079522862823,13252
+"Northwestern College","MN","Private",944,1209,0.859799713876967,11328
+"Saint John's University","MN","Private",1020,1691,0.857449088960343,12247
+"Saint Olaf College","MN","Private",1100,2888,0.744217081850536,14350
+"University of Minnesota at Morris","MN","Public",1200,1846,0.599451303155008,9843
+"Winona State University","MN","Public",950,5800,0.615639097744363,4200
+"University of Minnesota Twin Cities","MN","Public",1052,16502,0.578704541342499,8949
+"Avila College","MO","Private",900,651,0.798927613941021,8950
+"Kansas City Art Institute","MO","Private",919,527,0.668231611893583,6572
+"Lindenwood College","MO","Private",870,2155,0.597530864197532,9200
+"Maryville University","MO","Private",963,1343,0.723132969034608,9250
+"Missouri Valley College","MO","Private",800,1057,0.750381679389313,8550
+"Stephens College","MO","Private",900,614,0.900000000000001,13900
+"University of Missouri at Columbia","MO","Public",1066,14782,0.705354426528749,9057
+"University of Missouri at Rolla","MO","Public",1202,3926,0.972828982418751,9057
+"Webster University","MO","Private",1005,1739,0.694736842105263,9160
+"Westminster College","MO","Private",1000,665,0.835347432024167,10720
+"William Jewell College","MO","Private",1060,1279,0.825037707390646,10060
+"William Woods University","MO","Private",941,851,0.927505330490405,10535
+"Belhaven College","MS","Private",922,736,0.79435483870968,7600
+"Millsaps College","MS","Private",1120,1073,0.921546961325969,11320
+"University of Southern Mississippi","MS","Public",980,9260,0.717192982456142,4652
+"Carroll College","MT","Private",950,1093,0.930056710775047,8650
+"Montana College of Mineral Sci. & Tech.","MT","Public",1056,1470,0.951048951048955,6073
+"Montana State University","MT","Public",960,8730,0.810285714285715,5552
+"Rocky Mountain College","MT","Private",870,743,0.699999999999999,8734
+"University of Montana","MT","Public",946,7754,0.847616173808084,6311
+"Appalachian State University","NC","Public",990,9940,0.637768357719131,6806
+"University of North Carolina at Asheville","NC","Public",1054,2033,0.557199772339213,5972
+"Davidson College","NC","Private",1230,1601,0.402865571007163,17295
+"Duke University","NC","Private",1302,6188,0.282326492131409,18590
+"East Carolina University","NC","Public",921,13171,0.686003881820144,7248
+"Gardner Webb University","NC","Private",845,1603,0.837837837837841,8180
+"Guilford College","NC","Private",1030,1410,0.876871880199669,13404
+"Lenoir-Rhyne College","NC","Private",921,1188,0.75893769152196,10100
+"Mars Hill College","NC","Private",848,1111,0.826704545454544,6950
+"Montreat-Anderson College","NC","Private",870,316,0.847908745247146,8438
+"North Carolina Wesleyan College","NC","Private",826,646,0.848522167487687,8242
+"Queens College","NC","Private",1005,630,0.759689922480623,11020
+"Salem College","NC","Private",1002,534,0.847761194029852,10475
+"University of North Carolina at Charlotte","NC","Public",926,10099,0.765293813544718,7248
+"University of North Carolina at Wilmington","NC","Public",935,6635,0.635150716521167,7558
+"Wingate College","NC","Private",842,1207,0.82082324455206,7820
+"University of North Dakota","ND","Public",1000,8334,0.809866762693556,5634
+"North Dakota State University","ND","Public",1040,7368,0.7739218328841,5834
+"University of Nebraska at Lincoln","NE","Public",960,16454,0.956348574159635,5595
+"Colby-Sawyer College","NH","Private",883,618,0.852747252747256,14090
+"Thomas More Coll. of Liberal Arts","NH","Private",1066,59,1,7200
+"Centenary College","NJ","Private",970,396,0.845528455284551,11400
+"College of Santa Fe","NM","Private",964,873,0.818681318681321,11138
+"College of the Southwest","NM","Private",850,352,0.792207792207794,3120
+"University of Nevada at Reno","NV","Public",920,5916,0.839958158995812,6490
+"Dowling College","NY","Private",840,1059,0.819980217606329,9000
+"Cazenovia College","NY","Private",781,1010,0.892383675591372,9384
+"Colgate University","NY","Private",1186,2649,0.513179571663922,19510
+"College of Mount St. Vincent","NY","Private",928,707,0.684989429175474,11790
+"D'Youville College","NY","Private",932,1074,0.714780600461894,8920
+"Elmira College","NY","Private",959,1109,0.71722717913521,14990
+"Hartwick College","NY","Private",1002,1464,0.828132501200191,17480
+"Hofstra University","NY","Private",1010,6534,0.788906838987617,11600
+"Houghton College","NY","Private",1043,1210,0.828240252897788,9990
+"Hilbert College","NY","Private",700,888,0.987394957983192,7500
+"Iona College","NY","Private",867,3906,0.721586263287,10690
+"Keuka College","NY","Private",946,738,0.82646420824295,9600
+"King's College","NY","Private",907,246,0.654494382022474,8190
+"Marist College","NY","Private",990,3557,0.670259987317694,10700
+"Marymount Manhattan College","NY","Private",960,988,0.769784172661869,10200
+"Mount Saint Mary College","NY","Private",900,1170,0.594017094017095,7470
+"Nazareth College of Rochester","NY","Private",1034,1274,0.842661034846885,10850
+"Nyack College","NY","Private",905,508,0.615217391304349,7950
+"Roberts Wesleyan College","NY","Private",967,932,0.919389978213511,10220
+"Rochester Institute of Technology","NY","Private",1075,7176,0.807397959183676,13968
+"Skidmore College","NY","Private",1090,2322,0.635453063126018,18710
+"Siena College","NY","Private",1051,2669,0.652482269503548,10800
+"St. Bonaventure University","NY","Private",1013,1688,0.881799865681669,10456
+"St. John Fisher College","NY","Private",990,1687,0.777777777777775,10570
+"St. Joseph's College","NY","Private",917,1671,0.724186704384724,7350
+"SUNY at Binghamton","NY","Public",1148,8544,0.426329253958377,6550
+"SUNY College  at Brockport","NY","Public",952,5758,0.488620784206198,6550
+"SUNY College at Cortland","NY","Public",984,5011,0.446120689655172,6550
+"SUNY College at Fredonia","NY","Public",997,4123,0.5737133483699,6550
+"SUNY College at Geneseo","NY","Public",1149,5060,0.530588508955572,6550
+"SUNY College at New Paltz","NY","Public",1016,4658,0.429694011191809,6550
+"SUNY College at Oneonta","NY","Public",972,4627,0.580000000000001,6550
+"SUNY College  at Oswego","NY","Public",1030,6943,0.569500000000001,6550
+"SUNY College at Plattsburgh","NY","Public",980,5004,0.645701928275363,6550
+"SUNY College at Potsdam","NY","Public",1040,3598,0.726666666666664,6840
+"Utica College of Syracuse University","NY","Private",933,1525,0.76525821596244,12680
+"Vassar College","NY","Private",1228,2164,0.528732394366198,18920
+"Wells College","NY","Private",1080,416,0.754716981132076,14900
+"Art Academy of Cincinnati","OH","Private",850,199,0.630769230769229,8450
+"Ashland University","OH","Private",848,1874,0.871389270976616,11431
+"Baldwin-Wallace College","OH","Private",997,2718,0.808284023668639,10995
+"Bluffton College","OH","Private",972,760,0.742774566473986,9900
+"Bowling Green State University","OH","Public",946,13699,0.792671062587831,7452
+"Cedarville College","OH","Private",1010,2196,0.833970925784238,7344
+"Cleveland State University","OH","Public",848,7749,0.953884503531368,6462
+"College of Mount St. Joseph","OH","Private",920,1165,0.776942355889723,9800
+"Franciscan University of Steubenville","OH","Private",1004,1301,0.817359855334538,9650
+"College of Wooster","OH","Private",1100,1704,0.896666666666669,16240
+"Defiance College","OH","Private",819,645,0.80735551663748,10850
+"Heidelberg College","OH","Private",920,964,0.930894308943091,13780
+"Hiram College","OH","Private",1050,1000,0.790672451193059,14067
+"John Carroll University","OH","Private",1063,3168,0.871127633209414,11700
+"Kent State University","OH","Public",886,15615,0.330076004343106,7854
+"Kenyon College","OH","Private",1163,1445,0.695298372513563,19240
+"Malone College","OH","Private",912,1605,0.867276887871851,9858
+"Muskingum College","OH","Private",926,1115,0.831379621280434,13240
+"Notre Dame College of Ohio","OH","Private",838,377,0.786764705882351,8064
+"Oberlin College","OH","Private",1219,2587,0.57911259941398,19670
+"Ohio Northern University","OH","Private",1006,2502,0.797683923705719,15990
+"Ohio University","OH","Public",993,14861,0.75278962170008,7629
+"Ohio Wesleyan University","OH","Private",1103,1780,0.776255707762555,16732
+"Tiffin University","OH","Private",680,662,0.868639053254436,7600
+"University of Akron","OH","Public",880,12487,0.823156225218083,7650
+"University of Cincinnati","OH","Public",997,11036,0.810065645514222,8907
+"University of Dayton","OH","Private",1082,5889,0.832101870775036,11380
+"University of Toledo","OH","Public",951,15428,0.968576104746316,7441
+"Ursuline College","OH","Private",838,699,0.8,9600
+"Wittenberg University","OH","Private",1101,1980,0.878726629610913,15948
+"Xavier University","OH","Private",996,2849,0.921388463501784,11520
+"Antioch University","OH","Private",1004,712,0.927068723702661,15476
+"Bartlesville Wesleyan College","OK","Private",870,344,0.765100671140939,5950
+"Oklahoma Christian University","OK","Private",920,1419,0.985824742268042,6400
+"Oklahoma State University","OK","Public",1017,12830,0.865325077399378,5336
+"Phillips University","OK","Private",888,597,0.832369942196531,10500
+"University of Tulsa","OK","Private",1101,2936,0.909462616822432,11750
+"Oral Roberts University","OK","Private",1010,2645,0.531479967293541,7950
+"Concordia College","OR","Private",900,811,0.688963210702342,9600
+"Linfield College","OR","Private",1051,1548,0.761050608584243,13380
+"Oregon State University","OR","Public",965,10332,0.844491978609628,7890
+"Pacific University","OR","Private",1021,1041,0.900318133616122,14210
+"Reed College","OR","Private",1235,1199,0.730417090539166,19960
+"Southern Oregon State College","OR","Public",919,3215,0.838318512530319,7000
+"Warner Pacific College","OR","Private",875,503,0.776785714285715,7940
+"Willamette University","OR","Private",1100,1595,0.800361881785285,14800
+"Albright College","PA","Private",1023,973,0.808285163776491,15595
+"Alvernia College","PA","Private",840,801,0.86845827439887,8374
+"Carnegie Mellon University","PA","Private",1234,4265,0.595898258478459,17900
+"Cedar Crest College","PA","Private",960,791,0.78221649484536,14340
+"Chatham College","PA","Private",972,471,0.929245283018864,13500
+"Eastern College","PA","Private",931,1057,0.805676855895196,11190
+"Franklin and Marshall College","PA","Private",1100,1748,0.648318042813455,24940
+"Gannon University","PA","Private",982,2693,0.774350649350649,10970
+"Geneva College","PA","Private",962,1306,0.799401197604794,9476
+"Grove City College","PA","Private",1144,2213,0.445604175030109,5224
+"Lycoming College","PA","Private",944,1363,0.781493001555211,13900
+"Messiah College","PA","Private",1046,2258,0.793340987370841,10300
+"Muhlenberg College","PA","Private",1071,1656,0.728860658991661,16975
+"Widener University","PA","Private",1012,2186,0.697522206638614,12350
+"Point Park College","PA","Private",842,1173,0.850285714285717,9700
+"Robert Morris College","PA","Private",853,2621,0.850055126791621,6540
+"Thiel College","PA","Private",862,791,0.82409012131716,11172
+"University of Pennsylvania","PA","Private",1274,9205,0.422139745037922,17020
+"Westminster College","PA","Private",1000,1411,0.869477911646585,12065
+"Brown University","RI","Private",1300,5643,0.257349435881138,19528
+"Providence College","RI","Private",1022,3717,0.651099435687875,14400
+"Central Wesleyan College","SC","Private",813,1047,0.839080459770114,8300
+"College of Charleston","SC","Public",1019,6851,0.658005029337802,6120
+"Lander University","SC","Public",861,2074,0.865351629502572,4938
+"Newberry College","SC","Private",884,601,0.827981651376147,10194
+"Presbyterian College","SC","Private",1100,1133,0.76894639556377,11859
+"South Carolina State University","SC","Public",703,4396,0.685446009389672,4380
+"University of South Carolina at Columbia","SC","Public",985,12594,0.755881970622647,8074
+"University of South Carolina at Aiken","SC","Public",905,1855,0.660377358490568,5800
+"Voorhees College","SC","Private",670,703,0.68668941979522,4450
+"Winthrop University","SC","Public",986,3395,0.778017241379308,6400
+"Wofford College","SC","Private",1081,1059,0.622918054630246,12680
+"Univ. of South Carolina at Spartanburg","SC","Public",870,2207,0.624858757062148,5739
+"Belmont University","TN","Private",1012,1964,0.798360655737703,7800
+"Christian Brothers University","TN","Private",1010,1068,0.590909090909092,9300
+"David Lipscomb University","TN","Private",980,1957,0.915254237288138,5775
+"East Tennessee State University","TN","Public",850,6706,0.81981981981982,5800
+"Fisk University","TN","Private",881,850,0.667903525046383,6240
+"Freed-Hardeman University","TN","Private",943,1174,0.612290502793295,5500
+"Lee College","TN","Private",916,1831,0.764976958525346,4788
+"Maryville College","TN","Private",953,624,0.60655737704918,11200
+"Middle Tennessee State University","TN","Public",942,12541,0.746239372138652,5550
+"Tennessee Wesleyan College","TN","Private",810,402,0.784482758620693,7070
+"Tusculum College","TN","Private",790,983,0.594249201277956,7700
+"University of Tennessee at Knoxville","TN","Public",993,15749,0.718854543021546,5764
+"University of the South","TN","Private",1158,1129,0.668512110726643,15350
+"Vanderbilt University","TN","Private",1199,5500,0.601976639712487,17865
+"Angelo State University","TX","Public",950,4190,0.565254237288136,5130
+"Austin College","TX","Private",1052,1120,0.841772151898734,11280
+"Concordia Lutheran College","TX","Private",871,534,0.931034482758624,6900
+"Dallas Baptist University","TX","Private",932,848,0.872222222222225,5400
+"East Texas State University","TX","Public",878,4129,0.649391617845875,5390
+"Hardin-Simmons University","TX","Private",980,1365,0.90792291220557,6300
+"Howard Payne University","TX","Private",863,1201,0.879844961240312,5190
+"Houston Baptist University","TX","Private",930,1247,0.79903147699758,5400
+"Huston-Tillotson College","TX","Private",786,455,0.609195402298852,5180
+"Incarnate Word College","TX","Private",921,1685,0.797076526225278,8840
+"Lamar University","TX","Public",872,5438,0.73844178082192,4752
+"LeTourneau University","TX","Private",1043,1532,0.874213836477988,8840
+"McMurry University","TX","Private",908,880,0.711072664359862,6930
+"University of North Texas","TX","Public",993,14047,0.619511090991398,4104
+"Schreiner College","TX","Private",890,521,0.707191780821917,8955
+"Southwest Texas State University","TX","Public",907,13806,0.623066104078764,4860
+"Southwestern Adventist College","TX","Private",814,620,0.990654205607478,7536
+"Southwestern University","TX","Private",1103,1177,0.733118971061092,11850
+"St. Edward's University","TX","Private",921,1732,0.79559748427673,9428
+"St. Mary's University of San Antonio","TX","Private",970,2149,0.820595333869672,8678
+"Stephen F. Austin State University","TX","Public",939,9851,0.759965928449744,4860
+"Prairie View A. and M. University","TX","Public",709,4564,0.928898128898131,4290
+"Tarleton State University","TX","Public",832,4856,0.916317991631801,4860
+"Texas College","TX","Private",620,503,0.744094488188979,3605
+"Texas Lutheran College","TX","Private",934,895,0.851106639839037,7850
+"Texas Southern University","TX","Public",810,5584,0.746835443037973,7860
+"Texas Tech University","TX","Public",982,16785,0.797442374486898,4860
+"Texas Wesleyan University","TX","Private",841,1204,0.846283783783781,6400
+"University of Dallas","TX","Private",1143,1058,0.863436123348019,10760
+"University of Houston-Main Campus","TX","Public",984,15340,0.640141184020535,4104
+"University of St. Thomas","TX","Private",1060,995,0.748663101604276,8550
+"University of Texas at Arlington","TX","Public",940,10975,0.779945138677234,4422
+"University of Texas at Austin","TX","Public",1126,30017,0.648861171366593,5130
+"Wayland Baptist University","TX","Private",910,829,0.85375494071146,5100
+"West Texas A&M University","TX","Public",890,4111,0.772307692307695,4104
+"University of Texas at Dallas","TX","Public",1188,2106,0.716253443526169,4536
+"Univ. of Texas of the Permian Basin","TX","Public",839,841,0.775862068965517,5130
+"University of Texas at San Antonio","TX","Public",907,9375,0.73511975337918,4104
+"Texas A&M Univ. at College Station","TX","Public",1069,31643,0.726751416332733,5130
+"University of Utah","UT","Public",1027,13894,0.881452404317955,6857
+"Utah State University","UT","Public",1000,10657,0.893482831114226,5775
+"Bluefield College","VA","Private",819,653,0.949602122015919,7150
+"Emory & Henry College","VA","Private",930,809,0.844444444444444,8578
+"Hollins College","VA","Private",1007,795,0.827242524916945,13470
+"Longwood College","VA","Public",952,2874,0.680742628321806,7920
+"Radford University","VA","Public",950,8077,0.858295334970187,6684
+"Randolph-Macon Woman's College","VA","Private",1019,653,0.885057471264368,13970
+"Shenandoah University","VA","Private",915,868,0.757946210268947,10700
+"Sweet Briar College","VA","Private",1010,527,0.870129870129873,14500
+"Virginia Military Institute","VA","Public",1025,1191,0.755530973451325,9020
+"Christendom College","VA","Private",1136,139,0.888888888888889,8730
+"Castleton State College","VT","Public",875,1547,0.747812251392205,7656
+"Eastern Washington University","WA","Public",750,6561,0.855221873599284,7974
+"Gonzaga University","WA","Private",1031,2523,0.808059384941676,13000
+"Pacific Lutheran University","WA","Private",1005,2580,0.868371802869623,13312
+"Seattle University","WA","Private",989,2993,0.728132387706858,12825
+"St. Martin's College","WA","Private",940,494,0.863874345549737,11550
+"University of Puget Sound","WA","Private",1101,2738,0.698813056379822,16230
+"Western Washington University","WA","Public",1000,8909,0.642213410237923,8124
+"Whitman College","WA","Private",1150,1220,0.536270822138634,16670
+"Whitworth College","WA","Private",1034,1270,0.826048171275648,12660
+"Beloit College","WI","Private",1124,1085,0.699242424242424,16304
+"Carthage College","WI","Private",980,1405,0.883044554455442,13125
+"Marquette University","WI","Private",1053,7016,0.892857142857143,11610
+"Mount Mary College","WI","Private",1030,931,0.923404255319149,8950
+"Northland College","WI","Private",965,726,0.884233737596474,9570
+"Ripon College","WI","Private",1070,735,0.85349233390119,15200
+"St. Norbert College","WI","Private",1167,1946,0.93178410794603,12140
+"Univ. of Wisconsin at Eau Claire","WI","Public",985,8516,0.788968406353642,6996
+"Alderson-Broaddus College","WV","Private",837,799,0.855670103092784,10468
+"Bethany College","WV","Private",927,712,0.775602409638557,15700
+"Bluefield State College","WV","Public",780,1463,0.795411089866156,4498
+"Davis & Elkins College","WV","Private",836,754,0.796502384737678,9400
+"Marshall University","WV","Private",915,7703,0.867486985328915,5094
+"University of Charleston","WV","Private",948,771,0.784457478005863,9500
+"Shepherd College","WV","Private",903,2452,0.830604982206405,4694
+"West Virginia University","WV","Public",946,14524,0.810072689511941,6370
+"West Virginia Wesleyan College","WV","Private",928,1509,0.893997445721582,14200
+"Wheeling Jesuit College","WV","Private",912,971,0.836101882613507,10500
