@@ -9,8 +9,6 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 
-source("./packageHelpers.R")
-
 require(ggplot2)
 require(dplyr)
 require(shiny)
@@ -21,7 +19,7 @@ require(httpuv)
 knitr::opts_chunk$set(echo = FALSE)
 
 
-source("./makeStrings.R")
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/makeStrings.R")
 
 correct <- "<font color='red'>Correct!</font><br><br>"
 incorrect <- "<font color='red'>Not quite right...</font><br><br>"
@@ -34,7 +32,7 @@ congrats <- "<font color='red'>You did it!</font><br><br>"
 ```{r, echo = FALSE}
 
 # Read Data
-colleges = read.csv('http://calpoly.edu/~kbodwin/data/colleges1995.csv')
+colleges = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/colleges1995.csv')
 ```
 
 ## College Data from 1995

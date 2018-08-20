@@ -8,19 +8,26 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
-#install.packages(c('dplyr', 'ggplot2', 'learnr'))
-#install.packages(c('learnr', 'shiny'))
+
+require(ggplot2)
+require(dplyr)
+require(shiny)
+require(learnr)
+require(tidyr)
+require(httpuv)
 
 knitr::opts_chunk$set(echo = FALSE)
-titanic <- read.csv("http://calpoly.edu/~kbodwin/data/titanic0.csv")
-titanic = titanic[,-1]
-titanic_orig <- titanic
-source("http://calpoly.edu/~kbodwin/scripts/packageHelpers.R")
-source("http://calpoly.edu/~kbodwin/scripts/makeStrings.R")
+
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/makeStrings.R")
 
 correct <- "<font color='red'>Correct!</font><br><br>"
 incorrect <- "<font color='red'>Not quite right...</font><br><br>"
 congrats <- "<font color='red'>You did it!</font><br><br>"
+
+titanic = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic0.csv')
+titanic = titanic[,-1]
+titanic_orig <- titanic
 
 ### %ni = new input (red), %oi = old input (blue)
 ```

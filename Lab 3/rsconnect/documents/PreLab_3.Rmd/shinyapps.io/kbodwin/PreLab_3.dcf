@@ -1,0 +1,13 @@
+name: PreLab_3
+title: PreLab_3
+username:
+account: kbodwin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 401262
+bundleId: 1545300
+url: https://kbodwin.shinyapps.io/PreLab_3/
+when: 1534798678.27442
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: PreLab_3.html

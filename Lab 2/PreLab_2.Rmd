@@ -14,8 +14,12 @@ runtime: shiny_prerendered
 knitr::opts_chunk$set(echo = FALSE)
 #bball <- read.csv("http://calpoly.edu/~kbodwin/data/bball.csv")
 bball = read.csv("http://kbodwin.web.unc.edu/files/2016/06/basketball.csv")
-source("http://calpoly.edu/~kbodwin/scripts/packageHelpers.R")
-source("http://calpoly.edu/~kbodwin/scripts/makeStrings.R")
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/makeStrings.R")
+
+#delete html
+if(file.exists("./PreLab_2.html")){
+  file.remove("./PreLab_2.html")
+}
 
 correct <- "<font color='red'>Correct!</font><br><br>"
 incorrect <- "<font color='red'>Not quite right...</font><br><br>"
@@ -33,18 +37,18 @@ We will be using **R** to calculate information about Binomial random variables.
 ```{r factor_var}
 textInput("n",
           "How many tries do you have?",
-          value = "",
+          value = "0",
           width = '80%', placeholder = NULL)
 
 
 textInput("p",
           "What is the probability of success at each try?",
-          value = "",
+          value = "0",
           width = '80%', placeholder = NULL)
 
 textInput("k",
           "We are interested in the probability of how many successes?",
-          value = "",
+          value = "0",
           width = '80%', placeholder = NULL)
 
 bs_1_1 = reactive("dbinom(%ni, size = %ni, prob = %ni)")
@@ -88,18 +92,18 @@ It is not very common that we are interested in the probability of some exact nu
 ```{r pbinom}
 textInput("n2",
           "How many tries do you have?",
-          value = "",
+          value = "0",
           width = '80%', placeholder = NULL)
 
 
 textInput("p2",
           "What is the probability of success at each try?",
-          value = "",
+          value = "0",
           width = '80%', placeholder = NULL)
 
-textInput("k",
+textInput("k2",
           "We are interested in the probability of less than or equal to how many successes?",
-          value = "",
+          value = "0",
           width = '80%', placeholder = NULL)
 
 bs_1_2 = reactive("pbinom(%ni, size = %ni, prob = %ni)")
@@ -112,7 +116,7 @@ output$code_1_2 <- renderText(
         makePrintText(
           base_string = bs_1_2(),
           old_input = c(),
-          new_input = c(input$k, input$n2, input$p2)
+          new_input = c(input$k2, input$n2, input$p2)
         )
   )
 
@@ -121,7 +125,7 @@ output$output_1_2 <- renderPrint({
     makeEvalText(
       base_string = bs_1_2(), 
       old_input = c(),
-      new_input = c(input$k, input$n2, input$p2)
+      new_input = c(input$k2, input$n2, input$p2)
     )
    ))
 })
@@ -145,18 +149,18 @@ It is not very common that we are interested in the probability of some exact nu
 ```{r qbinom}
 textInput("n3",
           "How many tries do you have?",
-          value = "",
+          value = "0",
           width = '80%', placeholder = NULL)
 
 
 textInput("p3",
           "What is the probability of success at each try?",
-          value = "",
+          value = "0",
           width = '80%', placeholder = NULL)
 
 textInput("q",
           "We want to find the number of successes that has a probability of ____ below it.",
-          value = "",
+          value = "0",
           width = '80%', placeholder = NULL)
 
 bs_1_3 = reactive("qbinom(%ni, size = %ni, prob = %ni)")
@@ -235,40 +239,40 @@ htmlOutput("check_1.4")
 ```{r, context = "server"}
 
 output$check_1.1 <- renderText(
-  if(round(input$a_1.1,2) == round(dbinom(50, 100, .5), 2)){
-      correct
-  }else if(input$a_1.1 == ""){
+  if(input$a_1.1 == ""){
      ""
+  }else if(round(input$a_1.1,2) == round(dbinom(50, 100, .5), 2)){
+      correct
   }else{
     incorrect
   }
 )
 
 output$check_1.2 <- renderText(
-  if(round(input$a_1.2,2) == round(pbinom(44, 100, .5), 2)){
+  if(input$a_1.2 == ""){
+    ""
+  }else if(round(input$a_1.2,2) == round(pbinom(44, 100, .5), 2)){
       correct
-  }else if(input$a_1.2 == ""){
-     ""
   }else{
     incorrect
   }
 )
 
 output$check_1.3 <- renderText(
-  if(round(input$a_1.3,2) == round(1-pbinom(7, 43, .1), 2)){
-      correct
-  }else if(input$a_1.3 == ""){
+  if(input$a_1.3 == ""){
      ""
+  }else if(round(input$a_1.3,2) == round(1-pbinom(7, 43, .1), 2)){
+      correct
   }else{
     incorrect
   }
 )
 
 output$check_1.4 <- renderText(
-  if(round(input$a_1.4,2) == round(qbinom(.8, 20, .1), 2)){
-      correct
-  }else if(input$a_1.4 == ""){
+  if(input$a_1.4 == ""){
      ""
+  }else if(round(input$a_1.4,2) == round(qbinom(.8, 20, .1), 2)){
+      correct
   }else{
     incorrect
   }
@@ -291,7 +295,7 @@ For the following, try to guess what the output would be.  Do **not** run the co
 ```{r q_2}
 textInput("a_2.1",
            "dbinom(1, size = 1, prob = 0.7)",
-           value = "",
+           value = "0",
            width = '80%', placeholder = NULL)
 
 htmlOutput("check_2.1")
@@ -329,50 +333,50 @@ htmlOutput("check_2.5")
 ```{r, context = "server"}
 
 output$check_2.1 <- renderText(
-  if(input$a_2.1 == 0.7){
-      correct
-  }else if(input$a_2.1 == ""){
+  if(input$a_2.1 == ""){
      ""
+  }else if(input$a_2.1 == 0.7){
+      correct
   }else{
     incorrect
   }
 )
 
 output$check_2.2 <- renderText(
-  if(input$a_2.2 == 1){
-      correct
-  }else if(input$a_2.2 == ""){
+  if(input$a_2.2 == ""){
      ""
+  }else if(input$a_2.2 == 1){
+      correct
   }else{
     incorrect
   }
 )
 
 output$check_2.3 <- renderText(
-  if(input$a_2.3 == 0.5){
-      correct
-  }else if(input$a_2.3 == ""){
+  if(input$a_2.3 == ""){
      ""
+  }else if(input$a_2.3 == 0.5){
+      correct
   }else{
     incorrect
   }
 )
 
 output$check_2.4 <- renderText(
-  if(input$a_2.4 == 60){
-      correct
-  }else if(input$a_2.4 == ""){
+  if(input$a_2.4 == ""){
      ""
+  }else if(input$a_2.4 == 60){
+      correct
   }else{
     incorrect
   }
 )
 
 output$check_2.5 <- renderText(
-  if(input$a_2.5 == 50){
-      correct
-  }else if(input$a_2.5 == ""){
+  if(input$a_2.5 == ""){
      ""
+  }else if(input$a_2.5 == 50){
+      correct
   }else{
     incorrect
   }
@@ -447,20 +451,20 @@ output$check_3.2 <- renderText(
 )
 
 output$check_3.3 <- renderText(
-  if(input$a_3.3 == 9){
-      correct
-  }else if(input$a_3.3 == ""){
+  if(input$a_3.3 == ""){
      ""
+  }else if(input$a_3.3 == 9){
+      correct
   }else{
     incorrect
   }
 )
 
 output$check_3.4 <- renderText(
-  if(input$a_3.4 == 0.84){
-      correct
-  }else if(input$a_3.4 == ""){
+  if(input$a_3.4 == ""){
      ""
+  }else if(input$a_3.4 == 0.84){
+      correct
   }else{
     incorrect
   }
@@ -496,20 +500,20 @@ htmlOutput("check_4.2")
 ```{r, context = "server"}
 
 output$check_4.1 <- renderText(
-  if(input$a_4.1 == round(1-pnorm(71, mean = 67, sd = 3), 2)){
-      correct
-  }else if(input$a_4.1 == ""){
+  if(input$a_4.1 == ""){
      ""
+  }else if(round(input$a_4.1,2) == round(1-pnorm(71, mean = 67, sd = 3), 2)){
+      correct
   }else{
     incorrect
   }
 )
 
 output$check_4.2 <- renderText(
-  if(input$a_4.2 == round(qnorm(.02, mean = 67, sd = 3), 2)){
-      correct
-  }else if(input$a_4.2 == ""){
+  if(input$a_4.2 == ""){
      ""
+  }else if(round(input$a_4.2, 2) == round(qnorm(.02, mean = 67, sd = 3), 2)){
+      correct
   }else{
     incorrect
   }
