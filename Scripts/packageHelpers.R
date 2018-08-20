@@ -13,7 +13,8 @@ if(!require(shiny)){
 	library(shiny)
 }
 
-if(!require(httpuv)){
-	install.packages("httpuv")
-	library(httpuv)
+if(!require(devtools)){
+	install.packages("devtools")
+	library(devtools)
+  devtools::install_github("rstudio/httpuv")
 }
