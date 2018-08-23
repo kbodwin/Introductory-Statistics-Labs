@@ -50,7 +50,7 @@ Take a look at the dataset, and familiarize yourself with the variables.
 
 Let's take a look at how the name "Kelly" has changed over time, for female babies only.  First, we will make a new dataset called "kellys", that contains only counts for female Kellys.
 
-```{r}
+```{r, echo = TRUE}
 kellys <- babies %>% filter(Name == "Kelly", Gender == "F")
 ```
 
@@ -113,7 +113,7 @@ output$code_2 <- renderText(
 
 It appears that my name is getting steadily less popular since 1980.  However, we would like to know if this trend is significant.  First, let's adjust our dataset to narrow it down to only 1980 and beyond.
 
-```{r}
+```{r, echo = TRUE}
 kellys_80 <- babies %>% filter(Name == "Kelly", Gender == "F", Year > 1980)
 ```
 
@@ -396,8 +396,8 @@ We will regard the counts in each year as an independent observation, and perfor
 
 Use the code box below to make side-by-side boxplots comparing the name counts for the four names in my family since 1991.  Remember, we need to `filter()` the dataset first, to narrow down the years and the names!
 
-```{r}
-bodwins_91 <- babies %>% filter(Name %in% c("Kelly", "Gregory", "Diane", "Jim", Year > 1990))
+```{r, echo = TRUE}
+bodwins_91 <- babies %>% filter(Name %in% c("Kelly", "Gregory", "Diane", "Jim"), Year > 1990)
 ```
 
 ```{r 1.1, exercise = TRUE}
@@ -462,7 +462,7 @@ htmlOutput("check_7")
 ```{r, context = "server"}
 
 output$check_7 <- renderText(
-  if(round(as.numeric(input$a_7), 2) == 12.17){
+  if(round(as.numeric(input$a_7), 2) == 11.3){
       correct
   }else{
     incorrect

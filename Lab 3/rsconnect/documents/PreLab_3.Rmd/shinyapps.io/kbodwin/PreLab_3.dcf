@@ -5,9 +5,9 @@ account: kbodwin
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 401262
-bundleId: 1545300
+bundleId: 1549461
 url: https://kbodwin.shinyapps.io/PreLab_3/
-when: 1534798678.27442
+when: 1534973010.42734
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: PreLab_3.html
+ignoredFiles: Lab3_Assignment.Rmd|PreLab_3.html

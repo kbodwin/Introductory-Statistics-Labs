@@ -26,13 +26,12 @@ incorrect <- "<font color='red'>Not quite right...</font><br><br>"
 congrats <- "<font color='red'>You did it!</font><br><br>"
 
 ### %ni = new input (red), %oi = old input (blue)
-```
-
-
-```{r, echo = FALSE}
 
 # Read Data
 colleges = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/colleges1995.csv')
+
+Sys.sleep(5)
+
 ```
 
 ## College Data from 1995
@@ -245,7 +244,7 @@ htmlOutput("check_3.1")
 ```{r, context = "server"}
 
 output$check_3.1 <- renderText(
-  if(round(as.numeric(input$a_3.1),2) == -2.95){
+  if(round(as.numeric(input$a_3.1),1) == 3 | round(as.numeric(input$a_3.1),1) == -3){
       correct
   }else{
     incorrect
@@ -335,7 +334,7 @@ htmlOutput("check_4")
 ```{r, context = "server"}
 
 output$check_4 <- renderText(
-  if(round(as.numeric(input$a_4), 2) == 0.35){
+  if(round(as.numeric(input$a_4), 2) == 0.04){
       correct
   }else{
     incorrect

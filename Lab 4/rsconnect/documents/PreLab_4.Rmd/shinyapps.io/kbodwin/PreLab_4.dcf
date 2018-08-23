@@ -1,0 +1,13 @@
+name: PreLab_4
+title: PreLab_4
+username:
+account: kbodwin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 406470
+bundleId: 1551241
+url: https://kbodwin.shinyapps.io/PreLab_4/
+when: 1535051585.42138
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Lab4_Assignment.Rmd|Lab4_data_setup.R|PreLab_4.html|PreLab_4_files/figure-html/unnamed-chunk-12-1.png|PreLab_4_files/figure-html/unnamed-chunk-14-1.png

@@ -11,7 +11,7 @@ options(digits=2)
 knitr::opts_chunk$set(fig.width=4, fig.height=4) 
 
 source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/makeStrings.R")
-source("./makeStrings.R")
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
 
 # Load the data
 babies = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/babies_full.csv')
