@@ -1,0 +1,27 @@
+---
+title: 'Lab 4: Baby Names'
+author: "YOUR NAME HERE"
+output:
+  html_document: default
+---
+
+```{r, include = FALSE}
+## IGNORE THIS CHUNK
+options(digits=2)
+knitr::opts_chunk$set(fig.width=4, fig.height=4) 
+
+source("./packageLoaders.R")
+source("./makeStrings.R")
+
+# Load the data
+babies = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/babies.csv')
+
+
+```
+
+Instructions:  Using R code chunks like the one below, write up a report on some baby names of your choosing.  Your analysis should include at least one ANOVA test and at least one regression (and the appropriate accompanying plots).
+
+```{r}
+### YOUR CODE HERE ###
+```
+
