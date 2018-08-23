@@ -1,3 +1,8 @@
+if(!require(learnr)){
+  install.packages("learnr")
+  library(learnr)
+}
+
 if(!require(dplyr)){
 	install.packages("dplyr")
 	library(dplyr)
