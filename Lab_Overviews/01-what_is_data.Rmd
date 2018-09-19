@@ -1,0 +1,30 @@
+# Lab 1:  What is data?
+
+## Topics:  
+* Describing variables in a dataset
+*	Interpreting observations in real-world terms
+*	Calculating numerical summaries of samples
+*	Deciding which variables to collect or analyze
+*	Discussing evidence for specific research questions
+
+## Dataset:  Titanic  (abbreviated version)
+```{r titanic}
+
+```
+
+## R Skills: 
+* Getting used to R Markdown
+⦁* 	Reading a dataset into R
+⦁*	Looking at, and interpreting, the`summary()` of the dataset
+⦁*	Looking at, and interpreting, individual rows of the dataset:`head()`, `[1,]`
+⦁*	Checking for obvious errors and missing data: `na.omit()`
+⦁*	Filtering to look at specific observation and variables:`filter()`, `select()`
+⦁*	Mutating variables by factoring, combining, etc: `mutate()`, `mutate_at()`, `factor()`
+⦁*	Calculating summaries of samples, including by group: `mean()`, etc; `summarize_at()`, `group_by()`
+
+## Assignment:  Full Titanic dataset: who lived and died?
+
+## Additional Resources:  
+* DataCamp
+* RStudio Cheatsheets: dplyr
+* Swirl

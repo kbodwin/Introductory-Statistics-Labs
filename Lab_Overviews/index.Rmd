@@ -1,0 +1,13 @@
+--- 
+title: "Introductory Statistics Lab Outlines"
+author: "Kelly Bodwin"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: kbodwin/Introductory-Statistics-Labs/Lab_Overviews
+description: "An outline of lab assignments and learning goals in RStudio for an introductory college statistics course."
+---

@@ -1,0 +1,421 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Statistics 218: Labs Outline},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Statistics 218: Labs Outline}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\section{Lab 1: What is data?}\label{lab-1-what-is-data}
+
+\subsection{Topics:}\label{topics}
+
+\begin{itemize}
+\tightlist
+\item
+  Describing variables in a dataset
+\item
+  Interpreting observations in real-world terms
+\item
+  Calculating numerical summaries of samples
+\item
+  Deciding which variables to collect or analyze
+\item
+  Discussing evidence for specific research questions
+\end{itemize}
+
+\subsection{Dataset: Titanic (abbreviated
+version)}\label{dataset-titanic-abbreviated-version}
+
+\subsection{R Skills:}\label{r-skills}
+
+\begin{itemize}
+\tightlist
+\item
+  Getting used to R Markdown ⦁* Reading a dataset into R ⦁* Looking at,
+  and interpreting, the\texttt{summary()} of the dataset ⦁* Looking at,
+  and interpreting, individual rows of the dataset:\texttt{head()},
+  \texttt{{[}1,{]}} ⦁* Checking for obvious errors and missing data:
+  \texttt{na.omit()} ⦁* Filtering to look at specific observation and
+  variables:\texttt{filter()}, \texttt{select()} ⦁* Mutating variables
+  by factoring, combining, etc: \texttt{mutate()},
+  \texttt{mutate\_at()}, \texttt{factor()} ⦁* Calculating summaries of
+  samples, including by group: \texttt{mean()}, etc;
+  \texttt{summarize\_at()}, \texttt{group\_by()}
+\end{itemize}
+
+\subsection{Assignment: Full Titanic dataset: who lived and
+died?}\label{assignment-full-titanic-dataset-who-lived-and-died}
+
+\subsection{Additional Resources:}\label{additional-resources}
+
+\begin{itemize}
+\tightlist
+\item
+  DataCamp
+\item
+  RStudio Cheatsheets: dplyr
+\item
+  Swirl
+\end{itemize}
+
+\section{Lab 2: Visualization}\label{lab-2-visualization}
+
+\subsection{Topics:}\label{topics-1}
+
+Reading, interpreting, comparing, and knowing when to use\ldots{} *
+Histograms * Dot plots * Box plots * Bar graphs * {[}Pie Charts -
+omitted in R section{]} * Side-by-Side box plots * Side-by-Side bar
+graphs * Stacked bar graphs * Scatter plots * Line plots
+
+\subsection{Dataset: Titanic
+(abbreviated)}\label{dataset-titanic-abbreviated}
+
+\subsection{R Skills:}\label{r-skills-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Creating all the above in ggplot
+\item
+  Grouping and facetting
+\item
+  Optional bells and whistles for plotting
+\end{itemize}
+
+\subsection{Assignment: Titanic final
+report}\label{assignment-titanic-final-report}
+
+\subsection{Additional Resources:}\label{additional-resources-1}
+
+\begin{itemize}
+\tightlist
+\item
+  RStudio Cheatsheets: ggplot2
+\item
+  Colors pdf
+\item
+  Link some tutorials?
+\end{itemize}
+
+\section{Lab 3: Random Variables, Categorical/discrete
+distributions}\label{lab-3-random-variables-categoricaldiscrete-distributions}
+
+\subsection{Topics:}\label{topics-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Random variables: samples and populations, statistics and parameters
+\item
+  Frequency tables
+\item
+  Probability
+\item
+  The Binomial Distribution
+\item
+  Quantifying evidence: baby chi-square?
+\end{itemize}
+
+\subsection{Dataset: Election data?}\label{dataset-election-data}
+
+\subsection{Skills:}\label{skills}
+
+\begin{itemize}
+\tightlist
+\item
+  {[}review{]} Counting up categoricals
+\item
+  Making a frequency table from data: \texttt{reshape} stuff
+\item
+  Using \texttt{pbinom()} and \texttt{qbinom()}
+\item
+  Simulation? \texttt{rbinom()}
+\end{itemize}
+
+\subsection{Assignment: Hmmmm\ldots{}..}\label{assignment-hmmmm..}
+
+\subsection{Additional Resources}\label{additional-resources-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Applets!
+\end{itemize}
+
+\section{Lab 4: Hypothesis Testing}\label{lab-4-hypothesis-testing}
+
+\subsection{Topics:}\label{topics-3}
+
+\emph{⦁ Hypothesis test general principles } 1-sample prop test * very
+gentle intro to confidence interval for \(p\) * Chi-Square Test
+
+\subsection{Dataset: same as lab 3 ideally. Election
+data?}\label{dataset-same-as-lab-3-ideally.-election-data}
+
+\subsection{R Skills:}\label{r-skills-2}
+
+\begin{itemize}
+\tightlist
+\item
+  {[}review{]} making frequency tables
+\item
+  {[}review{]} \texttt{pbinom()}, \texttt{qbinom()}
+\item
+  \texttt{pchisq()}, \texttt{qchisq()}, maybe? probably.
+\item
+  \texttt{prop.test()}
+\item
+  \texttt{chisq.test()}
+\end{itemize}
+
+\subsection{Assignment: Final report on
+{[}biodata{]}.}\label{assignment-final-report-on-biodata.}
+
+\subsection{Additional Resources:}\label{additional-resources-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Applets
+\item
+  Real-world chi-square study abstracts and such
+\end{itemize}
+
+\section{Lab 5: Densities, the CLT}\label{lab-5-densities-the-clt}
+
+\subsection{Topics:}\label{topics-4}
+
+\begin{itemize}
+\tightlist
+\item
+  Density curves
+\item
+  The Uniform distribution
+\item
+  The Normal distribution
+\item
+  CLT
+\item
+  Normal approximation to Binomial
+\end{itemize}
+
+\subsection{Dataset: basketball??? hmmmmm I don't love
+it\ldots{}.}\label{dataset-basketball-hmmmmm-i-dont-love-it.}
+
+\subsection{R Skills:}\label{r-skills-3}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{runif()}, \texttt{punif()}, \texttt{qunif()}
+\item
+  \texttt{rnorm()}, \texttt{dnorm()}, \texttt{qnorm()}, \texttt{pnorm()}
+\item
+  Curves in \texttt{ggplot}
+\item
+  simulation\ldots{}.?
+\item
+  qq plots
+\end{itemize}
+
+\subsection{Assignment: Not bball. Make them do a different
+dataset.}\label{assignment-not-bball.-make-them-do-a-different-dataset.}
+
+\section{Lab 6: t-tests and confidence
+intervals}\label{lab-6-t-tests-and-confidence-intervals}
+
+\subsection{Topics:}\label{topics-5}
+
+\begin{itemize}
+\tightlist
+\item
+  one-sample t-test
+\item
+  two-sample t-test
+\item
+  Confidence intervals for \(\mu\) and \(\mu_1 - \mu_2\)
+\end{itemize}
+
+\subsection{Dataset: wine?}\label{dataset-wine}
+
+\subsection{R Skills:}\label{r-skills-4}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{t.test()}
+\item
+  Maybe conf int calculations?
+\end{itemize}
+
+\subsection{Assignment: wine? options?}\label{assignment-wine-options}
+
+\subsection{Additional Resources:}\label{additional-resources-4}
+
+\begin{itemize}
+\tightlist
+\item
+  Real world abstracts
+\end{itemize}
+
+\section{Lab 7: ANOVA}\label{lab-7-anova}
+
+\subsection{Topics:}\label{topics-6}
+
+\begin{itemize}
+\tightlist
+\item
+  ANOVA
+\item
+  Multiple testing, Tukey HSD
+\end{itemize}
+
+\subsection{Dataset: bodwins}\label{dataset-bodwins}
+
+\subsection{R Skills:}\label{r-skills-5}
+
+\begin{itemize}
+\tightlist
+\item
+  {[}review{]} Side-by-side boxplots
+\item
+  \texttt{anova()}, \texttt{lm()}, \texttt{aov()}
+\item
+  \texttt{tukeyHSD()}
+\end{itemize}
+
+\subsection{Assignment: your family or
+similar}\label{assignment-your-family-or-similar}
+
+\subsection{Additional Resources:}\label{additional-resources-5}
+
+\begin{itemize}
+\tightlist
+\item
+  Real world abstracts
+\end{itemize}
+
+\section{Lab 8: Regression}\label{lab-8-regression}
+
+\subsection{Topics:}\label{topics-7}
+
+\begin{itemize}
+\tightlist
+\item
+  Linear models
+\item
+  Least squares and residuals
+\item
+  Residual plots
+\item
+  Transformation of variables?
+\end{itemize}
+
+\subsection{Dataset: kellys}\label{dataset-kellys}
+
+\subsection{R Skills:}\label{r-skills-6}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{lm()}
+\item
+  {[}review{]} scatterplots
+\item
+  Adding model to scatterplot
+\item
+  Prediction
+\item
+  Plotting residuals (hmmm why does it suck in ggplot. maybe worth
+  building by hand)
+\end{itemize}
+
+\subsection{Assignment: your choice of names
+stuff}\label{assignment-your-choice-of-names-stuff}
+
+\subsection{Additional Resources}\label{additional-resources-6}
+
+\section{Lab 9: Final project}\label{lab-9-final-project}
+
+
+\end{document}

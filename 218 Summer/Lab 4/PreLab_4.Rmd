@@ -1,0 +1,520 @@
+---
+title: "Pre-Lab 4: ANOVA, Regression, Chi-Square"
+output: learnr::tutorial
+tutorial:
+  id: "Pre-Lab 3"
+  version: 1.0
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+
+require(ggplot2)
+require(dplyr)
+require(shiny)
+require(learnr)
+require(tidyr)
+require(httpuv)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/makeStrings.R")
+
+correct <- "<font color='red'>Correct!</font><br><br>"
+incorrect <- "<font color='red'>Not quite right...</font><br><br>"
+congrats <- "<font color='red'>You did it!</font><br><br>"
+
+### %ni = new input (red), %oi = old input (blue)
+
+# Read Data
+babies = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/babies_sub.csv')
+
+Sys.sleep(5)
+
+```
+
+## Baby Names in the U.S.
+
+Our dataset in this lab concerns baby names in a few different states.  
+
+The loaded dataset, `babies`, has information about baby names in the United States from 1940-2016.  For each year, and for each name with at least 50 recorded babies born, we are given the counts of how many babies had that name.  In this dataset, we include only California, and only a few baby names.
+
+Take a look at the dataset, and familiarize yourself with the variables.
+
+```{r ex_1.1, exercise = TRUE}
+```
+
+
+## Is my name not cool any more?
+
+Let's take a look at how the name "Kelly" has changed over time, for female babies only.  First, we will make a new dataset called "kellys", that contains only counts for female Kellys.
+
+```{r, echo = TRUE}
+kellys <- babies %>% filter(Name == "Kelly", Gender == "F")
+```
+
+
+Use the following code to plot the counts of babies named Kelly (in California) for each year.  Notice the new addition to `ggplot()` of `+ geom_point()`
+
+
+```{r, echo=FALSE}
+textInput("plot_var_2_1", 
+          "What variable would you like to plot on the x-axis?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_var_2_2", 
+          "What variable would you like to plot on the y-axis?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+radioButtons("plot_type", 
+             "Would you like a scatterplot or a line?",
+                   choices = c("Scatterplot" = "point",
+                               "Line" = "line"
+                              )
+              )
+
+bs_2 <- reactive("ggplot(%oi, aes(x = %ni, y = %ni)) + geom_%ni()")
+# 
+htmlOutput("code_2")
+# 
+plotOutput("plot_2")
+```
+
+
+```{r, context="server"}
+output$plot_2 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_2(), 
+      old_input = c("kellys"),
+      new_input = c(input$plot_var_2_1, input$plot_var_2_2, input$plot_type)
+    )
+   ))
+})
+
+output$code_2 <- renderText(
+        makePrintText( 
+      base_string = bs_2(), 
+      old_input = c("kellys"),
+      new_input = c(input$plot_var_2_1, input$plot_var_2_2, input$plot_type)
+    )
+  )
+
+```
+
+**Think about it:**  Why did the name "Kelly" suddenly become popular for female babies around 1960?  I have heard a few theories... can you find me an interesting one?  
+
+### Regression
+
+It appears that my name is getting steadily less popular since 1980.  However, we would like to know if this trend is significant.  First, let's adjust our dataset to narrow it down to only 1980 and beyond.
+
+```{r, echo = TRUE}
+kellys_80 <- babies %>% filter(Name == "Kelly", Gender == "F", Year > 1980)
+```
+
+Use the code below to run a **linear regression** on the counts of Kellys over time.  For this, we use the **R** command `lm()`, which stands for "linear model".  Typically, we will save the calculations by giving it a name.  You may choose any name you want - but you should choose something descriptive so you remember what it is!  In this example, we will use the name `my_model`.
+
+
+
+```{r, echo=FALSE}
+textInput("plot_var_3_1", 
+          "What is the explanatory variable?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_var_3_2", 
+          "What is the response variable?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+bs_3 <- reactive("summary(%oi(%ni ~ %ni, data = %oi))")
+# 
+htmlOutput("code_3")
+# 
+verbatimTextOutput("plot_3")
+```
+
+
+```{r, context="server"}
+output$plot_3 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_3(), 
+      old_input = c("lm", "kellys_80"),
+      new_input = c(input$plot_var_3_2, input$plot_var_3_1)
+    )
+   ))
+})
+
+output$code_3 <- renderText(
+        makePrintText( 
+      base_string = bs_3(), 
+      old_input = c("lm", "kellys_80"),
+      new_input = c(input$plot_var_3_2, input$plot_var_3_1)
+    )
+  )
+
+```
+
+
+```{r q_3}
+textInput("a_3",
+           "What is the test statistic for this regression line?",
+           value = "0",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_3")
+
+```
+
+```{r, context = "server"}
+
+output$check_3 <- renderText(
+  if(round(input$a_3, 2) == 1565){
+      correct
+  }else{
+    incorrect
+  }
+)
+```
+
+```{r q_4}
+textInput("a_4",
+           "What was the p-value for this regression line?",
+           value = "1",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_4")
+
+```
+
+```{r, context = "server"}
+
+output$check_4 <- renderText(
+  if(input$a_4 == 0){
+      correct
+  }else{
+    incorrect
+  }
+)
+```
+
+
+
+```{r q_5}
+textInput("a_5",
+           "What is the correlation between the variables?  (Hint:  The R-Squared value is literally r (correlation) squared.  But be careful of +/-.)",
+           value = "0",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_5")
+
+```
+
+```{r, context = "server"}
+
+output$check_5 <- renderText(
+  if(round(as.numeric(input$a_5), 2) == -0.99){
+      correct
+  }else{
+    incorrect
+  }
+)
+```
+
+### Checking residuals
+
+The last thing we need to do is make sure the *linear* regression is a good choice.  Use the code below to plot the regression line.
+
+```{r, echo=FALSE}
+textInput("plot_var_4_1", 
+          "What variable would you like to plot on the x-axis?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_var_4_2", 
+          "What variable would you like to plot on the y-axis?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+radioButtons("reg_line", 
+             "Add regression line to plot?",
+                   choices = c("No" = "",
+                               "Yes" = "+ geom_smooth(method = 'lm')"
+                              )
+              )
+
+bs_4 <- reactive("ggplot(%oi, aes(x = %ni, y = %ni)) + geom_%oi() %ni")
+# 
+htmlOutput("code_4")
+# 
+plotOutput("plot_4")
+```
+
+
+```{r, context="server"}
+output$plot_4 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4(), 
+      old_input = c("kellys_80", "point"),
+      new_input = c(input$plot_var_4_1, input$plot_var_4_2, input$reg_line)
+    )
+   ))
+})
+
+output$code_4 <- renderText(
+        makePrintText( 
+      base_string = bs_4(), 
+      old_input = c("kellys_80", "point"),
+      new_input = c(input$plot_var_4_1, input$plot_var_4_2, input$reg_line)
+    )
+  )
+
+```
+
+Here is a plot of the residuals (you do not need to learn to make these in R):
+
+```{r, echo = FALSE}
+my_lm <- lm(Count ~ Year, data = kellys_80)
+
+ggplot(my_lm) + 
+  geom_point(aes(x=.fitted, y=.resid)) +
+  xlab("Fitted values") + ylab("Residuals") +
+  geom_hline(yintercept = 0, col = "red")
+```
+
+```{r, echo=FALSE}
+textAreaInput("discuss_1", 
+          "Do you see any issue with the regression, based on the residuals?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+```
+
+
+## Was my name once a boy's name?
+
+My favorite hockey player growing up was named Kelly Hrudey.  I thought it was cool that we had the same name.  These days, you don't see many male Kelly's.  The swap from a male name to a female name seems to have occurred somewhere between 1950 and 1960.  
+
+Use the code below to run a *chi-square test*, to see if the true percent of all **male** Kellys in the U.S. was more than half, based on our sample of only California Kellys.  We will first find the observed counts for each gender in a given year, and then we will "pipe" this information to `chisq.test()` to compare them to expected counts.  By default, `chisq.test()` tests to see if all categories are equally likely.
+
+
+```{r, echo=FALSE}
+textInput("plot_var_5_1", 
+          "What is the explanatory variable?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_var_5_2", 
+          "What is the response variable?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_var_5_3", 
+          "What year do you want to test?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+radioButtons("opt_5", 
+             "What do you want to show?",
+                   choices = c("Counts" = "",
+                               "Results of Chi-Square Test" = "%>% chisq.test()"
+                              )
+              )
+
+bs_5 <- reactive("%oi %>% filter(Name == 'Kelly', Year == %ni) %>% select(%ni) %ni")
+# 
+htmlOutput("code_5")
+# 
+verbatimTextOutput("plot_5")
+```
+
+
+```{r, context="server"}
+output$plot_5 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_5(), 
+      old_input = c("babies"),
+      new_input = c(input$plot_var_5_3, input$plot_var_5_2, input$opt_5)
+    )
+   ))
+})
+
+output$code_5 <- renderText(
+        makePrintText( 
+      base_string = bs_5(), 
+      old_input = c("babies"),
+      new_input = c(input$plot_var_5_3, input$plot_var_5_2, input$opt_5)
+    )
+  )
+
+```
+
+```{r q_6}
+textInput("a_6",
+           "What is the earliest year for which there are significantly (at the 0.05 level) more female Kellys than male Kellys?",
+           value = "1950",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_6")
+
+```
+
+```{r, context = "server"}
+
+output$check_6 <- renderText(
+  if(round(as.numeric(input$a_6), 2) == 1956){
+      correct
+  }else{
+    incorrect
+  }
+)
+```
+
+
+## Whose name is most common?
+
+Over time, names come and go out of style.  My family would like to know whose name was most popular overall since 1991, the year my brother was born. My brother is named Gregory, and my parents are named Diane and Jim.
+
+We will regard the counts in each year as an independent observation, and perform an ANOVA test to see if the mean number of people born between 1991 and 2016 is different for the names Kelly, Gregory, Diane, and Jim.
+
+**Think about it:** Why is it unreasonable to treat each year as an independent sample?  Does knowing the counts in 1991 give you any extra information about 1992?
+
+Use the code box below to make side-by-side boxplots comparing the name counts for the four names in my family since 1991.  Remember, we need to `filter()` the dataset first, to narrow down the years and the names!
+
+```{r, echo = TRUE}
+bodwins_91 <- babies %>% filter(Name %in% c("Kelly", "Gregory", "Diane", "Jim"), Year > 1990)
+```
+
+```{r 1.1, exercise = TRUE}
+```
+
+### ANOVA in R
+
+
+```{r, echo=FALSE}
+textInput("plot_var_6_1", 
+          "What QUANTITATIVE variable would you like to compare the means of?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_var_6_2", 
+          "What CATEGORICAL variable separates the groups?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+bs_6 <- reactive("%oi(lm(%ni ~ %ni, data = %oi))")
+# 
+htmlOutput("code_6")
+# 
+verbatimTextOutput("plot_6")
+```
+
+
+```{r, context="server"}
+output$plot_6 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_6(), 
+      old_input = c("anova", "bodwins_91"),
+      new_input = c(input$plot_var_6_1, input$plot_var_6_2)
+    )
+   ))
+})
+
+output$code_6 <- renderText(
+        makePrintText( 
+      base_string = bs_6(), 
+      old_input = c("anova", "bodwins_91"),
+      new_input = c(input$plot_var_6_1, input$plot_var_6_2)
+    )
+  )
+
+```
+
+
+```{r q_7}
+textInput("a_7",
+           "What is test statistic for the ANOVA test?",
+           value = "0",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_7")
+
+```
+
+```{r, context = "server"}
+
+output$check_7 <- renderText(
+  if(round(as.numeric(input$a_7), 2) == 11.3){
+      correct
+  }else{
+    incorrect
+  }
+)
+```
+
+### Tukey's Honest Significant Difference
+
+Finally, we need to decide exactly how my family's names relate to each other.  Use the code below to run t-tests for each pair of names, and adjust the p-values to correct for **multiple testing**.
+
+
+```{r, echo=FALSE}
+textInput("plot_var_8_1", 
+          "What QUANTITATIVE variable would you like to compare the means of?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_var_8_2", 
+          "What CATEGORICAL variable separates the groups?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+bs_8 <- reactive("%oi(%oi(lm(%ni ~ %ni, data = %oi)))")
+# 
+htmlOutput("code_8")
+# 
+verbatimTextOutput("plot_8")
+```
+
+
+```{r, context="server"}
+output$plot_8 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_8(), 
+      old_input = c("TukeyHSD", "aov", "bodwins_91"),
+      new_input = c(input$plot_var_8_1, input$plot_var_8_2)
+    )
+   ))
+})
+
+output$code_8 <- renderText(
+        makePrintText( 
+      base_string = bs_8(), 
+      old_input = c("TukeyHSD", "aov", "bodwins_91"),
+      new_input = c(input$plot_var_8_1, input$plot_var_8_2)
+    )
+  )
+
+```
+
+Use this output to answer the question on PolyLearn.

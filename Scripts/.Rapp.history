@@ -1,0 +1,9 @@
+?require
+if(!require(learnr)){#
+	install.packages(learnr)#
+	library(learnr)#
+}
+if(!require(learnr)){#
+	install.packages(learnr)#
+	library(learnr)#
+}

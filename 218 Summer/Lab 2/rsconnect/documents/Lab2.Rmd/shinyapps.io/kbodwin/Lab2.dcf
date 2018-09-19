@@ -1,0 +1,13 @@
+name: Lab2
+title: Lab2
+username:
+account: kbodwin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 399351
+bundleId: 1545353
+url: https://kbodwin.shinyapps.io/Lab2/
+when: 1534800179.02746
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: PreLab_2.Rmd
