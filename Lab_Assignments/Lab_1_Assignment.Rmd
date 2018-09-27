@@ -9,6 +9,8 @@ output: html_document
 ### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
 knitr::opts_chunk$set(echo = TRUE)
 
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
+
 require(ggplot2)
 require(dplyr)
 require(tidyr)

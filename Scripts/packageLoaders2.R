@@ -8,6 +8,11 @@ if(!require(knitr)){
   library(knitr)
 }
 
+if(!require(tidyr)){
+  install.packages("tidyr")
+  library(tidyr)
+}
+
 if(!require(ggplot2)){
 	install.packages("ggplot2")
 	library(ggplot2)
