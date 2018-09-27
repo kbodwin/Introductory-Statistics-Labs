@@ -13,7 +13,7 @@ require(ggplot2)
 require(dplyr)
 require(tidyr)
 
-edu = read.csv("/Users/kbodwin/Dropbox/Teaching/ShinyLabs/Datasets/Edu-Data.csv")
+edu = read.csv("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/Edu-Data.csv")
 
 ```
 
