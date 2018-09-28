@@ -1,0 +1,74 @@
+---
+title: "Lab 1: Looking at Datasets"
+author: "YOUR NAME HERE"
+date: "September 27, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
+knitr::opts_chunk$set(echo = TRUE)
+
+require(ggplot2)
+require(dplyr)
+require(tidyr)
+
+edu = read.csv("/Users/kbodwin/Dropbox/Teaching/ShinyLabs/Datasets/Edu-Data.csv")
+
+```
+
+## Instructions
+
+This analysis is an exploration of a dataset containing information about grade school student educational performance in the Middle East.  The data has been loaded for you above, and named `edu`.
+
+In the following code chunk, look at the first few rows of `edu`.  You can also reference the file "Edu_data_description.txt" that is linked on PolyLearn, to read about this dataset.
+
+```{r}
+
+```
+
+Our goal will be to determine which aspects of a student's experience most relate to his or her performance.  The variable `Class` gives information about student performance - either "High", "Medium", or "Low".
+
+Choose two other **categorical** variables that you would like to study.  Use the code chunk below to `filter` your dataset down to only include Class and your two chosen variables.
+
+```{r}
+
+```
+
+
+## The Education Dataset
+
+
+[In this section, use vocabulary from the course to describe your (filtered) dataset.]
+
+## Research Questions
+
+[In this section, give 2-3 research questions about student class performance that you will address with this data.]
+
+## Plotting single variables
+
+Use the code chunk below to create an appropriate plot for each of your three categorical variables.
+
+```{r plot 1}
+
+```
+
+[In this section, discuss your first plot.]
+
+```{r plot 2}
+
+```
+
+[In this section, discuss your second plot.]
+
+```{r plot 3}
+
+```
+
+[In this section, discuss your third plot.]
+
+## Answering the research questions
+
+Using code chunks to make plots, combined with discussions of each plot, address your research questions with data.
+
+

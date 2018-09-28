@@ -1,8 +1,8 @@
 ---
-title: "Pre-Lab 1: Looking at Datasets"
+title: "Lab 1: Looking at Datasets"
 output: html
 tutorial:
-  id: "Pre-Lab 1"
+  id: "Lab 1"
   version: 1.0
 runtime: shiny_prerendered
 ---
@@ -24,7 +24,7 @@ correct <- "<font color='red'>Correct!</font><br><br>"
 incorrect <- "<font color='red'>Not quite right...</font><br><br>"
 congrats <- "<font color='red'>You did it!</font><br><br>"
 
-titanic = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic0.csv')
+titanic = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic.csv')
 titanic = titanic[,-1]
 
 ### %ni = new input (red), %oi = old input (blue)
@@ -78,14 +78,14 @@ You should read the `<-` symbol as "save the information on the right under the 
 
 ### Checking out the data
 
-For this lab, the dataset is already loaded for you.  The first thing we generally want to do is familiarize ourselves with the data. You can check out the first few rows of your dataset using the function `head()`, or you can look at some summary information about all the variables in the dataset using `summary()`.
+For this lab, the dataset is already loaded for you.  The first thing we generally want to do is familiarize ourselves with the data. You can check out the first few rows of your dataset using the function `head()`.  You can also see how many rows the dataset has using `nrow()`.
 
 When we want to do something to our dataset, we use a *pipe*, which looks like `%>%`.  You can think of this as "sending" the dataset into a process.
 
 ```{r, context="server"}
 
 bob <- makePrintText(
-          base_string = "%oi %>% head() \n %oi %>% summary()",
+          base_string = "%oi %>% head() \n %oi %>% nrow()",
           old_input = c("titanic", "titanic")
         )
 
@@ -93,7 +93,7 @@ output$code_1_2 <- renderText(bob)
 
 output$code_1_3 <- renderText(
         makePrintText(
-          base_string = "head(%oi) \n summary(%oi)",
+          base_string = "head(%oi) \n nrow(%oi)",
           old_input = c("titanic", "titanic")
         )
   )
@@ -124,47 +124,65 @@ textInput("a_1.1.1",
 htmlOutput("check_1.1.1")
 
 textInput("a_1.1.2",
-           "What was the median age of passengers in this dataset?",
+           "How old was Miss Laina Heikkinen?",
            value = "",
            width = '80%', placeholder = NULL)
 
 htmlOutput("check_1.1.2")
 
 textInput("a_1.1.3",
-           "What was the mean cost of a ticket on the Titanic, based on this dataset?",
+           "How much did Mr. William Henry Allen pay for his ticket, in dollars?",
            value = "",
            width = '80%', placeholder = NULL)
 
 htmlOutput("check_1.1.3")
+
+radioButtons("a_1.1.4",
+           "Did Mr. James Moran survive the sinking of the Titanic?",
+           c("Yes" = "y",
+             "No" = "n"),
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.1.4")
 ```
 
 ```{r, context = "server"}
 
 output$check_1.1.1 <- renderText(
-  if(input$a_1.1.1 == dim(titanic)[1]){
-      correct
-  }else if(input$a_1.1.1 == ""){
-     ""
+  if(input$a_1.1.1 == ""){
+      ""
+  }else if(input$a_1.1.1 == nrow(titanic)){
+     correct
   }else{
     incorrect
   }
 )
 
 output$check_1.1.2 <- renderText(
-  if(input$a_1.1.2 == median(titanic$Age, na.rm = TRUE)){
-      correct
-  }else if(input$a_1.1.2 == ""){
+  if(input$a_1.1.2 == ""){
      ""
+  }else if(input$a_1.1.2 == 26){
+      correct
   }else{
     incorrect
   }
 )
 
 output$check_1.1.3 <- renderText(
-  if(input$a_1.1.3 == mean(titanic$Fare, na.rm = TRUE)){
-      correct
-  }else if(input$a_1.1.3 == ""){
+  if(input$a_1.1.3 == ""){
      ""
+  }else if(input$a_1.1.3 == 8.05){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.4 <- renderText(
+  if(input$a_1.1.4 == ""){
+     ""
+  }else if(input$a_1.1.4 == "no"){
+      correct
   }else{
     incorrect
   }
@@ -173,99 +191,185 @@ output$check_1.1.3 <- renderText(
 
 ```
 
-## Cleaning Datasets
+## Looking at part of the dataset
 
-It is very rare that data comes to us in exactly the format we hope, or that **R** interprets the variable exactly as it should.  You will nearly always need to clean the data a bit before you begin calculating or plotting anything.  We will practice with one of the common issues today.
+Sometimes, we are only interested in looking at one piece of the dataset at a time.  
 
-### Missing Data
+### Choosing columns
 
-Sometimes, values in the dataset are not present; perhaps because they were misrecorded or unavailable.
+Perhaps we only want to consider a few of the variables. This can be done using `select()`.  Suppose we want to look at the name of the passenger, and only one other piece of information.
 
-```{r q_2_1}
-textInput("a_2_1",
-           "In our current titanic dataset, which variables have missing values?",
-           value = "",
-           width = '100%', 
-           placeholder = NULL)
-
-htmlOutput("check_2.1")
-```
-
-```{r, context = "server"}
-
-output$check_2.1 <- renderText(
-  if(grepl("Fare", input$a_2_1, ignore.case = TRUE) & grepl("Age", input$a_2_1, ignore.case = TRUE)){
-      correct
-  }else if(input$a_2_1 == ""){
-     ""
-  }else{
-    incorrect
-  }
-)
-
+```{r select}
+textInput("select_var",
+          "What other variable would you like to look at?",
+          value = "",
+          width = '80%', placeholder = NULL)
 
 ```
 
-You, as the scientist, will need to decide how to handle these missing values.  This will depend on your **research question** and your choice of **analysis**.  For now, we will simply toss out the rows (passengers) for which we are missing some information.
+```{r, context="server"}
+output$code_select <- renderText(
+        makePrintText(
+          base_string = "%oi %>% select(%oi, %ni) ",
+          old_input = c("titanic", "Name"),
+          new_input = c(input$select_var)
+        )
+  )
 
-The function `na.omit()` will automatically drop all rows from a dataset that have any values of `NA` in them.
-
-In the code box below, pipe `titanic` into `na.omit()` and run it.
-
-Suppose we want to take a look at our dataset once again, without those pesky `NA`'s.
-
-```{r, echo = TRUE}
-titanic %>% summary()
+output$output_select <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = "%oi %>% select(%oi, %ni) ",
+          old_input = c("titanic", "Name"),
+          new_input = c(input$select_var)
+    )
+   ))
+})
 ```
 
-Oh no!  They are still there!  What happened?
-
-We have fallen into a common mistake when using the `%>%` approach: we did not actually save our updated dataset.  That is, we told **R**, "Please do `na.omit()` to `titanic`", but we did not use `<-` to tell it "... and save the results under this name".
-
-Although we *could* come up with another name - perhaps `titanic2` - and create a second dataset to work with, that isn't really necessary.  Most of the time, we will simply save our updated data with the same name as the old one.
-
-While convenient, this updating can be dangerous.  We have now **replaced** the dataset `titanic` with a new version.  If we made a mistake, our original data is gone!
-
-If this happens at home, you can always simply reload your data by running `read.csv()` again. For the purposes of this lab, a copy of the original dataset called `titanic_orig` is already loaded into **R**.  Any time you want to "reset" your data, simply run the line
-
-```{r, eval = FALSE, echo = TRUE}
-titanic <- titanic_orig
-```
-
-in one of your code boxes.
-
-### Question:
-
-Finish the code below, using piping and `na.omit()`, to update the dataset.
+Your code:
 
 ```{r}
-
-# htmlOutput("check_2.2")
+htmlOutput("code_select")
 ```
 
-```{r, context = "server"}
-# 
-# output$check_2.2 <- renderText(
-#   if(sum(is.na(titanic)) == 0){
-#       congrats
-#   }else{
-#      ""
-#   }
-# )
+Your output:
+```{r}
+verbatimTextOutput("output_select")
+```
+
+### Choosing rows
+
+More often, we want to narrow down our sample according to one of the variables.  In **R**, we do this using `filter()`.  
+
+Suppose we want to see only the passengers who survived the sinking.
+
+
+```{r select}
+textInput("filter_var",
+          "What variable contains the information about who survived the sinking?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+radioButtons("filter_val",
+             "What value do you want that variable to have?",
+             c(1 = "lived",
+               0 = "died"))
+
+```
+
+```{r, context="server"}
+output$code_filter <- renderText(
+        makePrintText(
+          base_string = "%oi %>% filter(%ni == %ni) ",
+          old_input = c("titanic"),
+          new_input = c(input$filter_var, input$filter_val)
+        )
+  )
+
+output$output_filter <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = "%oi %>% filter(%ni == %ni) ",
+          old_input = c("titanic"),
+          new_input = c(input$filter_var, input$filter_val)
+    )
+   ))
+})
+```
+
+Your code:
+
+```{r}
+htmlOutput("code_filter")
+```
+
+Your output:
+```{r}
+verbatimTextOutput("output_filter")
+```
+
+
+## Making new variables
+
+It is very rare that data comes to us in exactly the format we hope, or that **R** interprets the variable exactly as it should.  You will nearly always need to adjust the data a bit before you begin calculating or plotting anything.  
+
+You, as the scientist, will need to decide how to create each new variable.  This will depend on your **research question** and your choice of **analysis**. 
+
+### Adding two variables
+
+Suppose we are interested in combining information in the dataset.  For example, our `titanic` data contains two pieces of information:  The number of siblings or spouses travelling with a passenger, and the number of parents or children travelling with a passenger.
+
+We may not be interested in this distinction; instead, we want to know how many family members overall are travelling with each passenger.
+
+To create this, we will `mutate()` our dataset, which means adding or changing a variable. 
+
+
+```{r add_vars}
+textInput("sib_spouse",
+          "What is the name of the variable containing the number of siblings or spouses travelling with each passenger?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+textInput("parent_child",
+          "What is the name of the variable containing the number of parents or children travelling with each passenger?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+
+textInput("new_family",
+          "What name would you like to give the new variable?",
+          value = "",
+          width = '80%', placeholder = NULL)
 
 
 ```
 
+```{r, context="server"}
 
-## Adjusting Variables
+output$code_fam <- renderText(
+        makePrintText(
+          base_string = "%oi <- %oi %>% mutate( \n \t %ni = %ni + %ni \n )",
+          old_input = c("titanic", "titanic"),
+          new_input = c(input$new_family, input$sib_spouse, input$parent_child)
+        )
+  )
 
-Next we may want to alter some of our variables in our dataset, to better represent what we wish to study.
+eval(parse(text = 
+    makeEvalText(
+      base_string = "%oi <- %oi %>% mutate( \n \t %ni = %ni + %ni \n )",
+          old_input = c("titanic", "titanic"),
+          new_input = c(input$new_family, input$sib_spouse, input$parent_child)
+    )
+   ))
+
+```
+
+The code for this will look like:
+
+```{r}
+htmlOutput("code_fam")
+```
+
+Notice how we always use `<-` to update the dataset, i.e., to save the new calculations into our data.  Then, if we look at the data again, the new variable should be there:
+
+```{r}
+titanic %>% head()
+
+```
+
 
 ### Quantitative and Categorical variables
 
-Notice that when you ran `summary(titanic)`, you were given the mean and 5-number summary of the variable called `Pclass`.  This is because the information for that variable is given as number corresponding to the cabin class of the passenger (1, 2, or 3).  When **R** encounters numbers, it treats the variable as *quantitative*.  We know, however, that this should be *categorical* and *ordinal*.
+Consider the variable called `PClass`.  As you hopefully observed, this variable should be **categorical** - it tells which class (First, Second, or Third) the passenger travelled in.  However, here is what **R** thinks about the *class*, or type, of that variable:
 
-To fix this, we will `mutate()` our dataset, which means adding or changing a variable.  The function `factor()` will turn a numeric variable into categories.
+```{r}
+class(titanic$Pclass)
+```
+
+It is an "integer" - that is, a discrete, quantitative variable.  Oh no!
+
+ The function `factor()` will turn a numeric variable into categories.
 
 
 ```{r factor_var}
@@ -292,6 +396,8 @@ output$code_3_1 <- renderText(
           new_input = c(input$new_pclass, input$pclass)
         )
   )
+
+
 
 ```
 
