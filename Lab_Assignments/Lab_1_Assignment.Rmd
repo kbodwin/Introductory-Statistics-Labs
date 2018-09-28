@@ -31,7 +31,7 @@ In the following code chunk, look at the first few rows of `edu`.  You can also 
 
 Our goal will be to determine which aspects of a student's experience most relate to his or her performance.  The variable `Class` gives information about student performance - either "High", "Medium", or "Low".
 
-Choose two other **categorical** variables that you would like to study.  Use the code chunk below to `filter` your dataset down to only include Class and your two chosen variables.
+Choose two other **categorical** variables that you would like to study.  Use the code chunk below to `select` from your dataset only Class and your two chosen variables.
 
 ```{r}
 
