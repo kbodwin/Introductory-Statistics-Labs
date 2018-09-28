@@ -116,7 +116,7 @@ However, it is good to get into the habit of using the pipe - as we will see a b
 
 Check out the result of the above lines of code:
 
-```{r}
+```{r, echo = TRUE}
 titanic %>% head()
 titanic %>% nrow()
 ```
