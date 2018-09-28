@@ -189,7 +189,7 @@ output$check_1.1.3 <- renderText(
 output$check_1.1.4 <- renderText(
   if(input$a_1.1.4 == ""){
      ""
-  }else if(input$a_1.1.4 == "no"){
+  }else if(input$a_1.1.4 == "n"){
       correct
   }else{
     incorrect
@@ -499,7 +499,7 @@ First, we tell **R** that we want to make a plot from a certain dataset, and we 
 Then, we add the type of plot we want, and any extra options.
 
 
-### Bar Plots and Dot Plots
+### Bar Plots
 
 ```{r, echo=FALSE}
 textInput("plot_var_1", 
