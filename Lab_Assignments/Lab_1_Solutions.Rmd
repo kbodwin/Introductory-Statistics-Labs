@@ -1,6 +1,6 @@
 ---
 title: "Lab 1: Looking at Datasets"
-author: "YOUR NAME HERE"
+author: "Example Version: Titanic Data"
 date: "September 27, 2018"
 output: html_document
 ---
@@ -9,41 +9,62 @@ output: html_document
 ### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
 knitr::opts_chunk$set(echo = TRUE)
 
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
+
 require(ggplot2)
 require(dplyr)
 require(tidyr)
 
-edu = read.csv("/Users/kbodwin/Dropbox/Teaching/ShinyLabs/Datasets/Edu-Data.csv")
+titanic = read.csv("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic.csv")
 
 ```
 
-## Instructions
-
-This analysis is an exploration of a dataset containing information about grade school student educational performance in the Middle East.  The data has been loaded for you above, and named `edu`.
-
-In the following code chunk, look at the first few rows of `edu`.  You can also reference the file "Edu_data_description.txt" that is linked on PolyLearn, to read about this dataset.
+## Introduction
 
 ```{r}
-
+head(titanic)
 ```
 
-Our goal will be to determine which aspects of a student's experience most relate to his or her performance.  The variable `Class` gives information about student performance - either "High", "Medium", or "Low".
+This is a dataset of 887 passengers on the HMS Titanic.  There are 9 variables.  We are interested in determining what factors lead to passengers surviving or not surviving the sinking.
 
-Choose two other **categorical** variables that you would like to study.  Use the code chunk below to `filter` your dataset down to only include Class and your two chosen variables.
+We will focus on two categorical variables:  The passenger's gender, and their travelling class.
+
+The code below makes a new dataset called `titanic_new`.  This dataset contains the variable `Survived`, which we have mutated to change the labels 0 and 1 to be "Lived" and "Died".  It also contains `Passenger.Class` and `Sex`.
 
 ```{r}
-
+titanic_new <- titanic %>%  
+  mutate(
+  Passenger.Class = factor(Pclass, 
+                           levels = c(1,2,3), 
+                           labels = c("First", "Second", "Third")),
+  Survived = factor(Survived, 
+                    levels = c(0,1), 
+                    labels = c("Died", "Lived"))
+  ) %>% 
+  select(Survived, Sex, Passenger.Class)
+  
+titanic_new %>% head()
+  
 ```
 
 
-## The Education Dataset
 
+## The Titanic Dataset
 
-[In this section, use vocabulary from the course to describe your (filtered) dataset.]
+There are three categorical variables in this dataset:  
+* Survived, a binary variable of whether the passenger lived or died
+* Sex, a binary variable giving the passenger's gender
+* Passenger.Class, a variable with three values for First, Second, or Third class travel
+
+This sample was probably a convenience sample, since the dataset contains information about all the passengers for which records were availble.
+
+This is an observational study.
 
 ## Research Questions
 
-[In this section, give 2-3 research questions about student class performance that you will address with this data.]
+Question 1:  Which class of passengers was most likely to survive?
+Question 2:  Which gender was most likely to survive?
+Question 3:  Is the relationship between survival and gender different for the three classes?
 
 ## Plotting single variables
 
@@ -51,24 +72,63 @@ Use the code chunk below to create an appropriate plot for each of your three ca
 
 ```{r plot 1}
 
+ggplot(titanic_new, aes(x = Survived, fill = Survived)) + geom_bar() + ggtitle("Survival on the Titanic")
+
 ```
 
-[In this section, discuss your first plot.]
+In this bar chart, we can see that about 570 passengers died, and about 320 passengers survived, from among those in the dataset.
+
 
 ```{r plot 2}
 
+ggplot(titanic_new, aes(x = Sex, fill = Sex)) + geom_bar() + ggtitle("Gender on the Titanic")
 ```
 
-[In this section, discuss your second plot.]
+There were about 310 female passengers and about 580 male passengers in this dataset.
 
 ```{r plot 3}
 
+ggplot(titanic_new, aes(x = Passenger.Class, fill = Passenger.Class)) + geom_bar() + ggtitle("Passenger Classes on the Titanic")
+
 ```
 
-[In this section, discuss your third plot.]
+There were almost 500 passengers in third class, and about 200 in each of first and second class.
 
 ## Answering the research questions
 
-Using code chunks to make plots, combined with discussions of each plot, address your research questions with data.
+### Question 1:  Which class of passengers was most likely to survive?
+
+```{r}
+ggplot(titanic_new, aes(x = Passenger.Class, fill = Survived)) + geom_bar() + ggtitle("Passenger Classe Survival on the Titanic")
+```
+
+About 75% of all third class passengers died, about 50% of second class, and about 33% of first class.  This tells us that the richer passengers, traveling in the fancier classes, were more likely to escape off the sinking ship.
 
 
+### Question 2:  Which gender was most likely to survive?
+
+```{r}
+ggplot(titanic_new, aes(x = Sex, fill = Survived)) + geom_bar() + ggtitle("Gender and Survival on the Titanic")
+```
+
+Around 80% of the male passengers died, compared only 20% of the female passengers.  This makes sense, because on the Titanic, women and children were given lifeboats first.
+
+
+### Question 3:  Is the relationship between survival and gender different for the three classes?
+
+```{r}
+ggplot(titanic_new, aes(x = Sex, fill = Survived)) + geom_bar(position = "dodge") + facet_wrap(~Passenger.Class)+ ggtitle("Gender and Survival on the Titanic")
+
+```
+
+In all classes, women survived more than men.  However, the women in third class died at a much higher rate than the women in first or second class.  This plot tells us that both gender and class mattered to survival, as we already knew.
+
+But is the gender pattern *different* across the three classes?
+
+```{r}
+ggplot(titanic_new, aes(x = Sex, fill = Survived)) + geom_bar(position = "fill") + facet_wrap(~Passenger.Class)+ ggtitle("Gender and Survival on the Titanic")
+```
+
+From this plot, we can conclude that the gender pattern *is* different for the three classes.  First and second class were very similar, but in third class, the women were not nearly as favored (although they still survived more then the men).
+
+This is an interesting nuance to the Titanic narrative.  Yes, women and children were given lifeboats first - but this was mostly for the high class passengers.  Working class women, travelling in third class, were much less likely to escape.  We might think this has to do with location of rooms - perhaps 3rd class is further below deck - but we can see that men in 2nd class had almost the same chance of dying as 3rd class.  Thus, a more likely explanation is that 3rd class women were treated differently.

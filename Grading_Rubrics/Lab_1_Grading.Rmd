@@ -1,0 +1,48 @@
+---
+title: "Lab 1 Grading Guide"
+output:
+  html_document: 
+    css: style.css
+  pdf_document: default
+---
+
+## Introduction [(10 points)]{style="float:right"}
+
+* Did the student use `edu %>% head()` to show the first 6 rows?  [(3)]{style="float:right"}
+* Did the student use `select()` to choose 3 variables?  [(4)]{style="float:right"}
+* Were the variables chosen **categorical**?  (anything but `raisedhands`, `VisITedResources`, `AnnouncementsView`, or `Discussion`) [(3, 1 each)]{style="float:right"}
+</font>
+
+## The Dataset [(15 points)]{style="float:right"}
+
+* Did the student use class vocabulary to describe the three variables? [(10)]{style="float:right"}
+* Did the student discuss the dataset, mentioning at least one of: sampling method, number of observations, experimental vs observational?  [(5)]{style="float:right"}
+
+## Research Questions [(15 points)]{style="float:right"}
+
+* Did the student supply at least 2 research questions?  [(6)]{style="float:right"}
+* Did each research question involve the variable `Class`, i.e., the level of class performance of the elementary school students? [(4)]{style="float:right"}
+* Do the research questions make sense?  Are they well defined?  [(5)]{style="float:right"}
+
+## Plotting single variables [(24 points)]{style="float:right"}
+
+* Is there a bar plot for each of the three variables?  [(9, 3 each)]{style="float:right"}
+* Do the plots have reasonable titles and axis labels?  [(3, 1 each)]{style="float:right"}
+* Is there a discussion for each plot? [(3, 1 each)]{style="float:right"}
+* Do the discussions show a correct interpretation of the plot? [(9, 3 each)]{style="float:right"}
+
+## Answering the research question [(36 points)]{style="float:right"}
+
+*If there are more than 2 research questions, grade the best two.*
+
+* Are there at least 2 plots, involving `Class` and at least one other variables? [(8, 4 each)]{style="float:right"}
+* Do the plots appropriately address the research questions? [(8, 4 each)]{style="float:right"}
+* Is there a discussion of each plot? [(6, 3 each)]{style="float:right"}
+* Are the discussions clear and easy to understand, using vocabulary where appropriate and talking about the data in real-world terms? [(4, 2 each)]{style="float:right"}
+* Do the discussions show a correct interpretation of the plots, and a correct conclusion with regard to the research question? [(10, 5 each)]{style="float:right"}
+
+## Extra Credit [(10 points)]{style="float:right"}
+
+If one of the research questions includes all three variables, and the corresponding plot and discussion involve all 3 variables in an reasonable way, give up to 10 points Extra Credit.
+
+
