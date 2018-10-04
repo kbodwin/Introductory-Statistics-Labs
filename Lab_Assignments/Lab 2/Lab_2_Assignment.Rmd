@@ -1,7 +1,7 @@
 ---
-title: "Lab 1: Looking at Datasets"
+title: "Lab 2: Quantitative Variables"
 author: "YOUR NAME HERE"
-date: "September 27, 2018"
+date: "October 4, 2018"
 output: html_document
 ---
 
