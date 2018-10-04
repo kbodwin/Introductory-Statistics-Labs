@@ -270,6 +270,57 @@ titanic <- titanic_full
 titanic %>% summary()
 ```
 
+### Counting categorical variables
+
+
+```{r count}
+textInput("var_0_1",
+          "What is the first categorical variable you would you like to count?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+textInput("var_0_2",
+          "What is the second categorical variable you would you like to count?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+
+bs_0 = reactive("%oi %>% count(%ni, %ni)")
+
+```
+
+```{r, context="server"}
+
+output$code_0 <- renderText(
+        makePrintText(
+          base_string = bs_0(),
+          old_input = c("titanic"),
+          new_input = c(input$var_0_1, input$var_0_2)
+        )
+  )
+
+output$output_0 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = bs_0(),
+          old_input = c("titanic"),
+          new_input = c(input$var_0_1, input$var_0_2)
+    )
+   ))
+})
+
+```
+
+```{r}
+htmlOutput("code_0")
+```
+
+Result:
+
+```{r}
+verbatimTextOutput("output_0")
+```
+
 ### Individual statistics
 
 If we are only interested in a specific summary statistic, or if we want to calculate something that is not included in `summary()`, such as **standard deviation**, we can use the function `summarize_at()` to specify the variables and statistics to calculate.
@@ -278,7 +329,7 @@ If we are only interested in a specific summary statistic, or if we want to calc
 
 ```{r summarize}
 textInput("var1",
-          "Which variable would you like to find information about?",
+          "Which QUANTITATIVE variable would you like to find information about?",
           value = "",
           width = '80%', placeholder = NULL)
 

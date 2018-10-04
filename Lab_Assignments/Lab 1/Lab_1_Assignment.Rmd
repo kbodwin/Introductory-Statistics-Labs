@@ -15,86 +15,62 @@ require(ggplot2)
 require(dplyr)
 require(tidyr)
 
-bball = read.table("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/cp_bball.csv", header = TRUE)
-bball <- tbl_df(bball)
+edu = read.csv("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/Edu-Data.csv")
 
 ```
 
-## The Dataset
+## Instructions
 
-This analysis is an exploration of a dataset containing the results of all Cal Poly's basketball games in the 2015-2016 season.  The data has been loaded and named `bball`.
+This analysis is an exploration of a dataset containing information about grade school student educational performance in the Middle East.  The data has been loaded for you above, and named `edu`.
 
-
-```{r}
-### Use R functions to look at the dataset here ###
-```
-
-[Describe the dataset here.]
-
-## Is Cal Poly a worse than average team?
-
-An "average" team is defined to be a team that is just as likely to lose as to win a game.  We would like to determine if Cal Poly's team was average or not.  Fill in the blanks in the discussion below.  Use the code chunk below to run any code you need for calculations.
+In the following code chunk, look at the first few rows of `edu`.  You can also reference the file "Edu_data_description.txt" that is linked on PolyLearn, to read about this dataset.
 
 ```{r}
 
 ```
 
-If Cal Poly was truly an average team, the probability that they win any given game is [_____].
+Our goal will be to determine which aspects of a student's experience most relate to his or her performance.  The variable `Class` gives information about student performance - either "High", "Medium", or "Low".
 
-Assume Cal Poly is an average team.  Define the random variable X = "number of games Cal Poly wins in a season".  The distribution of X is [____________].  The mean of X is [________].
-
-The probability that X is less than or equal to 19 is [_________].
-
-
-In the 2015-16 Season, Cal Poly won [_____] games and lost [______] games.  This means they won [_____]% of their games.
+Choose two other **categorical** variables that you would like to study.  Use the code chunk below to `select` from your dataset only Class and your two chosen variables.
 
 ```{r}
-### In this chunk, make a bar plot Cal Poly's wins and losses.
+
 ```
 
 
+## The Education Dataset
 
-[Using the above information, make an argument that Cal Poly is or is not an average team.]
 
+[In this section, use vocabulary from the course to describe your new dataset.]
 
-## Was Cal Poly more likely to win at home than away?
+## Research Questions
 
-Perhaps Cal Poly performs better in front of a home crowd.  Let's find out.
+[In this section, give 2-3 research questions about student class performance that you will address with this data.]
 
-```{r}
-### In this chunk, make a bar plot that addresses the above research question.
+## Plotting single variables
+
+Use the code chunk below to create an appropriate plot for each of your three categorical variables.
+
+```{r plot 1 = StudentAbsenceDays, Class}
+
 ```
 
-```{r}
-### Use this chunk for any calculations you need.  Hint: remember "count"
+[In this section, discuss your first plot.]
+
+```{r plot 2 = rasiedhand, Class}
+
 ```
 
-Cal Poly won [_____]% of its home games and [______]% of its away games.
+[In this section, discuss your second plot.]
 
-[Make a conclusion here.]
+```{r plot 3 = Topic, Class}
 
-## Does Cal Poly score more at home than away?
-
-Perhaps Cal Poly scores more in front of a home crowd, regardless of wins and losses.
-
-```{r}
-### In this chunk, make a plot that addresses the above research question.
 ```
 
-```{r}
-### Use this chunk for any calculations you need.  Hint: remember "group_by" and "summarize_at"
-```
+[In this section, discuss your third plot.]
 
-In Home Games, Cal Poly scored an average of [______] points, with a standard deviation of [______] points.  In Away Games, Cal Poly scored an average of [_____] points, with a standard deviation of [______] points.
+## Answering the research questions
 
-[Make a conclusion here about home versus away games.]
+Using code chunks to make plots, combined with discussions of each plot, address your research questions with data.
 
-## Does Cal Poly truly play better at home?
 
-Consider the following argument:
-
-"Even if Cal Poly didn't score much more at home than away, they still played better.  This is because they played better defense at home, so the scores overall were lower."
-
-Make an argument in favor or against this statement.  Include *more than one* summary statistic in your analysis, and make at least one plot.
-
-For 5 points EC, include a correctly used *probability statement* in your analysis, to quantify your evidence.
