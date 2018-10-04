@@ -1,11 +1,11 @@
-illustrate_binom <- function(n, p, x = -1, q = 0, equal_to = FALSE){
+illustrate_binom <- function(n, p, x = 0, q = 0, equal_to = FALSE){
 
   n = as.integer(n)
   p = as.numeric(p)
   x = as.integer(x)
   q = as.numeric(q)
   
-  freqs <- data.frame(cbind(factor(0:n), sapply(0:n, function(x) dbinom(x, n, p))))
+  freqs <- data.frame(cbind(0:n, sapply(0:n, function(x) dbinom(x, n, p))))
   names(freqs) = c("Value", "Prob")
   
   if(equal_to){

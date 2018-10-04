@@ -154,7 +154,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <p><em>Give answers to 2 decimals</em></p>
 <p><div class="form-group shiny-input-container" style="width: 80%;">
 <label for="a_4.1">dbinom(1, size = 1, prob = 0.7)</label>
-<input id="a_4.1" type="text" class="form-control" value="0"/>
+<input id="a_4.1" type="text" class="form-control" value=""/>
 </div><div id="check_4.1" class="shiny-html-output"></div><div class="form-group shiny-input-container" style="width: 80%;">
 <label for="a_4.2">pbinom(60, size = 60, prob = 0.13)</label>
 <input id="a_4.2" type="text" class="form-control" value=""/>
@@ -164,7 +164,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div><div id="check_4.4" class="shiny-html-output"></div><div class="form-group shiny-input-container" style="width: 80%;">
 <label for="a_4.3">pbinom(50, size = 100, prob = 0.5)</label>
 <input id="a_4.3" type="text" class="form-control" value=""/>
-</div><div id="check_2.3" class="shiny-html-output"></div><div class="form-group shiny-input-container" style="width: 80%;">
+</div><div id="check_4.3" class="shiny-html-output"></div><div class="form-group shiny-input-container" style="width: 80%;">
 <label for="a_4.5">qbinom(0.5, size = 100, prob = 0.5)</label>
 <input id="a_4.5" type="text" class="form-control" value=""/>
 </div><div id="check_4.5" class="shiny-html-output"></div></p>
@@ -348,7 +348,7 @@ output$check_2.3 <- renderText(
 
 output$code_3 <- renderText(
         makePrintText(
-          base_string = bs_1_3(),
+          base_string = bs_3(),
           old_input = c(),
           new_input = c(input$q, input$n3, input$p3)
         )
@@ -357,7 +357,7 @@ output$code_3 <- renderText(
 output$output_3 <- renderPrint({
  eval(parse(text = 
     makeEvalText(
-      base_string = bs_1_3(), 
+      base_string = bs_3(), 
       old_input = c(),
       new_input = c(input$q, input$n3, input$p3)
     )
@@ -368,13 +368,13 @@ output$binom_var_3 <- renderText(
         makePrintText(
           base_string = "X ~ Binomial(%ni, %ni) \n P(X = ?) = %ni",
           old_input = c(),
-          new_input = c(input$n2, input$p2, input$k2)
+          new_input = c(input$n3, input$p3, input$q)
         )
   )
 
 
-output$distn_2 <- renderPlot(
-  illustrate_binom(input$n2, input$p2, x = input$k2)
+output$distn_3 <- renderPlot(
+  illustrate_binom(input$n3, input$p3, q = input$q)
 )
 
 </script>
@@ -451,10 +451,10 @@ output$check_4.3 <- renderText(
   }
 )
 
-output$check_2.4 <- renderText(
-  if(as.numeric(input$a_2.4) == ""){
+output$check_4.4 <- renderText(
+  if(input$a_4.4 == ""){
      ""
-  }else if(input$a_2.4 == 60){
+  }else if(as.numeric(input$a_4.4) == 60){
       correct
   }else{
     incorrect

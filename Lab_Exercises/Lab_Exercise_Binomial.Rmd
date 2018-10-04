@@ -181,7 +181,7 @@ output$check_1.3 <- renderText(
 
 It is not very common that we are interested in the probability of some exact number of successes.  More often, we want to quantify **evidence** by finding the probability of some number **or more** of successes.  For this, we will use *pbinom()*.  By default, `pbinom()` finds the probability of getting **less than or equal to** the given number.  Try it below.
 
-```{r pbinom}
+```{r pbinom2}
 textInput("n2",
           "How many trials do you have?",
           value = "0",
@@ -344,7 +344,7 @@ textInput("q",
           value = "0",
           width = '80%', placeholder = NULL)
 
-bs_1_3 = reactive("qbinom(%ni, size = %ni, prob = %ni)")
+bs_3 = reactive("qbinom(%ni, size = %ni, prob = %ni)")
 
 ```
 
@@ -352,7 +352,7 @@ bs_1_3 = reactive("qbinom(%ni, size = %ni, prob = %ni)")
 
 output$code_3 <- renderText(
         makePrintText(
-          base_string = bs_1_3(),
+          base_string = bs_3(),
           old_input = c(),
           new_input = c(input$q, input$n3, input$p3)
         )
@@ -361,7 +361,7 @@ output$code_3 <- renderText(
 output$output_3 <- renderPrint({
  eval(parse(text = 
     makeEvalText(
-      base_string = bs_1_3(), 
+      base_string = bs_3(), 
       old_input = c(),
       new_input = c(input$q, input$n3, input$p3)
     )
@@ -372,13 +372,13 @@ output$binom_var_3 <- renderText(
         makePrintText(
           base_string = "X ~ Binomial(%ni, %ni) \n P(X ≤ ?) = %ni",
           old_input = c(),
-          new_input = c(input$n2, input$p2, input$k2)
+          new_input = c(input$n3, input$p3, input$q)
         )
   )
 
 
-output$distn_2 <- renderPlot(
-  illustrate_binom(input$n2, input$p2, x = input$k2)
+output$distn_3 <- renderPlot(
+  illustrate_binom(input$n3, input$p3, q = input$q)
 )
 
 ```
@@ -483,7 +483,7 @@ For the following, try to guess what the output would be.  Do **not** run the co
 ```{r q_4}
 textInput("a_4.1",
            "dbinom(1, size = 1, prob = 0.7)",
-           value = "0",
+           value = "",
            width = '80%', placeholder = NULL)
 
 htmlOutput("check_4.1")
@@ -508,7 +508,7 @@ textInput("a_4.3",
            value = "",
            width = '80%', placeholder = NULL)
 
-htmlOutput("check_2.3")
+htmlOutput("check_4.3")
 
 textInput("a_4.5",
            "qbinom(0.5, size = 100, prob = 0.5)",
@@ -550,10 +550,10 @@ output$check_4.3 <- renderText(
   }
 )
 
-output$check_2.4 <- renderText(
-  if(as.numeric(input$a_2.4) == ""){
+output$check_4.4 <- renderText(
+  if(input$a_4.4 == ""){
      ""
-  }else if(input$a_2.4 == 60){
+  }else if(as.numeric(input$a_4.4) == 60){
       correct
   }else{
     incorrect
