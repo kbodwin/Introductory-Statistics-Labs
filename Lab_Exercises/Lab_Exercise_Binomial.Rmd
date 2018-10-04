@@ -29,9 +29,13 @@ congrats <- "<font color='red'>You did it!</font><br><br>"
 ```
 
 
-## Binomial Probabilities in R
+## Introduction
 
-We will be using **R** to calculate information about Binomial random variables.  The first important function is `dbinom()`, which finds the *probability* of some number of successes.
+In this exercise, we will be using **R** to calculate information about Binomial random variables.  
+
+## Probability of one value
+
+The first important function is `dbinom()`, which finds the *probability* of some number of successes.
 
 
 ```{r factor_var}

@@ -1,0 +1,486 @@
+---
+title: "Lab Exercise: Quantitative Variables"
+output: learnr::tutorial
+tutorial:
+  id: "Lab_Summaries"
+  version: 1.0
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+
+require(learnr)
+require(ggplot2)
+require(dplyr)
+require(shiny)
+require(tidyr)
+require(httpuv)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+tags$style(type="text/css",
+         ".shiny-output-error { visibility: hidden; }",
+         ".shiny-output-error:before { visibility: hidden; }"
+)
+
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/makeStrings.R")
+
+correct <- "<font color='red'>Correct!</font><br><br>"
+incorrect <- "<font color='red'>Not quite right...</font><br><br>"
+congrats <- "<font color='red'>You did it!</font><br><br>"
+
+titanic = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic.csv')
+
+titanic_full <- titanic %>% mutate(
+   Family.Aboard = Siblings.Spouses.Aboard + Parents.Children.Aboard,
+     Survived = factor(Survived,
+                    levels = c(0,1),
+                    labels = c("Died", "Lived")),
+  Passenger.Class = factor(Pclass, 
+                           levels = c(1,2,3), 
+                           labels = c("First", "Second", "Third"))
+)
+### %ni = new input (red), %oi = old input (blue)
+```
+
+
+## Introduction
+
+In this exercise, we will continue to explore the `titanic` dataset, which has already been loaded for you.  This time, we will think about **quantitative** variables - how to display them, how to summarize them, and how to answer research questions with plots and numerical summaries.
+
+First, we will make the necessary adjustments to the categorical variables:
+
+```{r, echo = TRUE}
+titanic <- titanic %>% mutate(
+  Survived = factor(Survived,
+                    levels = c(0,1),
+                    labels = c("Died", "Lived")),
+  Passenger.Class = factor(Pclass, 
+                           levels = c(1,2,3), 
+                           labels = c("First", "Second", "Third"))
+)
+```
+
+Then, remind yourself what the dataset looks like:
+
+```{r, echo = TRUE}
+titanic %>% head()
+```
+
+
+## Adding two variables
+
+Suppose we are interested in combining information in the dataset.  For example, our `titanic` data contains two pieces of information:  The number of siblings or spouses travelling with a passenger, and the number of parents or children travelling with a passenger.
+
+We may not be interested in this distinction; instead, we want to know how many family members overall are travelling with each passenger.  Let's choose to name this variable `Family.Aboard`.
+
+To create this, we will `mutate()` our dataset to make our new variable. 
+
+
+```{r add_vars}
+textInput("sib_spouse",
+          "What is the name of the variable containing the number of siblings or spouses travelling with each passenger?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+textInput("parent_child",
+          "What is the name of the variable containing the number of parents or children travelling with each passenger?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+
+```
+
+```{r, context="server"}
+
+output$code_fam <- renderText(
+        makePrintText(
+          base_string = "%oi <- %oi %>% mutate( \n \t %oi = %ni + %ni \n )",
+          old_input = c("titanic", "titanic", "Family.Aboard"),
+          new_input = c(input$sib_spouse, input$parent_child)
+        )
+  )
+
+
+```
+
+```{r}
+titanic <- titanic %>% mutate(
+  Family.Aboard = Siblings.Spouses.Aboard + Parents.Children.Aboard
+)
+```
+
+The code for this will look like:
+
+```{r}
+htmlOutput("code_fam")
+```
+
+Notice how we always use `<-` to update the dataset, i.e., to save the new calculations into our data.  Then, if we look at the data again, the new variable should be there:
+
+```{r}
+titanic %>% head()
+
+```
+
+
+## Histograms
+
+To make other plots beyond the **barplots** that you already learned, you will use almost the same code.  We still use `ggplot()` in the same way, as well as options like `ggtitle()` and `xlab`.  The only difference is that instead of `geom_bar()`, we want to make a **histogram**, or `geom_histogram()`.  Try it below.  Pay careful attention to the new options that come with `geom_histogram()`
+
+(Hint: Go to [This Page](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) to see lots of fun color options!)
+
+```{r, echo=FALSE}
+textInput("plot_2_var", 
+          "What QUANTITATIVE variable would you like to make a histogram of?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+sliderInput("plot_2_bins", 
+          "How many bins should the histogram have?",
+          value = 20,
+          min = 1, 
+          max = 100)
+
+textInput("plot_2_color", 
+          "What color should the histogram be?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_2_title", 
+          "What title will you give your plot?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_2_xlab", 
+          "What label should the x-axis have?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+
+
+bs_2 <- reactive("ggplot(%oi, aes(x = %ni)) + geom_%oi(bins = %ni, fill = '%ni') + ggtitle('%ni') + xlab('%ni')")
+# 
+htmlOutput("code_2")
+# 
+plotOutput("plot_2")
+```
+
+
+```{r, context="server"}
+output$plot_2 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_2(), 
+      old_input = c("titanic_full", "histogram"),
+      new_input = c(input$plot_2_var, input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab)
+    )
+   ))
+})
+
+output$code_2 <- renderText(
+        makePrintText( 
+      base_string = bs_2(), 
+      old_input = c("titanic", "histogram"),
+      new_input = c(input$plot_2_var, input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab)
+    )
+  )
+
+```
+
+### Densities
+
+A histogram is our best guess about the shape of a **density**.  We can also choose to plot a smooth line over the histogram, to help us visualize what the density might be like.
+
+```{r}
+
+radioButtons("count_density",
+             "The height of the bars should be:",
+             choices = c("counts" = "", 
+                         "densities" = "aes(y = ..density..), ")
+)
+
+radioButtons("add_density",
+             "The plot should show an estimated density curve.",
+             choices = c(
+                "no" = "",
+               "yes" = "+ geom_density(size = 2)"
+             )
+)
+               
+
+
+bs_3 <- reactive("ggplot(%oi, aes(x = %oi)) + geom_%oi(%nibins = %oi, fill = '%oi') %ni+ ggtitle('%oi') + xlab('%oi')")
+# 
+htmlOutput("code_3")
+# 
+plotOutput("plot_3")
+```
+
+```{r, context="server"}
+output$plot_3 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_3(), 
+      old_input = c("titanic_full", input$plot_2_var, "histogram", input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab),
+      new_input = c(input$count_density, input$add_density)
+    )
+   ))
+})
+
+output$code_3 <- renderText(
+        makePrintText( 
+      base_string = bs_3(), 
+      old_input = c("titanic", input$plot_2_var, "histogram", input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab),
+      new_input = c(input$count_density, input$add_density)
+    )
+  )
+
+```
+
+### Reading the histogram
+
+Use the exercise above to with the variable `Age`. Think about the following questions:
+
+* What number of bins one seems to give the most reasonable density estimate, in your opinion?
+
+* How many modes does this distribution have?
+
+* Is this distribution skewed?
+
+* What are the **mean** and **median** age of Titanic passengers?
+
+
+## Calculating summary statistics
+
+The histogram let us "eyeball" reasonable guesses about the *mean* and *median* of our quantitative variables.  But of course, we can calculate these directly in **R**.
+
+An easy method, and a good first step in any data analysis, is to use the function `summary()` to get some basic information about all the variables:
+
+```{r}
+titanic <- titanic_full
+```
+
+```{r, echo = TRUE}
+titanic %>% summary()
+```
+
+### Individual statistics
+
+If we are only interested in a specific summary statistic, or if we want to calculate something that is not included in `summary()`, such as **standard deviation**, we can use the function `summarize_at()` to specify the variables and statistics to calculate.
+
+
+
+```{r summarize}
+textInput("var1",
+          "Which variable would you like to find information about?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+checkboxGroupInput("funs1", 
+          "What information do you want?",
+          choices = c("Mean" = "mean",
+                      "Median" = "median",
+                      "Standard Deviation" = "sd",
+                      "IQR" = "IQR",
+                      "Sample Size" = "length")
+)
+
+
+bs_1_1 = reactive("%oi %>% summarize_at(vars(%ni), funs(%ni))")
+
+```
+
+```{r, context="server"}
+
+output$code_1_1 <- renderText(
+        makePrintText(
+          base_string = bs_1_1(),
+          old_input = c("titanic"),
+          new_input = c(input$var1, toString(input$funs1))
+        )
+  )
+
+output$output_1_1 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_1_1(), 
+          old_input = c("titanic_full"),
+          new_input = c(input$var1, toString(input$funs1))
+    )
+   ))
+})
+
+```
+
+```{r}
+htmlOutput("code_1_1")
+```
+
+Result:
+
+```{r}
+verbatimTextOutput("output_1_1")
+```
+
+### Check your work
+
+
+```{r q_1.1}
+textInput("a_1.1.1",
+           "What is the standard deviation of the age of passengers?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.1.1")
+
+textInput("a_1.1.2",
+           "What was the median age of passengers in this dataset?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.1.2")
+
+textInput("a_1.1.3",
+           "What was the IQR for a ticket on the Titanic, based on this dataset?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.1.3")
+```
+
+```{r, context = "server"}
+
+output$check_1.1.1 <- renderText(
+  if(input$a_1.1.1 == ""){
+     ""
+  }else if(round(input$a_1.1.1) == round(sd(titanic$Age), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.2 <- renderText(
+   if(input$a_1.1.2 == ""){
+     ""
+  }else if(round(input$a_1.1.2,2) == round(median(titanic$Age, na.rm = TRUE), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.3 <- renderText(
+   if(input$a_1.1.3 == ""){
+     ""
+  }else if(round(input$a_1.1.3,2) == round(IQR(titanic$Fare, na.rm = TRUE), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+
+```
+
+## Comparing a Quantitative variable across categories
+
+### Multiple Histograms
+
+Recall from the previous lab the option `facet_grid`.  We can use this addition in the exact same way as we did for *barplots* to make multiple separate *histograms* across values a particular categorical variable.
+
+
+```{r, echo=FALSE}
+textInput("plot_4_var_quant", 
+          "What QUANTITATIVE variable would you like to plot on a histogram?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_4_var_cat", 
+          "What CATEGORICAL variable would you like to use to separate the histograms?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+bs_4 <- reactive("ggplot(%oi) + geom_histogram(aes(x = %ni)) + %oi(~%ni)")
+# 
+htmlOutput("code_4")
+# 
+plotOutput("plot_4")
+```
+
+
+```{r, context="server"}
+output$plot_4 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4(), 
+      old_input = c("titanic_full", "facet_grid"),
+      new_input = c(input$plot_4_var_quant, input$plot_4_var_cat)
+    )
+   ))
+})
+
+output$code_4 <- renderText(
+        makePrintText( 
+      base_string = bs_4(), 
+      old_input = c("titanic", "facet_grid"),
+      new_input = c(input$plot_4_var_quant, input$plot_4_var_cat)
+    )
+  )
+
+```
+
+### Boxplots
+
+A better way to compare a quantitative and a categorical variable is usually to make **side-by-side boxplots**.
+
+
+```{r, echo=FALSE}
+textInput("plot_5_var_quant", 
+          "What QUANTITATIVE variable would you like to plot?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_5_var_cat", 
+          "What CATEGORICAL variable would you like to compare?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+bs_5 <- reactive("ggplot(%oi) + geom_%oi(aes(x = %ni, y = %ni, fill = %ni))")
+# 
+htmlOutput("code_5")
+# 
+plotOutput("plot_5")
+```
+
+
+```{r, context="server"}
+output$plot_5 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_5(), 
+      old_input = c("titanic_full", "boxplot"),
+      new_input = c(input$plot_5_var_cat, input$plot_5_var_quant, input$plot_5_var_cat)
+    )
+   ))
+})
+
+output$code_5 <- renderText(
+        makePrintText( 
+      base_string = bs_5(), 
+      old_input = c("titanic", "boxplot"),
+      new_input = c(input$plot_5_var_cat, input$plot_5_var_quant, input$plot_5_var_cat)
+    )
+  )
+
+```
