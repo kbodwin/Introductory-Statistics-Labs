@@ -1,0 +1,81 @@
+---
+title: "Lab 1: Looking at Datasets"
+author: "YOUR NAME HERE"
+date: "September 27, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
+knitr::opts_chunk$set(echo = TRUE)
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
+
+require(ggplot2)
+require(dplyr)
+require(tidyr)
+
+bball = read.csv("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/cp_bball.csv")
+bball = bball[,-1]
+
+```
+
+## The Dataset
+
+This analysis is an exploration of a dataset containing the results of all Cal Poly's basketball games in the 2015-2016 season.  The data has been loaded and named `bball`.
+
+
+```{r}
+### Use R functions to look at the dataset here ###
+```
+
+[Describe the dataset here.]
+
+## Is Cal Poly a worse than average team?
+
+An "average" team is defined to be a team that is just as likely to lose as to win a game.  We would like to determine if Cal Poly's team was average or not.  Fill in the blanks in the discussion below.  Use the code chunk below to run any code you need for calculations.
+
+```{r}
+
+```
+
+If Cal Poly was truly an average team, the probability that they win any given game is [_____].
+
+Assume Cal Poly is an average team.  Define the random variable X = "number of games Cal Poly wins in a season".  The distribution of X is [____________].  The mean of X is [________].
+
+The probability that X is less than or equal to 19 is [_________].
+
+
+In the 2015-16 Season, Cal Poly won [_____] games and lost [______] games.  This means they won [_____]% of their games.
+
+```{r}
+### In this chunk, make a bar plot Cal Poly's wins and losses.
+```
+
+
+
+[Using the above information, make an argument that Cal Poly is or is not an average team.]
+
+
+## Was Cal Poly more likely to win at home than away?
+
+Perhaps Cal Poly performs better in front of a home crowd.  Let's find out.
+
+```{r}
+### In this chunk, make a bar plot that addresses the above research question.
+```
+
+```{r}
+### Use this chunk for any calculations you need
+```
+
+Cal Poly won [_____]% of its home games and [______]% of its away games.
+
+[Make a conclusion here.]
+
+## 
+
+
+
+
+
