@@ -1,5 +1,10 @@
 illustrate_binom <- function(n, p, x = -1, q = 0, equal_to = FALSE){
 
+  n = as.integer(n)
+  p = as.numeric(p)
+  x = as.integer(x)
+  q = as.numeric(q)
+  
   freqs <- data.frame(cbind(factor(0:n), sapply(0:n, function(x) dbinom(x, n, p))))
   names(freqs) = c("Value", "Prob")
   
@@ -16,5 +21,3 @@ illustrate_binom <- function(n, p, x = -1, q = 0, equal_to = FALSE){
     guides(fill=FALSE) + scale_x_continuous(breaks = 0:(n+1))
   
 }
-
-illustrate_binom(10, 0.5, q = .95)
