@@ -9,6 +9,10 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 
+if(file.exists("./Lab_Exercise_QuantVars.html")){
+  file.remove("./Lab_Exercise_QuantVars.html")
+}
+
 require(learnr)
 require(ggplot2)
 require(dplyr)
