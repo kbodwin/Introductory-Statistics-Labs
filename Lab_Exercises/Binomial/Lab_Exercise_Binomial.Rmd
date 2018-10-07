@@ -9,12 +9,6 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 
-if(file.exists("./Lab_Exercise_Binomial.html")){
-  file.remove("./Lab_Exercise_Binomial.html")
-}
-
-update.packages("httpuv")
-
 require(learnr)
 require(ggplot2)
 require(dplyr)
