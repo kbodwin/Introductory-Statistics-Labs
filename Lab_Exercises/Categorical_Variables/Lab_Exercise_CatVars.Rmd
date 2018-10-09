@@ -1,0 +1,814 @@
+---
+title: "Lab 1: Looking at Datasets"
+output: learnr::tutorial
+tutorial:
+  id: "Lab 1"
+  version: 1.0
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+
+require(learnr)
+require(ggplot2)
+require(dplyr)
+require(shiny)
+require(tidyr)
+require(httpuv)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/makeStrings.R")
+
+correct <- "<font color='red'>Correct!</font><br><br>"
+incorrect <- "<font color='red'>Not quite right...</font><br><br>"
+congrats <- "<font color='red'>You did it!</font><br><br>"
+
+titanic = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic.csv')
+titanic <- titanic %>% mutate(
+  Survived = factor(Survived)
+)
+
+titanic_full <- titanic %>% mutate(
+   Family.Aboard = Siblings.Spouses.Aboard + Parents.Children.Aboard,
+   Passenger.Class = factor(Pclass, 
+                           levels = c(1,2,3), 
+                           labels = c("First", "Second", "Third"))
+)
+
+### %ni = new input (red), %oi = old input (blue)
+```
+
+
+## Reading Datasets
+
+Today we'll be looking at a dataset containing information about passengers on the H.M.S. Titanic.
+
+
+### Loading the data
+
+The first step of any data analysis in **R** will be to "load" the data.  This means taking a dataset from online or from a folder on your computer and putting that information into the **R** program.
+
+This dataset is already stored online, at [my personal website](http://calpoly.edu/~kbodwin/data/titanic0.csv) The information is stored in "csv" format, or "comma-separated values". We will simply use an **R** function called `read.csv()` to get this information and store it.
+
+When you load a dataset, you will need to give it a name.  This is so that in the future, you can tell **R** where to find the information it needs - especially once you are dealing with more than one dataset.
+
+Throughout this class, we will do our best to follow the [Tidyverse Style Guide](http://style.tidyverse.org/), which gives some guidelines for making your code look nice and easy to read.  
+
+The style guide suggests giving names that use only lowercase letters and underscores ("_").  The name should also be descriptive; for example, for a dataset containing incomes of workers in the United States, we might go with `us_incomes_2018` rather than `incomes` or `my_dataset`.
+
+We will name this dataset `titanic`.  The code to load the data looks like this:
+
+
+```{r, context="server"}
+
+output$code_1_1 <- renderText(
+        makePrintText(
+          base_string = "%ni <- read.csv('%oi')",
+          old_input = c("http://calpoly.edu/~kbodwin/data/titanic.csv"),
+          new_input = c("titanic")
+        )
+  )
+
+```
+
+```{r}
+htmlOutput("code_1_1")
+```
+
+You should read the `<-` symbol as "save the information on the right under the name on the left".  In this case, we are saving all of the data in the file `titanic.csv` and giving it the name of our choosing, `titanic`.
+
+### Checking out the data
+
+For this lab, the dataset is already loaded for you.  The first thing we generally want to do is familiarize ourselves with the data. You can check out the first few rows of your dataset using the function `head()`.  You can also see how many rows the dataset has using `nrow()`.
+
+When we want to do something to our dataset, we use a *pipe*, which looks like `%>%`.  You can think of this as "sending" the dataset into a process.
+
+```{r, context="server"}
+
+bob <- makePrintText(
+          base_string = "%oi %>% head() \n %oi %>% nrow()",
+          old_input = c("titanic", "titanic")
+        )
+
+output$code_1_2 <- renderText(bob)
+
+output$code_1_3 <- renderText(
+        makePrintText(
+          base_string = "head(%oi) \n nrow(%oi)",
+          old_input = c("titanic", "titanic")
+        )
+  )
+```
+
+```{r}
+htmlOutput("code_1_2")
+```
+
+
+Note that we can also simply put the name `titanic` inside the parentheses of the function, like this:
+
+```{r}
+htmlOutput("code_1_3")
+```
+
+However, it is good to get into the habit of using the pipe - as we will see a bit later on, this will become convenient when we want to use many functions in a row on the same dataset.
+
+Check out the result of the above lines of code:
+
+```{r, echo = TRUE}
+titanic %>% head()
+titanic %>% nrow()
+```
+
+### Questions:
+
+```{r q_1.1}
+textInput("a_1.1.1",
+           "How many Titanic passengers are represented in this dataset?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.1.1")
+
+textInput("a_1.1.2",
+           "How old was Miss Laina Heikkinen?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.1.2")
+
+textInput("a_1.1.3",
+           "How much did Mr. William Henry Allen pay for his ticket, in dollars?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.1.3")
+
+radioButtons("a_1.1.4",
+           "Did Mr. James Moran survive the sinking of the Titanic?",
+           choices = c("Don't know" = "dk",
+              "Yes" = "y",
+             "No" = "n"))
+
+htmlOutput("check_1.1.4")
+```
+
+```{r, context = "server"}
+
+output$check_1.1.1 <- renderText(
+  if(input$a_1.1.1 == ""){
+      ""
+  }else if(input$a_1.1.1 == nrow(titanic)){
+     correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.2 <- renderText(
+  if(input$a_1.1.2 == ""){
+     ""
+  }else if(input$a_1.1.2 == 26){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.3 <- renderText(
+  if(input$a_1.1.3 == ""){
+     ""
+  }else if(input$a_1.1.3 == 8.05){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.4 <- renderText(
+  if(input$a_1.1.4 == ""){
+     ""
+  }else if(input$a_1.1.4 == "n"){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+
+```
+
+## Looking at part of the dataset
+
+Sometimes, we are only interested in looking at one piece of the dataset at a time.  
+
+### Choosing columns
+
+Perhaps we only want to consider a few of the variables. This can be done using `select()`.  Suppose we want to look at the name of the passenger, and only one other piece of information.  We will select these two variables, and then *pipe* that data to `head()` so we can look at the first few values.
+
+```{r select}
+textInput("select_var",
+          "What other variable would you like to look at?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+```
+
+```{r, context="server"}
+output$code_select <- renderText(
+        makePrintText(
+          base_string = "%oi %>% select(%oi, %ni) %>% head() ",
+          old_input = c("titanic", "Name"),
+          new_input = c(input$select_var)
+        )
+  )
+
+output$output_select <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = "%oi %>% select(%oi, %ni) %>% head()",
+          old_input = c("titanic", "Name"),
+          new_input = c(input$select_var)
+    )
+   ))
+})
+```
+
+Your code:
+
+```{r}
+htmlOutput("code_select")
+```
+
+Your output:
+```{r}
+verbatimTextOutput("output_select")
+```
+
+
+### Choosing rows
+
+More often, we want to narrow down our sample according to one of the variables.  In **R**, we do this using `filter()`.  
+
+Suppose we want to see only the passengers who survived the sinking.
+
+
+```{r filter}
+textInput("filter_var",
+          "What variable contains the information about who survived the sinking?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+radioButtons("filter_val",
+             "What value do you want that variable to have?",
+             choices = c("0" = "0",
+               "1" = "1"))
+
+```
+
+```{r, context="server"}
+output$code_filter <- renderText(
+        makePrintText(
+          base_string = "%oi %>% filter(%ni == %ni) %>% head()",
+          old_input = c("titanic"),
+          new_input = c(input$filter_var, input$filter_val)
+        )
+  )
+
+output$output_filter <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = "%oi %>% filter(%ni == %ni) %>% head()",
+          old_input = c("titanic"),
+          new_input = c(input$filter_var, input$filter_val)
+    )
+   ))
+})
+```
+
+Your code: (notice the double "equals" signs!)
+
+```{r}
+htmlOutput("code_filter")
+```
+
+Your output:
+```{r}
+verbatimTextOutput("output_filter")
+```
+
+```{r q_filter}
+textInput("a_filter",
+           "What is the first name of the 6th survivor listed?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_filter")
+```
+
+```{r, context = "server"}
+output$check_filter <- renderText(
+  if(input$a_filter == ""){
+     ""
+  }else if(input$a_filter == "Marguerite"){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+
+```
+
+
+## Making new variables
+
+It is very rare that data comes to us in exactly the format we hope, or that **R** interprets the variable exactly as it should.  You will nearly always need to adjust the data a bit before you begin calculating or plotting anything.  
+
+You, as the scientist, will need to decide how to create each new variable.  This will depend on your **research question** and your choice of **analysis**. 
+
+### Adding two variables
+
+Suppose we are interested in combining information in the dataset.  For example, our `titanic` data contains two pieces of information:  The number of siblings or spouses travelling with a passenger, and the number of parents or children travelling with a passenger.
+
+We may not be interested in this distinction; instead, we want to know how many family members overall are travelling with each passenger.  Let's choose to name this variable `Family.Aboard`.
+
+To create this, we will `mutate()` our dataset, which means adding or changing a variable. 
+
+
+```{r add_vars}
+textInput("sib_spouse",
+          "What is the name of the variable containing the number of siblings or spouses travelling with each passenger?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+textInput("parent_child",
+          "What is the name of the variable containing the number of parents or children travelling with each passenger?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+
+```
+
+```{r, context="server"}
+
+output$code_fam <- renderText(
+        makePrintText(
+          base_string = "%oi <- %oi %>% mutate( \n \t %oi = %ni + %ni \n )",
+          old_input = c("titanic", "titanic", "Family.Aboard"),
+          new_input = c(input$sib_spouse, input$parent_child)
+        )
+  )
+
+
+```
+
+```{r}
+titanic <- titanic %>% mutate(
+  Family.Aboard = Siblings.Spouses.Aboard + Parents.Children.Aboard
+)
+```
+
+The code for this will look like:
+
+```{r}
+htmlOutput("code_fam")
+```
+
+Notice how we always use `<-` to update the dataset, i.e., to save the new calculations into our data.  Then, if we look at the data again, the new variable should be there:
+
+```{r}
+titanic %>% head()
+
+```
+
+
+### Quantitative and Categorical variables
+
+Consider the variable called `Pclass`.  As you hopefully realized, this variable should be **categorical** - it tells which class (First, Second, or Third) the passenger travelled in.  However, here is what **R** thinks about the *class*, or type, of that variable:
+
+```{r, echo = TRUE}
+class(titanic$Pclass)
+```
+
+It is an "integer" - that is, a discrete, quantitative variable.  Oh no!
+
+Let's make a new variable named `Passenger.Class`, using `mutate()`.  The function `factor()` will turn a numeric variable into categories.  
+
+
+```{r factor_var}
+textInput("pclass",
+          "What is the name of the existing variable that you would like to make categorical?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+
+```
+
+```{r, context="server"}
+
+output$code_3_1 <- renderText(
+        makePrintText(
+          base_string = "%oi <- %oi %>% mutate( \n \t %oi = factor(%ni) \n )",
+          old_input = c("titanic", "titanic", "Passenger.Class"),
+          new_input = c(input$pclass)
+        )
+  )
+
+
+
+```
+
+The code for this will look like:
+
+```{r}
+htmlOutput("code_3_1")
+titanic <- titanic %>% mutate(
+  Passenger.Class = factor(Pclass)
+)
+```
+
+And we can check to make sure our new variable exists and did what we hoped:
+
+```{r, echo = TRUE}
+class(titanic$Passenger.Class)
+
+```
+
+
+Perhaps you think it might be convenient to have the values of your new variable be more informative than `1` and `2` and `3`.  This is easy to do with `factor()`.
+
+```{r factor_var_names}
+textInput("word_1",
+          "What label would you like to use for 1?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+
+textInput("word_2",
+          "What label would you like to use for 2?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+textInput("word_3",
+          "What label would you like to use for 3?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+
+```
+
+```{r, context="server"}
+
+output$code_3_2 <- renderText(  
+  makePrintText(
+          base_string = "titanic <- titanic %>% mutate( \n \t %oi = factor(%oi, \n \t \t levels = c(1,2,3), \n \t \t labels = c('%ni', '%ni', '%ni')) \n )",
+          old_input = c(input$new_pclass, input$pclass),
+          new_input = c(input$word_1, input$word_2, input$word_3)
+        ))
+```
+
+```{r}
+htmlOutput("code_3_2")
+titanic <- titanic %>% mutate( 
+  Passenger.Class = factor(Pclass, 
+                           levels = c(1,2,3), 
+                           labels = c("First", "Second", "Third")))
+```
+
+And check your dataset:
+
+```{r, echo = TRUE}
+
+titanic %>% select(Name, Pclass, Passenger.Class) %>% head()
+
+```
+
+This is your first experience with optional arguments in a function!  Notice that `factor()` worked just fine with only a variable name, but that you were able to do even more with the options `levels` and `labels`.
+
+
+## Visualizing Categorical Variables
+
+Data loaded?  Check!  Data cleaned?  Check!  Time for the fun stuff.  Let's begin by making some nice plots for the *categorical* variables in our dataset.
+
+We will be using a package called `ggplot2` to make all of our visualizations.  This package has a very specific format for plotting.  
+
+First, we tell **R** that we want to make a plot from a certain dataset, and we specify the **aethetic**, `aes()`, which determines the variables we want to visualize.  
+
+Then, we add the type of plot we want, and any extra options.
+
+
+### Bar Plots
+
+```{r, echo=FALSE}
+textInput("plot_var_1", 
+          "What variable would you like to plot?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_dat_1", 
+          "What dataset is that variable found in?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+# radioButtons("plot_type_1",
+#              "Would you like a barplot or a dotplot?",
+#              choices = c("barplot" = "bar",
+#                          "dotplot" = "dotplot"))
+
+bs_4_1 = reactive("ggplot(%ni, aes(x = %ni)) + geom_bar()")
+
+htmlOutput("code_4_1")
+
+plotOutput("plot_4_1")
+```
+
+
+```{r, context="server"}
+output$plot_4_1 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4_1(), 
+      new_input = c("titanic_full", input$plot_var_1)
+    )
+   ))
+})
+
+output$code_4_1 <- renderText(
+        makePrintText( 
+          base_string = bs_4_1(), 
+          new_input = c(input$plot_dat_1, input$plot_var_1)
+        )
+  )
+
+```
+
+Beyond the crucial information of the dataset and the variable(s) to plot, there are also plenty of optional settings to make our image nicer.
+
+```{r, echo=FALSE}
+textInput("plot_title_1", 
+          "Title of the plot:", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_xlab_1", 
+          "Label for x-axis:", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+radioButtons("fill_1", 
+             "Should the bars be different colors?",
+                   choices = c("No" = "",
+                               "Yes" = ", fill = %oi")
+              )
+
+bs_4_2 <- reactive("ggplot(%oi, aes(x = %oi%ni)) + geom_bar() + ggtitle('%ni') + xlab('%ni')")
+
+```
+
+```{r, context = "server"}
+output$plot_4_2 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4_2(), 
+      old_input = c("titanic_full", input$plot_var_1, input$plot_var_1),
+      new_input = c(input$fill_1, input$plot_title_1, input$plot_xlab_1)
+    )
+   ))
+})
+
+output$code_4_2 <- renderText(
+        makePrintText( 
+          base_string = bs_4_2(), 
+          old_input = c(input$plot_dat_1, input$plot_var_1, input$plot_var_1),
+          new_input = c(input$fill_1, input$plot_title_1, input$plot_xlab_1)
+    )
+  )
+
+
+```
+
+```{r, echo = FALSE}
+htmlOutput("code_4_2")
+
+plotOutput("plot_4_2")
+```
+
+## Comparing two categorical variables
+
+### Multiple graphs
+
+Now suppose we wish to compare two categorical variables.  One option is to simply make separate barplots for each category.  We do so by adding the option `facet_grid()` to our plot.  Try it below.
+
+```{r, echo=FALSE}
+
+textInput("plot_var_2_1", 
+          "What variable would you like use for the bars?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_var_2", 
+          "What variable would you like to use to separate the plots?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_title_2", 
+          "Title of the plot:", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_xlab_2", 
+          "Label for x-axis:", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+radioButtons("fill_2", 
+             "Should the bars be different colors?",
+                   choices = c("No" = "",
+                               "Yes" = ", fill = %oi")
+              )
+
+
+bs_4_3 <- reactive("ggplot(%oi, aes(x = %ni%ni)) + geom_bar() + facet_grid(~%ni) + ggtitle('%ni') + xlab('%ni')")
+
+
+```
+
+```{r, context = "server"}
+output$plot_4_3 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4_3(), 
+      old_input = c("titanic_full", input$plot_var_2_1),
+      new_input = c(input$plot_var_2_1, input$fill_2, input$plot_var_2, input$plot_title_2, input$plot_xlab_2)
+    )
+   ))
+})
+
+output$code_4_3 <- renderText(
+        makePrintText( 
+      base_string = bs_4_3(), 
+      old_input = c("titanic", input$plot_var_2_1),
+      new_input = c(input$plot_var_2_1, input$fill_2, input$plot_var_2, input$plot_title_2, input$plot_xlab_2)
+    )
+  )
+
+
+```
+
+```{r, echo = FALSE}
+htmlOutput("code_4_3")
+
+plotOutput("plot_4_3")
+```
+
+### Side-by-side graphs
+
+Another option is to plot bars side-by-side, separating groups by the value of the second categorical variable.
+```{r, echo=FALSE}
+
+textInput("plot_var_3_1", 
+          "What variable would you like use for the bar heights?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_var_3_2", 
+          "What variable would you like to use to separate the bars?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_title_3", 
+          "Title of the plot:", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_xlab_3", 
+          "Label for x-axis:", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+
+
+bs_4_4 <- reactive("ggplot(%oi, aes(x = %ni, fill = %ni)) + geom_bar(%ni) + ggtitle('%ni') + xlab('%ni')")
+
+
+```
+
+```{r, context = "server"}
+output$plot_4_4 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4_4(), 
+      old_input = c("titanic_full"),
+      new_input = c(input$plot_var_3_1, input$plot_var_3_2, "position = 'dodge'", input$plot_title_3, input$plot_xlab_3)
+    )
+   ))
+})
+
+output$code_4_4 <- renderText(
+        makePrintText( 
+          base_string = bs_4_4(), 
+      old_input = c("titanic"),
+      new_input = c(input$plot_var_3_1, input$plot_var_3_2, "position = 'dodge'", input$plot_title_3, input$plot_xlab_3)
+    )
+  )
+
+
+```
+
+```{r, echo = FALSE}
+htmlOutput("code_4_4")
+
+plotOutput("plot_4_4")
+```
+
+### Stacked Bar Charts
+
+The last, and typically best option is to make a **stacked bar chart**, which combines the two categorical variables on the bars themselves.  Note that these charts continue to obey the *area principle* - the area of the colored sections corresponds to the number of people in that category!
+
+Another advantage of the stacked bar chart is that it is a great alternative to a pie chart for looking at percentages.  Try plotting the bar heights as percentages rather than counts.  Think about what research questions might be better addressed by this approach.
+
+```{r, echo=FALSE}
+
+textInput("plot_var_4_1", 
+          "What variable would you like use for the bar heights?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_var_4_2", 
+          "What variable would you to color the bar stacks?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_title_4", 
+          "Title of the plot:", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("plot_xlab_4", 
+          "Label for x-axis:", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+radioButtons("plot_pct",
+             "The height of the bars should be:",
+             choices = c(
+               "Counts" = "",
+               "Percentages" = "position = 'fill'"
+             ))
+
+
+
+bs_4_5 <- reactive("ggplot(%oi, aes(x = %ni, fill = %ni)) + geom_bar(%ni) + ggtitle('%ni') + xlab('%ni')")
+
+
+```
+
+```{r, context = "server"}
+output$plot_4_5 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4_5(), 
+      old_input = c("titanic_full"),
+      new_input = c(input$plot_var_4_1, input$plot_var_4_2, input$plot_pct, input$plot_title_4, input$plot_xlab_4)
+    )
+   ))
+})
+
+output$code_4_5 <- renderText(
+        makePrintText( 
+          base_string = bs_4_5(), 
+      old_input = c("titanic"),
+      new_input = c(input$plot_var_4_1, input$plot_var_4_2, input$plot_pct, input$plot_title_4, input$plot_xlab_4)
+    )
+  )
+
+
+```
+
+```{r, echo = FALSE}
+htmlOutput("code_4_5")
+
+plotOutput("plot_4_5")
+```
+
+
+Play around with these various plots, until you find an insight that you think is interesting!
