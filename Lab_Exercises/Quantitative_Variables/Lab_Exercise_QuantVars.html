@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+
+<title>Lab Exercise: Quantitative Variables</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<div id="section-introduction" class="section level2">
+<h2>Introduction</h2>
+<p>In this exercise, we will continue to explore the <code>titanic</code> dataset, which has already been loaded for you. This time, we will think about <strong>quantitative</strong> variables - how to display them, how to summarize them, and how to answer research questions with plots and numerical summaries.</p>
+<p>First, we will make the necessary adjustments to the categorical variables:</p>
+<pre class="r"><code>titanic &lt;- titanic %&gt;% mutate(
+  Survived = factor(Survived,
+                    levels = c(0,1),
+                    labels = c(&quot;Died&quot;, &quot;Lived&quot;)),
+  Passenger.Class = factor(Pclass, 
+                           levels = c(1,2,3), 
+                           labels = c(&quot;First&quot;, &quot;Second&quot;, &quot;Third&quot;))
+)</code></pre>
+<p>Then, remind yourself what the dataset looks like:</p>
+<pre class="r"><code>titanic %&gt;% head()</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Survived"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Pclass"],"name":[2],"type":["int"],"align":["right"]},{"label":["Name"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["Sex"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Siblings.Spouses.Aboard"],"name":[6],"type":["int"],"align":["right"]},{"label":["Parents.Children.Aboard"],"name":[7],"type":["int"],"align":["right"]},{"label":["Fare"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Passenger.Class"],"name":[9],"type":["fctr"],"align":["left"]}],"data":[{"1":"Died","2":"3","3":"Mr. Owen Harris Braund","4":"male","5":"22","6":"1","7":"0","8":"7.2500","9":"Third","_rn_":"1"},{"1":"Lived","2":"1","3":"Mrs. John Bradley (Florence Briggs Thayer) Cumings","4":"female","5":"38","6":"1","7":"0","8":"71.2833","9":"First","_rn_":"2"},{"1":"Lived","2":"3","3":"Miss. Laina Heikkinen","4":"female","5":"26","6":"0","7":"0","8":"7.9250","9":"Third","_rn_":"3"},{"1":"Lived","2":"1","3":"Mrs. Jacques Heath (Lily May Peel) Futrelle","4":"female","5":"35","6":"1","7":"0","8":"53.1000","9":"First","_rn_":"4"},{"1":"Died","2":"3","3":"Mr. William Henry Allen","4":"male","5":"35","6":"0","7":"0","8":"8.0500","9":"Third","_rn_":"5"},{"1":"Died","2":"3","3":"Mr. James Moran","4":"male","5":"27","6":"0","7":"0","8":"8.4583","9":"Third","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="section-adding-two-variables" class="section level2">
+<h2>Adding two variables</h2>
+<p>Suppose we are interested in combining information in the dataset. For example, our <code>titanic</code> data contains two pieces of information: The number of siblings or spouses travelling with a passenger, and the number of parents or children travelling with a passenger.</p>
+<p>We may not be interested in this distinction; instead, we want to know how many family members overall are travelling with each passenger. Let’s choose to name this variable <code>Family.Aboard</code>.</p>
+<p>To create this, we will <code>mutate()</code> our dataset to make our new variable.</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="sib_spouse">What is the name of the variable containing the number of siblings or spouses travelling with each passenger?</label>
+<input id="sib_spouse" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="parent_child">What is the name of the variable containing the number of parents or children travelling with each passenger?</label>
+<input id="parent_child" type="text" class="form-control" value=""/>
+</div></p>
+<p>The code for this will look like:</p>
+<div id="code_fam" class="shiny-html-output"></div>
+<p>Notice how we always use <code>&lt;-</code> to update the dataset, i.e., to save the new calculations into our data. Then, if we look at the data again, the new variable should be there:</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Survived"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Pclass"],"name":[2],"type":["int"],"align":["right"]},{"label":["Name"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["Sex"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Siblings.Spouses.Aboard"],"name":[6],"type":["int"],"align":["right"]},{"label":["Parents.Children.Aboard"],"name":[7],"type":["int"],"align":["right"]},{"label":["Fare"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Passenger.Class"],"name":[9],"type":["fctr"],"align":["left"]},{"label":["Family.Aboard"],"name":[10],"type":["int"],"align":["right"]}],"data":[{"1":"Died","2":"3","3":"Mr. Owen Harris Braund","4":"male","5":"22","6":"1","7":"0","8":"7.2500","9":"Third","10":"1","_rn_":"1"},{"1":"Lived","2":"1","3":"Mrs. John Bradley (Florence Briggs Thayer) Cumings","4":"female","5":"38","6":"1","7":"0","8":"71.2833","9":"First","10":"1","_rn_":"2"},{"1":"Lived","2":"3","3":"Miss. Laina Heikkinen","4":"female","5":"26","6":"0","7":"0","8":"7.9250","9":"Third","10":"0","_rn_":"3"},{"1":"Lived","2":"1","3":"Mrs. Jacques Heath (Lily May Peel) Futrelle","4":"female","5":"35","6":"1","7":"0","8":"53.1000","9":"First","10":"1","_rn_":"4"},{"1":"Died","2":"3","3":"Mr. William Henry Allen","4":"male","5":"35","6":"0","7":"0","8":"8.0500","9":"Third","10":"0","_rn_":"5"},{"1":"Died","2":"3","3":"Mr. James Moran","4":"male","5":"27","6":"0","7":"0","8":"8.4583","9":"Third","10":"0","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="section-histograms" class="section level2">
+<h2>Histograms</h2>
+<p>To make other plots beyond the <strong>barplots</strong> that you already learned, you will use almost the same code. We still use <code>ggplot()</code> in the same way, as well as options like <code>ggtitle()</code> and <code>xlab</code>. The only difference is that instead of <code>geom_bar()</code>, we want to make a <strong>histogram</strong>, or <code>geom_histogram()</code>. Try it below. Pay careful attention to the new options that come with <code>geom_histogram()</code></p>
+<p>(Hint: Go to <a href="http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf">This Page</a> to see lots of fun color options!)</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_2_var">What QUANTITATIVE variable would you like to make a histogram of?</label>
+<input id="plot_2_var" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container">
+<label class="control-label" for="plot_2_bins">How many bins should the histogram have?</label>
+<input class="js-range-slider" id="plot_2_bins" data-min="1" data-max="100" data-from="20" data-step="1" data-grid="true" data-grid-num="9.9" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_2_color">What color should the histogram be?</label>
+<input id="plot_2_color" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_2_title">What title will you give your plot?</label>
+<input id="plot_2_title" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_2_xlab">What label should the x-axis have?</label>
+<input id="plot_2_xlab" type="text" class="form-control" value=""/>
+</div><div id="code_2" class="shiny-html-output"></div><div id="plot_2" class="shiny-plot-output" style="width: 100% ; height: 400px"></div></p>
+<div id="section-densities" class="section level3">
+<h3>Densities</h3>
+<p>A histogram is our best guess about the shape of a <strong>density</strong>. We can also choose to plot a smooth line over the histogram, to help us visualize what the density might be like.</p>
+<p><div id="count_density" class="form-group shiny-input-radiogroup shiny-input-container">
+<label class="control-label" for="count_density">The height of the bars should be:</label>
+<div class="shiny-options-group">
+<div class="radio">
+<label>
+<input type="radio" name="count_density" value="" checked="checked"/>
+<span>counts</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="count_density" value="aes(y = ..density..), "/>
+<span>densities</span>
+</label>
+</div>
+</div>
+</div><div id="add_density" class="form-group shiny-input-radiogroup shiny-input-container">
+<label class="control-label" for="add_density">The plot should show an estimated density curve.</label>
+<div class="shiny-options-group">
+<div class="radio">
+<label>
+<input type="radio" name="add_density" value="" checked="checked"/>
+<span>no</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="add_density" value="+ geom_density(size = 2)"/>
+<span>yes</span>
+</label>
+</div>
+</div>
+</div><div id="code_3" class="shiny-html-output"></div><div id="plot_3" class="shiny-plot-output" style="width: 100% ; height: 400px"></div></p>
+</div>
+<div id="section-reading-the-histogram" class="section level3">
+<h3>Reading the histogram</h3>
+<p>Use the exercise above to with the variable <code>Age</code>. Think about the following questions:</p>
+<ul>
+<li><p>What number of bins one seems to give the most reasonable density estimate, in your opinion?</p></li>
+<li><p>How many modes does this distribution have?</p></li>
+<li><p>Is this distribution skewed?</p></li>
+<li><p>What are the <strong>mean</strong> and <strong>median</strong> age of Titanic passengers?</p></li>
+</ul>
+</div>
+</div>
+<div id="section-calculating-summary-statistics" class="section level2">
+<h2>Calculating summary statistics</h2>
+<p>The histogram let us “eyeball” reasonable guesses about the <em>mean</em> and <em>median</em> of our quantitative variables. But of course, we can calculate these directly in <strong>R</strong>.</p>
+<p>An easy method, and a good first step in any data analysis, is to use the function <code>summary()</code> to get some basic information about all the variables:</p>
+<pre class="r"><code>titanic %&gt;% summary()</code></pre>
+<pre><code>##   Survived       Pclass                                      Name    
+##  Died :545   Min.   :1.000   Capt. Edward Gifford Crosby       :  1  
+##  Lived:342   1st Qu.:2.000   Col. John Weir                    :  1  
+##              Median :3.000   Col. Oberst Alfons Simonius-Blumer:  1  
+##              Mean   :2.306   Don. Manuel E Uruchurtu           :  1  
+##              3rd Qu.:3.000   Dr. Alfred Pain                   :  1  
+##              Max.   :3.000   Dr. Alice (Farnham) Leader        :  1  
+##                              (Other)                           :881  
+##      Sex           Age        Siblings.Spouses.Aboard
+##  female:314   Min.   : 0.42   Min.   :0.0000         
+##  male  :573   1st Qu.:20.25   1st Qu.:0.0000         
+##               Median :28.00   Median :0.0000         
+##               Mean   :29.47   Mean   :0.5254         
+##               3rd Qu.:38.00   3rd Qu.:1.0000         
+##               Max.   :80.00   Max.   :8.0000         
+##                                                      
+##  Parents.Children.Aboard      Fare         Family.Aboard    
+##  Min.   :0.0000          Min.   :  0.000   Min.   : 0.0000  
+##  1st Qu.:0.0000          1st Qu.:  7.925   1st Qu.: 0.0000  
+##  Median :0.0000          Median : 14.454   Median : 0.0000  
+##  Mean   :0.3833          Mean   : 32.305   Mean   : 0.9087  
+##  3rd Qu.:0.0000          3rd Qu.: 31.137   3rd Qu.: 1.0000  
+##  Max.   :6.0000          Max.   :512.329   Max.   :10.0000  
+##                                                             
+##  Passenger.Class
+##  First :216     
+##  Second:184     
+##  Third :487     
+##                 
+##                 
+##                 
+## </code></pre>
+<div id="section-counting-categorical-variables" class="section level3">
+<h3>Counting categorical variables</h3>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="var_0_1">What is the first categorical variable you would you like to count?</label>
+<input id="var_0_1" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="var_0_2">What is the second categorical variable you would you like to count?</label>
+<input id="var_0_2" type="text" class="form-control" value=""/>
+</div></p>
+<div id="code_0" class="shiny-html-output"></div>
+<p>Result:</p>
+<pre id="output_0" class="shiny-text-output noplaceholder"></pre>
+</div>
+<div id="section-individual-statistics" class="section level3">
+<h3>Individual statistics</h3>
+<p>If we are only interested in a specific summary statistic, or if we want to calculate something that is not included in <code>summary()</code>, such as <strong>standard deviation</strong>, we can use the function <code>summarize_at()</code> to specify the variables and statistics to calculate.</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="var1">Which QUANTITATIVE variable would you like to find information about?</label>
+<input id="var1" type="text" class="form-control" value=""/>
+</div><div id="funs1" class="form-group shiny-input-checkboxgroup shiny-input-container">
+<label class="control-label" for="funs1">What information do you want?</label>
+<div class="shiny-options-group">
+<div class="checkbox">
+<label>
+<input type="checkbox" name="funs1" value="mean"/>
+<span>Mean</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="funs1" value="median"/>
+<span>Median</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="funs1" value="sd"/>
+<span>Standard Deviation</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="funs1" value="IQR"/>
+<span>IQR</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="funs1" value="length"/>
+<span>Sample Size</span>
+</label>
+</div>
+</div>
+</div></p>
+<div id="code_1_1" class="shiny-html-output"></div>
+<p>Result:</p>
+<pre id="output_1_1" class="shiny-text-output noplaceholder"></pre>
+</div>
+<div id="section-summary-statistics-by-group" class="section level3">
+<h3>Summary statistics by Group</h3>
+<p>Some research questions will involve understanding how a quantitative variable relates to a categorical variable. We may wish to calculate summary statistics separately for each category. We can achieve this with <code>group_by()</code></p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="var2_quant">Which QUANTITATIVE variable would you like to find information about?</label>
+<input id="var2_quant" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="var2_cat">Which CATEGORICAL variable would you like to use to split groups?</label>
+<input id="var2_cat" type="text" class="form-control" value=""/>
+</div><div id="funs2" class="form-group shiny-input-checkboxgroup shiny-input-container">
+<label class="control-label" for="funs2">What information do you want?</label>
+<div class="shiny-options-group">
+<div class="checkbox">
+<label>
+<input type="checkbox" name="funs2" value="mean"/>
+<span>Mean</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="funs2" value="median"/>
+<span>Median</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="funs2" value="sd"/>
+<span>Standard Deviation</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="funs2" value="IQR"/>
+<span>IQR</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="funs2" value="length"/>
+<span>Sample Size</span>
+</label>
+</div>
+</div>
+</div></p>
+<div id="code_1_2" class="shiny-html-output"></div>
+<p>Result:</p>
+<pre id="output_1_2" class="shiny-text-output noplaceholder"></pre>
+</div>
+<div id="section-check-your-work" class="section level3">
+<h3>Check your work</h3>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="a_1.1.1">What is the standard deviation of the age of First Class passengers?</label>
+<input id="a_1.1.1" type="text" class="form-control" value=""/>
+</div><div id="check_1.1.1" class="shiny-html-output"></div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="a_1.1.2">What was the median age of Female passengers?</label>
+<input id="a_1.1.2" type="text" class="form-control" value=""/>
+</div><div id="check_1.1.2" class="shiny-html-output"></div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="a_1.1.3">What was the IQR for a ticket on the Titanic, based on this dataset?</label>
+<input id="a_1.1.3" type="text" class="form-control" value=""/>
+</div><div id="check_1.1.3" class="shiny-html-output"></div></p>
+</div>
+</div>
+<div id="section-comparing-a-quantitative-variable-across-categories" class="section level2">
+<h2>Comparing a Quantitative variable across categories</h2>
+<div id="section-multiple-histograms" class="section level3">
+<h3>Multiple Histograms</h3>
+<p>Recall from the previous lab the option <code>facet_grid</code>. We can use this addition in the exact same way as we did for <em>barplots</em> to make multiple separate <em>histograms</em> across values a particular categorical variable.</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_4_var_quant">What QUANTITATIVE variable would you like to plot on a histogram?</label>
+<input id="plot_4_var_quant" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_4_var_cat">What CATEGORICAL variable would you like to use to separate the histograms?</label>
+<input id="plot_4_var_cat" type="text" class="form-control" value=""/>
+</div><div id="code_4" class="shiny-html-output"></div><div id="plot_4" class="shiny-plot-output" style="width: 100% ; height: 400px"></div></p>
+</div>
+<div id="section-boxplots" class="section level3">
+<h3>Boxplots</h3>
+<p>A better way to compare a quantitative and a categorical variable is usually to make <strong>side-by-side boxplots</strong>.</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_5_var_quant">What QUANTITATIVE variable would you like to plot?</label>
+<input id="plot_5_var_quant" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_5_var_cat">What CATEGORICAL variable would you like to compare?</label>
+<input id="plot_5_var_cat" type="text" class="form-control" value=""/>
+</div><div id="code_5" class="shiny-html-output"></div><div id="plot_5" class="shiny-plot-output" style="width: 100% ; height: 400px"></div></p>
+
+<script type="application/shiny-prerendered" data-context="server-start">
+
+
+require(learnr)
+require(ggplot2)
+require(dplyr)
+require(shiny)
+require(tidyr)
+require(httpuv)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+tags$style(type="text/css",
+         ".shiny-output-error { visibility: hidden; }",
+         ".shiny-output-error:before { visibility: hidden; }"
+)
+
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/makeStrings.R")
+
+correct <- "<font color='red'>Correct!<\u002ffont><br><br>"
+incorrect <- "<font color='red'>Not quite right...<\u002ffont><br><br>"
+congrats <- "<font color='red'>You did it!<\u002ffont><br><br>"
+
+titanic = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic.csv')
+
+titanic_full <- titanic %>% mutate(
+   Family.Aboard = Siblings.Spouses.Aboard + Parents.Children.Aboard,
+     Survived = factor(Survived,
+                    levels = c(0,1),
+                    labels = c("Died", "Lived")),
+  Passenger.Class = factor(Pclass, 
+                           levels = c(1,2,3), 
+                           labels = c("First", "Second", "Third"))
+)
+### %ni = new input (red), %oi = old input (blue)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = list(id = "Lab_Summaries", version = 1))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+output$code_fam <- renderText(
+        makePrintText(
+          base_string = "%oi <- %oi %>% mutate( \n \t %oi = %ni + %ni \n )",
+          old_input = c("titanic", "titanic", "Family.Aboard"),
+          new_input = c(input$sib_spouse, input$parent_child)
+        )
+  )
+
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$plot_2 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_2(), 
+      old_input = c("titanic_full", "histogram"),
+      new_input = c(input$plot_2_var, input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab)
+    )
+   ))
+})
+
+output$code_2 <- renderText(
+        makePrintText( 
+      base_string = bs_2(), 
+      old_input = c("titanic", "histogram"),
+      new_input = c(input$plot_2_var, input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab)
+    )
+  )
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$plot_3 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_3(), 
+      old_input = c("titanic_full", input$plot_2_var, "histogram", input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab),
+      new_input = c(input$count_density, input$add_density)
+    )
+   ))
+})
+
+output$code_3 <- renderText(
+        makePrintText( 
+      base_string = bs_3(), 
+      old_input = c("titanic", input$plot_2_var, "histogram", input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab),
+      new_input = c(input$count_density, input$add_density)
+    )
+  )
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+output$code_0 <- renderText(
+        makePrintText(
+          base_string = bs_0(),
+          old_input = c("titanic"),
+          new_input = c(input$var_0_1, input$var_0_2)
+        )
+  )
+
+output$output_0 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = bs_0(),
+          old_input = c("titanic"),
+          new_input = c(input$var_0_1, input$var_0_2)
+    )
+   ))
+})
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+output$code_1_1 <- renderText(
+        makePrintText(
+          base_string = bs_1_1(),
+          old_input = c("titanic"),
+          new_input = c(input$var1, toString(input$funs1))
+        )
+  )
+
+output$output_1_1 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_1_1(), 
+          old_input = c("titanic_full"),
+          new_input = c(input$var1, toString(input$funs1))
+    )
+   ))
+})
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+output$code_1_2 <- renderText(
+        makePrintText(
+          base_string = bs_1_2(),
+          old_input = c("titanic"),
+          new_input = c(input$var2_cat, input$var2_quant, toString(input$funs2))
+        )
+  )
+
+output$output_1_2 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+        base_string = bs_1_2(),
+        old_input = c("titanic"),
+        new_input = c(input$var2_cat, input$var2_quant, toString(input$funs2))
+    )
+   ))
+})
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+output$check_1.1.1 <- renderText(
+  if(input$a_1.1.1 == ""){
+     ""
+  }else if(round(as.numeric(input$a_1.1.1), 2) == round(sd(titanic[titanic$Pclass == 1, "Fare"]),2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.2 <- renderText(
+   if(input$a_1.1.2 == ""){
+     ""
+  }else if(round(as.numeric(input$a_1.1.2),2) == round(median(titanic[titanic$Sex == "female", "Age"]),2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.3 <- renderText(
+   if(input$a_1.1.3 == ""){
+     ""
+  }else if(round(as.numeric(input$a_1.1.3),2) == round(IQR(titanic$Fare, na.rm = TRUE), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$plot_4 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4(), 
+      old_input = c("titanic_full", "facet_grid"),
+      new_input = c(input$plot_4_var_quant, input$plot_4_var_cat)
+    )
+   ))
+})
+
+output$code_4 <- renderText(
+        makePrintText( 
+      base_string = bs_4(), 
+      old_input = c("titanic", "facet_grid"),
+      new_input = c(input$plot_4_var_quant, input$plot_4_var_cat)
+    )
+  )
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$plot_5 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_5(), 
+      old_input = c("titanic_full", "boxplot"),
+      new_input = c(input$plot_5_var_cat, input$plot_5_var_quant, input$plot_5_var_cat)
+    )
+   ))
+})
+
+output$code_5 <- renderText(
+        makePrintText( 
+      base_string = bs_5(), 
+      old_input = c("titanic", "boxplot"),
+      new_input = c(input$plot_5_var_cat, input$plot_5_var_quant, input$plot_5_var_cat)
+    )
+  )
+
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap-3.3.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.0.13"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/fontawesome-all.min.js","js/fa-v4-shims.min.js"]},{"type":"character","attributes":{},"value":["css/fa-svg-with-js.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["localforage"]},{"type":"character","attributes":{},"value":["1.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/localforage"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["localforage.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider"]},{"type":"character","attributes":{},"value":["2.1.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css","css/ion.rangeSlider.skinShiny.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">Lab Exercise: Quantitative Variables</h2>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+
+</html>
