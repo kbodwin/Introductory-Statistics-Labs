@@ -1,5 +1,5 @@
 ---
-title: "Lab 1: Looking at Datasets"
+title: "Lab Exercise: Categorical Variables"
 output: learnr::tutorial
 tutorial:
   id: "Lab 1"
@@ -8,6 +8,10 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
+
+if(file.exists("Lab_Exercise_CatVars.html")){
+  file.remove("Lab_Exercise_CatVars.html")
+}
 
 require(learnr)
 require(ggplot2)
