@@ -39,6 +39,8 @@ illustrate_norm <- function(mu, sigma, x = NA, q = NA){
     cutoff = qnorm(q, mu, sigma)
   }
   
+  cutoff = round(cutoff, 2)
+  
   ulim = max(cutoff, mu + 3*sigma) + sigma/2
   llim = min(cutoff, mu - 3*sigma) - sigma/2
   
