@@ -59,7 +59,7 @@ textInput("x1",
           value = "0",
           width = '80%', placeholder = NULL)
 
-bs_1 = reactive("pnorm(x = %ni, mean = %ni, sd = %ni)")
+bs_1 = reactive("pnorm(%ni, mean = %ni, sd = %ni)")
 
 ```
 
@@ -197,7 +197,7 @@ textInput("q2",
           value = "0",
           width = '80%', placeholder = NULL)
 
-bs_3 = reactive("qnorm(p = %ni, mean = %ni, sd = %ni)")
+bs_3 = reactive("qnorm(%ni, mean = %ni, sd = %ni)")
 
 ```
 
@@ -395,7 +395,7 @@ output$check_4.2 <- renderText(
 output$check_4.3 <- renderText(
   if(input$a_4.3 == ""){
      ""
-  }else if(as.numeric(input$a_4.3) == 9){
+  }else if(as.numeric(input$a_4.3) == 0.84){
       correct
   }else{
     incorrect
@@ -405,7 +405,7 @@ output$check_4.3 <- renderText(
 output$check_4.4 <- renderText(
   if(input$a_4.4 == ""){
      ""
-  }else if(as.numeric(input$a_4.4) == 0.84){
+  }else if(as.numeric(input$a_4.4) == 9){
       correct
   }else{
     incorrect

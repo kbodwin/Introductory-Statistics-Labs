@@ -36,7 +36,7 @@ illustrate_norm <- function(mu, sigma, x = NA, q = NA){
     cutoff = x
     q = round(pnorm(x, mu, sigma), 3)
   }else{
-    cutoff = qnorm(q, mu, sigma)*sigma + mu
+    cutoff = qnorm(q, mu, sigma)
   }
   
   ulim = max(cutoff, mu + 3*sigma) + sigma/2
