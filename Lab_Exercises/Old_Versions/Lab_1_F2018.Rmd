@@ -14,9 +14,6 @@ require(ggplot2)
 require(dplyr)
 require(shiny)
 require(tidyr)
-
-update.packages("httpuv")
-
 require(httpuv)
 
 knitr::opts_chunk$set(echo = FALSE)

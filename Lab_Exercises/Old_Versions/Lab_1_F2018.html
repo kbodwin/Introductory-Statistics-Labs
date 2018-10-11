@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+
+<title>Lab 1: Looking at Datasets</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<div id="section-reading-datasets" class="section level2">
+<h2>Reading Datasets</h2>
+<p>Today we’ll be looking at a dataset containing information about passengers on the H.M.S. Titanic.</p>
+<div id="section-loading-the-data" class="section level3">
+<h3>Loading the data</h3>
+<p>The first step of any data analysis in <strong>R</strong> will be to “load” the data. This means taking a dataset from online or from a folder on your computer and putting that information into the <strong>R</strong> program.</p>
+<p>This dataset is already stored online, at <a href="http://calpoly.edu/~kbodwin/data/titanic0.csv">my personal website</a> The information is stored in “csv” format, or “comma-separated values”. We will simply use an <strong>R</strong> function called <code>read.csv()</code> to get this information and store it.</p>
+<p>When you load a dataset, you will need to give it a name. This is so that in the future, you can tell <strong>R</strong> where to find the information it needs - especially once you are dealing with more than one dataset.</p>
+<p>Throughout this class, we will do our best to follow the <a href="http://style.tidyverse.org/">Tidyverse Style Guide</a>, which gives some guidelines for making your code look nice and easy to read.</p>
+<p>The style guide suggests giving names that use only lowercase letters and underscores (“_“). The name should also be descriptive; for example, for a dataset containing incomes of workers in the United States, we might go with <code>us_incomes_2018</code> rather than <code>incomes</code> or <code>my_dataset</code>.</p>
+<p>We will name this dataset <code>titanic</code>. The code to load the data looks like this:</p>
+<div id="code_1_1" class="shiny-html-output"></div>
+<p>You should read the <code>&lt;-</code> symbol as “save the information on the right under the name on the left”. In this case, we are saving all of the data in the file <code>titanic.csv</code> and giving it the name of our choosing, <code>titanic</code>.</p>
+</div>
+<div id="section-checking-out-the-data" class="section level3">
+<h3>Checking out the data</h3>
+<p>For this lab, the dataset is already loaded for you. The first thing we generally want to do is familiarize ourselves with the data. You can check out the first few rows of your dataset using the function <code>head()</code>. You can also see how many rows the dataset has using <code>nrow()</code>.</p>
+<p>When we want to do something to our dataset, we use a <em>pipe</em>, which looks like <code>%&gt;%</code>. You can think of this as “sending” the dataset into a process.</p>
+<div id="code_1_2" class="shiny-html-output"></div>
+<p>Note that we can also simply put the name <code>titanic</code> inside the parentheses of the function, like this:</p>
+<div id="code_1_3" class="shiny-html-output"></div>
+<p>However, it is good to get into the habit of using the pipe - as we will see a bit later on, this will become convenient when we want to use many functions in a row on the same dataset.</p>
+<p>Check out the result of the above lines of code:</p>
+<pre class="r"><code>titanic %&gt;% head()</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Survived"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Pclass"],"name":[2],"type":["int"],"align":["right"]},{"label":["Name"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["Sex"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Siblings.Spouses.Aboard"],"name":[6],"type":["int"],"align":["right"]},{"label":["Parents.Children.Aboard"],"name":[7],"type":["int"],"align":["right"]},{"label":["Fare"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"0","2":"3","3":"Mr. Owen Harris Braund","4":"male","5":"22","6":"1","7":"0","8":"7.2500","_rn_":"1"},{"1":"1","2":"1","3":"Mrs. John Bradley (Florence Briggs Thayer) Cumings","4":"female","5":"38","6":"1","7":"0","8":"71.2833","_rn_":"2"},{"1":"1","2":"3","3":"Miss. Laina Heikkinen","4":"female","5":"26","6":"0","7":"0","8":"7.9250","_rn_":"3"},{"1":"1","2":"1","3":"Mrs. Jacques Heath (Lily May Peel) Futrelle","4":"female","5":"35","6":"1","7":"0","8":"53.1000","_rn_":"4"},{"1":"0","2":"3","3":"Mr. William Henry Allen","4":"male","5":"35","6":"0","7":"0","8":"8.0500","_rn_":"5"},{"1":"0","2":"3","3":"Mr. James Moran","4":"male","5":"27","6":"0","7":"0","8":"8.4583","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>titanic %&gt;% nrow()</code></pre>
+<pre><code>## [1] 887</code></pre>
+</div>
+<div id="section-questions" class="section level3">
+<h3>Questions:</h3>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="a_1.1.1">How many Titanic passengers are represented in this dataset?</label>
+<input id="a_1.1.1" type="text" class="form-control" value=""/>
+</div><div id="check_1.1.1" class="shiny-html-output"></div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="a_1.1.2">How old was Miss Laina Heikkinen?</label>
+<input id="a_1.1.2" type="text" class="form-control" value=""/>
+</div><div id="check_1.1.2" class="shiny-html-output"></div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="a_1.1.3">How much did Mr. William Henry Allen pay for his ticket, in dollars?</label>
+<input id="a_1.1.3" type="text" class="form-control" value=""/>
+</div><div id="check_1.1.3" class="shiny-html-output"></div><div id="a_1.1.4" class="form-group shiny-input-radiogroup shiny-input-container">
+<label class="control-label" for="a_1.1.4">Did Mr. James Moran survive the sinking of the Titanic?</label>
+<div class="shiny-options-group">
+<div class="radio">
+<label>
+<input type="radio" name="a_1.1.4" value="dk" checked="checked"/>
+<span>Don't know</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="a_1.1.4" value="y"/>
+<span>Yes</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="a_1.1.4" value="n"/>
+<span>No</span>
+</label>
+</div>
+</div>
+</div><div id="check_1.1.4" class="shiny-html-output"></div></p>
+</div>
+</div>
+<div id="section-looking-at-part-of-the-dataset" class="section level2">
+<h2>Looking at part of the dataset</h2>
+<p>Sometimes, we are only interested in looking at one piece of the dataset at a time.</p>
+<div id="section-choosing-columns" class="section level3">
+<h3>Choosing columns</h3>
+<p>Perhaps we only want to consider a few of the variables. This can be done using <code>select()</code>. Suppose we want to look at the name of the passenger, and only one other piece of information. We will select these two variables, and then <em>pipe</em> that data to <code>head()</code> so we can look at the first few values.</p>
+<div class="form-group shiny-input-container" style="width: 80%;">
+<label for="select_var">What other variable would you like to look at?</label>
+<input id="select_var" type="text" class="form-control" value=""/>
+</div>
+<p>Your code:</p>
+<div id="code_select" class="shiny-html-output"></div>
+<p>Your output: <pre id="output_select" class="shiny-text-output noplaceholder"></pre></p>
+</div>
+<div id="section-choosing-rows" class="section level3">
+<h3>Choosing rows</h3>
+<p>More often, we want to narrow down our sample according to one of the variables. In <strong>R</strong>, we do this using <code>filter()</code>.</p>
+<p>Suppose we want to see only the passengers who survived the sinking.</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="filter_var">What variable contains the information about who survived the sinking?</label>
+<input id="filter_var" type="text" class="form-control" value=""/>
+</div><div id="filter_val" class="form-group shiny-input-radiogroup shiny-input-container">
+<label class="control-label" for="filter_val">What value do you want that variable to have?</label>
+<div class="shiny-options-group">
+<div class="radio">
+<label>
+<input type="radio" name="filter_val" value="0" checked="checked"/>
+<span>0</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="filter_val" value="1"/>
+<span>1</span>
+</label>
+</div>
+</div>
+</div></p>
+<p>Your code: (notice the double “equals” signs!)</p>
+<div id="code_filter" class="shiny-html-output"></div>
+<p>Your output: <pre id="output_filter" class="shiny-text-output noplaceholder"></pre></p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="a_filter">What is the first name of the 6th survivor listed?</label>
+<input id="a_filter" type="text" class="form-control" value=""/>
+</div><div id="check_filter" class="shiny-html-output"></div></p>
+</div>
+</div>
+<div id="section-making-new-variables" class="section level2">
+<h2>Making new variables</h2>
+<p>It is very rare that data comes to us in exactly the format we hope, or that <strong>R</strong> interprets the variable exactly as it should. You will nearly always need to adjust the data a bit before you begin calculating or plotting anything.</p>
+<p>You, as the scientist, will need to decide how to create each new variable. This will depend on your <strong>research question</strong> and your choice of <strong>analysis</strong>.</p>
+<div id="section-adding-two-variables" class="section level3">
+<h3>Adding two variables</h3>
+<p>Suppose we are interested in combining information in the dataset. For example, our <code>titanic</code> data contains two pieces of information: The number of siblings or spouses travelling with a passenger, and the number of parents or children travelling with a passenger.</p>
+<p>We may not be interested in this distinction; instead, we want to know how many family members overall are travelling with each passenger. Let’s choose to name this variable <code>Family.Aboard</code>.</p>
+<p>To create this, we will <code>mutate()</code> our dataset, which means adding or changing a variable.</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="sib_spouse">What is the name of the variable containing the number of siblings or spouses travelling with each passenger?</label>
+<input id="sib_spouse" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="parent_child">What is the name of the variable containing the number of parents or children travelling with each passenger?</label>
+<input id="parent_child" type="text" class="form-control" value=""/>
+</div></p>
+<p>The code for this will look like:</p>
+<div id="code_fam" class="shiny-html-output"></div>
+<p>Notice how we always use <code>&lt;-</code> to update the dataset, i.e., to save the new calculations into our data. Then, if we look at the data again, the new variable should be there:</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Survived"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Pclass"],"name":[2],"type":["int"],"align":["right"]},{"label":["Name"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["Sex"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Siblings.Spouses.Aboard"],"name":[6],"type":["int"],"align":["right"]},{"label":["Parents.Children.Aboard"],"name":[7],"type":["int"],"align":["right"]},{"label":["Fare"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Family.Aboard"],"name":[9],"type":["int"],"align":["right"]}],"data":[{"1":"0","2":"3","3":"Mr. Owen Harris Braund","4":"male","5":"22","6":"1","7":"0","8":"7.2500","9":"1","_rn_":"1"},{"1":"1","2":"1","3":"Mrs. John Bradley (Florence Briggs Thayer) Cumings","4":"female","5":"38","6":"1","7":"0","8":"71.2833","9":"1","_rn_":"2"},{"1":"1","2":"3","3":"Miss. Laina Heikkinen","4":"female","5":"26","6":"0","7":"0","8":"7.9250","9":"0","_rn_":"3"},{"1":"1","2":"1","3":"Mrs. Jacques Heath (Lily May Peel) Futrelle","4":"female","5":"35","6":"1","7":"0","8":"53.1000","9":"1","_rn_":"4"},{"1":"0","2":"3","3":"Mr. William Henry Allen","4":"male","5":"35","6":"0","7":"0","8":"8.0500","9":"0","_rn_":"5"},{"1":"0","2":"3","3":"Mr. James Moran","4":"male","5":"27","6":"0","7":"0","8":"8.4583","9":"0","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="section-quantitative-and-categorical-variables" class="section level3">
+<h3>Quantitative and Categorical variables</h3>
+<p>Consider the variable called <code>Pclass</code>. As you hopefully realized, this variable should be <strong>categorical</strong> - it tells which class (First, Second, or Third) the passenger travelled in. However, here is what <strong>R</strong> thinks about the <em>class</em>, or type, of that variable:</p>
+<pre class="r"><code>class(titanic$Pclass)</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<p>It is an “integer” - that is, a discrete, quantitative variable. Oh no!</p>
+<p>Let’s make a new variable named <code>Passenger.Class</code>, using <code>mutate()</code>. The function <code>factor()</code> will turn a numeric variable into categories.</p>
+<div class="form-group shiny-input-container" style="width: 80%;">
+<label for="pclass">What is the name of the existing variable that you would like to make categorical?</label>
+<input id="pclass" type="text" class="form-control" value=""/>
+</div>
+<p>The code for this will look like:</p>
+<div id="code_3_1" class="shiny-html-output"></div>
+<p>And we can check to make sure our new variable exists and did what we hoped:</p>
+<pre class="r"><code>class(titanic$Passenger.Class)</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<p>Perhaps you think it might be convenient to have the values of your new variable be more informative than <code>1</code> and <code>2</code> and <code>3</code>. This is easy to do with <code>factor()</code>.</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="word_1">What label would you like to use for 1?</label>
+<input id="word_1" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="word_2">What label would you like to use for 2?</label>
+<input id="word_2" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="word_3">What label would you like to use for 3?</label>
+<input id="word_3" type="text" class="form-control" value=""/>
+</div></p>
+<div id="code_3_2" class="shiny-html-output"></div>
+<p>And check your dataset:</p>
+<pre class="r"><code>titanic %&gt;% select(Name, Pclass, Passenger.Class) %&gt;% head()</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Name"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Pclass"],"name":[2],"type":["int"],"align":["right"]},{"label":["Passenger.Class"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"Mr. Owen Harris Braund","2":"3","3":"Third","_rn_":"1"},{"1":"Mrs. John Bradley (Florence Briggs Thayer) Cumings","2":"1","3":"First","_rn_":"2"},{"1":"Miss. Laina Heikkinen","2":"3","3":"Third","_rn_":"3"},{"1":"Mrs. Jacques Heath (Lily May Peel) Futrelle","2":"1","3":"First","_rn_":"4"},{"1":"Mr. William Henry Allen","2":"3","3":"Third","_rn_":"5"},{"1":"Mr. James Moran","2":"3","3":"Third","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>This is your first experience with optional arguments in a function! Notice that <code>factor()</code> worked just fine with only a variable name, but that you were able to do even more with the options <code>levels</code> and <code>labels</code>.</p>
+</div>
+</div>
+<div id="section-visualizing-categorical-variables" class="section level2">
+<h2>Visualizing Categorical Variables</h2>
+<p>Data loaded? Check! Data cleaned? Check! Time for the fun stuff. Let’s begin by making some nice plots for the <em>categorical</em> variables in our dataset.</p>
+<p>We will be using a package called <code>ggplot2</code> to make all of our visualizations. This package has a very specific format for plotting.</p>
+<p>First, we tell <strong>R</strong> that we want to make a plot from a certain dataset, and we specify the <strong>aethetic</strong>, <code>aes()</code>, which determines the variables we want to visualize.</p>
+<p>Then, we add the type of plot we want, and any extra options.</p>
+<div id="section-bar-plots" class="section level3">
+<h3>Bar Plots</h3>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_var_1">What variable would you like to plot?</label>
+<input id="plot_var_1" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_dat_1">What dataset is that variable found in?</label>
+<input id="plot_dat_1" type="text" class="form-control" value=""/>
+</div><div id="code_4_1" class="shiny-html-output"></div><div id="plot_4_1" class="shiny-plot-output" style="width: 100% ; height: 400px"></div></p>
+<p>Beyond the crucial information of the dataset and the variable(s) to plot, there are also plenty of optional settings to make our image nicer.</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_title_1">Title of the plot:</label>
+<input id="plot_title_1" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_xlab_1">Label for x-axis:</label>
+<input id="plot_xlab_1" type="text" class="form-control" value=""/>
+</div><div id="fill_1" class="form-group shiny-input-radiogroup shiny-input-container">
+<label class="control-label" for="fill_1">Should the bars be different colors?</label>
+<div class="shiny-options-group">
+<div class="radio">
+<label>
+<input type="radio" name="fill_1" value="" checked="checked"/>
+<span>No</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="fill_1" value=", fill = %oi"/>
+<span>Yes</span>
+</label>
+</div>
+</div>
+</div></p>
+<p><div id="code_4_2" class="shiny-html-output"></div><div id="plot_4_2" class="shiny-plot-output" style="width: 100% ; height: 400px"></div></p>
+</div>
+</div>
+<div id="section-comparing-two-categorical-variables" class="section level2">
+<h2>Comparing two categorical variables</h2>
+<div id="section-multiple-graphs" class="section level3">
+<h3>Multiple graphs</h3>
+<p>Now suppose we wish to compare two categorical variables. One option is to simply make separate barplots for each category. We do so by adding the option <code>facet_grid()</code> to our plot. Try it below.</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_var_2_1">What variable would you like use for the bars?</label>
+<input id="plot_var_2_1" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_var_2">What variable would you like to use to separate the plots?</label>
+<input id="plot_var_2" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_title_2">Title of the plot:</label>
+<input id="plot_title_2" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_xlab_2">Label for x-axis:</label>
+<input id="plot_xlab_2" type="text" class="form-control" value=""/>
+</div><div id="fill_2" class="form-group shiny-input-radiogroup shiny-input-container">
+<label class="control-label" for="fill_2">Should the bars be different colors?</label>
+<div class="shiny-options-group">
+<div class="radio">
+<label>
+<input type="radio" name="fill_2" value="" checked="checked"/>
+<span>No</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="fill_2" value=", fill = %oi"/>
+<span>Yes</span>
+</label>
+</div>
+</div>
+</div></p>
+<p><div id="code_4_3" class="shiny-html-output"></div><div id="plot_4_3" class="shiny-plot-output" style="width: 100% ; height: 400px"></div></p>
+</div>
+<div id="section-side-by-side-graphs" class="section level3">
+<h3>Side-by-side graphs</h3>
+<p>Another option is to plot bars side-by-side, separating groups by the value of the second categorical variable. <div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_var_3_1">What variable would you like use for the bar heights?</label>
+<input id="plot_var_3_1" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_var_3_2">What variable would you like to use to separate the bars?</label>
+<input id="plot_var_3_2" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_title_3">Title of the plot:</label>
+<input id="plot_title_3" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_xlab_3">Label for x-axis:</label>
+<input id="plot_xlab_3" type="text" class="form-control" value=""/>
+</div></p>
+<p><div id="code_4_4" class="shiny-html-output"></div><div id="plot_4_4" class="shiny-plot-output" style="width: 100% ; height: 400px"></div></p>
+</div>
+<div id="section-stacked-bar-charts" class="section level3">
+<h3>Stacked Bar Charts</h3>
+<p>The last, and typically best option is to make a <strong>stacked bar chart</strong>, which combines the two categorical variables on the bars themselves. Note that these charts continue to obey the <em>area principle</em> - the area of the colored sections corresponds to the number of people in that category!</p>
+<p>Another advantage of the stacked bar chart is that it is a great alternative to a pie chart for looking at percentages. Try plotting the bar heights as percentages rather than counts. Think about what research questions might be better addressed by this approach.</p>
+<p><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_var_4_1">What variable would you like use for the bar heights?</label>
+<input id="plot_var_4_1" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_var_4_2">What variable would you to color the bar stacks?</label>
+<input id="plot_var_4_2" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_title_4">Title of the plot:</label>
+<input id="plot_title_4" type="text" class="form-control" value=""/>
+</div><div class="form-group shiny-input-container" style="width: 80%;">
+<label for="plot_xlab_4">Label for x-axis:</label>
+<input id="plot_xlab_4" type="text" class="form-control" value=""/>
+</div><div id="plot_pct" class="form-group shiny-input-radiogroup shiny-input-container">
+<label class="control-label" for="plot_pct">The height of the bars should be:</label>
+<div class="shiny-options-group">
+<div class="radio">
+<label>
+<input type="radio" name="plot_pct" value="" checked="checked"/>
+<span>Counts</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="plot_pct" value="position = &#39;fill&#39;"/>
+<span>Percentages</span>
+</label>
+</div>
+</div>
+</div></p>
+<p><div id="code_4_5" class="shiny-html-output"></div><div id="plot_4_5" class="shiny-plot-output" style="width: 100% ; height: 400px"></div></p>
+Play around with these various plots, until you find an insight that you think is interesting! 
+<script type="application/shiny-prerendered" data-context="server-start">
+
+require(learnr)
+require(ggplot2)
+require(dplyr)
+require(shiny)
+require(tidyr)
+require(httpuv)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/makeStrings.R")
+
+correct <- "<font color='red'>Correct!<\u002ffont><br><br>"
+incorrect <- "<font color='red'>Not quite right...<\u002ffont><br><br>"
+congrats <- "<font color='red'>You did it!<\u002ffont><br><br>"
+
+titanic = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic.csv')
+titanic <- titanic %>% mutate(
+  Survived = factor(Survived)
+)
+
+titanic_full <- titanic %>% mutate(
+   Family.Aboard = Siblings.Spouses.Aboard + Parents.Children.Aboard,
+   Passenger.Class = factor(Pclass, 
+                           levels = c(1,2,3), 
+                           labels = c("First", "Second", "Third"))
+)
+
+### %ni = new input (red), %oi = old input (blue)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = list("Lab 1", 1))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+output$code_1_1 <- renderText(
+        makePrintText(
+          base_string = "%ni <- read.csv('%oi')",
+          old_input = c("http://calpoly.edu/~kbodwin/data/titanic.csv"),
+          new_input = c("titanic")
+        )
+  )
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+bob <- makePrintText(
+          base_string = "%oi %>% head() \n %oi %>% nrow()",
+          old_input = c("titanic", "titanic")
+        )
+
+output$code_1_2 <- renderText(bob)
+
+output$code_1_3 <- renderText(
+        makePrintText(
+          base_string = "head(%oi) \n nrow(%oi)",
+          old_input = c("titanic", "titanic")
+        )
+  )
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+output$check_1.1.1 <- renderText(
+  if(input$a_1.1.1 == ""){
+      ""
+  }else if(input$a_1.1.1 == nrow(titanic)){
+     correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.2 <- renderText(
+  if(input$a_1.1.2 == ""){
+     ""
+  }else if(input$a_1.1.2 == 26){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.3 <- renderText(
+  if(input$a_1.1.3 == ""){
+     ""
+  }else if(input$a_1.1.3 == 8.05){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.1.4 <- renderText(
+  if(input$a_1.1.4 == ""){
+     ""
+  }else if(input$a_1.1.4 == "n"){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$code_select <- renderText(
+        makePrintText(
+          base_string = "%oi %>% select(%oi, %ni) %>% head() ",
+          old_input = c("titanic", "Name"),
+          new_input = c(input$select_var)
+        )
+  )
+
+output$output_select <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = "%oi %>% select(%oi, %ni) %>% head()",
+          old_input = c("titanic", "Name"),
+          new_input = c(input$select_var)
+    )
+   ))
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$code_filter <- renderText(
+        makePrintText(
+          base_string = "%oi %>% filter(%ni == %ni) %>% head()",
+          old_input = c("titanic"),
+          new_input = c(input$filter_var, input$filter_val)
+        )
+  )
+
+output$output_filter <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = "%oi %>% filter(%ni == %ni) %>% head()",
+          old_input = c("titanic"),
+          new_input = c(input$filter_var, input$filter_val)
+    )
+   ))
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$check_filter <- renderText(
+  if(input$a_filter == ""){
+     ""
+  }else if(input$a_filter == "Marguerite"){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+output$code_fam <- renderText(
+        makePrintText(
+          base_string = "%oi <- %oi %>% mutate( \n \t %oi = %ni + %ni \n )",
+          old_input = c("titanic", "titanic", "Family.Aboard"),
+          new_input = c(input$sib_spouse, input$parent_child)
+        )
+  )
+
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+output$code_3_1 <- renderText(
+        makePrintText(
+          base_string = "%oi <- %oi %>% mutate( \n \t %oi = factor(%ni) \n )",
+          old_input = c("titanic", "titanic", "Passenger.Class"),
+          new_input = c(input$pclass)
+        )
+  )
+
+
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+output$code_3_2 <- renderText(  
+  makePrintText(
+          base_string = "titanic <- titanic %>% mutate( \n \t %oi = factor(%oi, \n \t \t levels = c(1,2,3), \n \t \t labels = c('%ni', '%ni', '%ni')) \n )",
+          old_input = c(input$new_pclass, input$pclass),
+          new_input = c(input$word_1, input$word_2, input$word_3)
+        ))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$plot_4_1 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4_1(), 
+      new_input = c("titanic_full", input$plot_var_1)
+    )
+   ))
+})
+
+output$code_4_1 <- renderText(
+        makePrintText( 
+          base_string = bs_4_1(), 
+          new_input = c(input$plot_dat_1, input$plot_var_1)
+        )
+  )
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$plot_4_2 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4_2(), 
+      old_input = c("titanic_full", input$plot_var_1, input$plot_var_1),
+      new_input = c(input$fill_1, input$plot_title_1, input$plot_xlab_1)
+    )
+   ))
+})
+
+output$code_4_2 <- renderText(
+        makePrintText( 
+          base_string = bs_4_2(), 
+          old_input = c(input$plot_dat_1, input$plot_var_1, input$plot_var_1),
+          new_input = c(input$fill_1, input$plot_title_1, input$plot_xlab_1)
+    )
+  )
+
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$plot_4_3 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4_3(), 
+      old_input = c("titanic_full", input$plot_var_2_1),
+      new_input = c(input$plot_var_2_1, input$fill_2, input$plot_var_2, input$plot_title_2, input$plot_xlab_2)
+    )
+   ))
+})
+
+output$code_4_3 <- renderText(
+        makePrintText( 
+      base_string = bs_4_3(), 
+      old_input = c("titanic", input$plot_var_2_1),
+      new_input = c(input$plot_var_2_1, input$fill_2, input$plot_var_2, input$plot_title_2, input$plot_xlab_2)
+    )
+  )
+
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$plot_4_4 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4_4(), 
+      old_input = c("titanic_full"),
+      new_input = c(input$plot_var_3_1, input$plot_var_3_2, "position = 'dodge'", input$plot_title_3, input$plot_xlab_3)
+    )
+   ))
+})
+
+output$code_4_4 <- renderText(
+        makePrintText( 
+          base_string = bs_4_4(), 
+      old_input = c("titanic"),
+      new_input = c(input$plot_var_3_1, input$plot_var_3_2, "position = 'dodge'", input$plot_title_3, input$plot_xlab_3)
+    )
+  )
+
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+output$plot_4_5 <- renderPlot({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_4_5(), 
+      old_input = c("titanic_full"),
+      new_input = c(input$plot_var_4_1, input$plot_var_4_2, input$plot_pct, input$plot_title_4, input$plot_xlab_4)
+    )
+   ))
+})
+
+output$code_4_5 <- renderText(
+        makePrintText( 
+          base_string = bs_4_5(), 
+      old_input = c("titanic"),
+      new_input = c(input$plot_var_4_1, input$plot_var_4_2, input$plot_pct, input$plot_title_4, input$plot_xlab_4)
+    )
+  )
+
+
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap-3.3.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.0.13"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/fontawesome-all.min.js","js/fa-v4-shims.min.js"]},{"type":"character","attributes":{},"value":["css/fa-svg-with-js.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["localforage"]},{"type":"character","attributes":{},"value":["1.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/localforage"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["localforage.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.9.2.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">Lab 1: Looking at Datasets</h2>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+
+</html>
