@@ -1,0 +1,112 @@
+---
+title: "Lab 2: Quantitative Variables"
+author: "Solution"
+date: ""
+output: html_document
+---
+
+```{r setup, include=FALSE}
+### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
+knitr::opts_chunk$set(echo = TRUE, digits = 2)
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
+
+require(ggplot2)
+require(dplyr)
+require(tidyr)
+
+bball = read.table("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/cp_bball.csv", header = TRUE)
+bball <- tbl_df(bball)
+
+```
+
+## The Dataset
+
+This analysis is an exploration of a dataset containing the results of all Cal Poly's basketball games in the 2015-2016 season.  The data has been loaded and named `bball`.
+
+
+```{r}
+bball %>% head()
+bball %>% summary
+```
+
+This is an observational dataset of the 27 games Cal Poly's basketball team played in 2015-16.  The notable variables are:
+
+* `Team.Location`: A categorical, binary variable of whether the game was played at home or away
+
+* `Team.Score`:  A quantitative discrete variable, the number of points Cal Poly scored
+
+* `Opponent`:  A categorical variable giving the name of the opposing team.
+
+* `Opponent.Score`: A quantitative discrete variable, the number of points the opponent scored.
+
+* `Team.Location`: A categorical, binary variable of whether Cal Poly won or lost.
+
+## Is Cal Poly a worse than average team?
+
+An "average" team is defined to be a team that is just as likely to lose as to win a game.  We would like to determine if Cal Poly's team was average or not.  Fill in the blanks in the discussion below.  Use the code chunk below to run any code you need for calculations.
+
+```{r}
+pbinom(19, 27, 0.5)
+8/27
+```
+
+If Cal Poly was truly an average team, the probability that they win any given game is `50%`.
+
+Assume Cal Poly is an average team.  Define the random variable X = "number of games Cal Poly wins in a season".  The distribution of X is `Binomial(27, 0.5)`.  The mean of X is `13.5`.
+
+The probability that X is less than or equal to 19 is `r pbinom(19, 27, 0.5)`.
+
+
+In the 2015-16 Season, Cal Poly won `8` games and lost `19` games.  This means they won `r 8/27*100`% of their games.
+
+```{r}
+ggplot(bball, aes(x = Team.Result, fill = Team.Result)) + geom_bar() + ggtitle("Cal Poly basketball team results")
+```
+
+
+
+Cal Poly is probably a worse than average team.  We expected them to win 50% of the time, but they only won about 30% of the games.  In fact, if they were truly average, the probability of losing 19 or more games by bad luck would be only about 1%!
+
+
+## Was Cal Poly more likely to win at home than away?
+
+Perhaps Cal Poly performs better in front of a home crowd.  Let's find out.
+
+```{r}
+ggplot(bball, aes(x = Team.Location, fill = Team.Result)) + geom_bar(position = "fill") + ggtitle("Cal Poly basketball team results")
+```
+
+```{r}
+bball %>% count(Team.Location, Team.Result)
+```
+
+Cal Poly won `r 7/12*100`% of its home games and `r 3/15*100`% of its away games.
+
+Cal Poly seems to be much more likely to win at home than away.
+
+## Does Cal Poly score more at home than away?
+
+Perhaps Cal Poly scores more in front of a home crowd, regardless of wins and losses.
+
+```{r}
+ggplot(bball, aes(x = Team.Location, fill = Team.Location, y = Team.Score)) + geom_boxplot() + ggtitle("Cal Poly basketball team results")
+```
+
+```{r}
+bball %>% group_by(Team.Location) %>% summarize_at(vars(Team.Score), funs(mean, sd))
+```
+
+In Home Games, Cal Poly scored an average of `73.4` points, with a standard deviation of `10.1` points.  In Away Games, Cal Poly scored an average of `71.7` points, with a standard deviation of `11.8` points.
+
+There does not seem to be much difference in the number of points Cal Poly scores at home versus away.
+
+## Does Cal Poly truly play better at home?
+
+Consider the following argument:
+
+"Even if Cal Poly didn't score much more at home than away, they still played better.  This is because they played better defense at home, so the scores overall were lower."
+
+Make an argument in favor or against this statement.  Include *more than one* summary statistic in your analysis, and make at least one plot.
+
+For 5 points EC, include a correctly used *probability statement* in your analysis, to quantify your evidence.

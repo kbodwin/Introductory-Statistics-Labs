@@ -1,0 +1,42 @@
+---
+title: "Lab 2 Grading Guide"
+output:
+  html_document: 
+    css: style.css
+  pdf_document: default
+---
+
+## The Dataset [(13 points)]{style="float:right"}
+
+* Did the student use `head()` and `summary()` to examine the data?  [(3)]{style="float:right"}
+* Did the student use class vocabulary to describe some of the variables? [(5)]{style="float:right"}
+* Did the student discuss the dataset, mentioning at least one of: sampling method, number of observations, experimental vs observational?  [(5)]{style="float:right"}
+
+## Is Cal Poly a worse than average team? [(22 points)]{style="float:right"}
+
+* Is the distribution of X correctly identified?  [(5)]{style="float:right"}
+* Are the numbers in the blanks correct? [(12, 2 each)]{style="float:right"}
+* Is the bar plot correctly displayed, with a proper title?  [(5)]{style="float:right"}
+* Is the conclusion reasonable and well-explained?  [(5)]{style="float:right"}
+
+## Was Cal Poly more likely to win at home than away? [(17 points)]{style="float:right"}
+
+* Is there a plot that reasonably addresses the research question?  [(5)]{style="float:right"}
+* Is the plot the *best* possible evidence? [(2)]{style="float:right"}
+* Is `count()` used correctly? [(5)]{style="float:right"}
+* Is the conclusion reasonable and well-explained?  [(5)]{style="float:right"}
+
+## Does Cal Poly score more at home than away? [(19 points)]{style="float:right"}
+
+* Is there a plot that reasonably addresses the research question?  [(5)]{style="float:right"}
+* Is the plot the *best* possible evidence? [(2)]{style="float:right"}
+* Are `group_by()` and `summarize_at()` used correctly to find the numbers in the blanks? [(7)]{style="float:right"}
+* Is the conclusion reasonable and well-explained?  [(5)]{style="float:right"}
+
+## Does Cal Poly truly play better at home? [(29 points)]{style="float:right"}
+
+* Is there a plot that reasonably addresses the research question? [(8)]{style="float:right"}
+* Are there at least two summary statistics calculated? [(8, 4 each)]{style="float:right"}
+* Does the discussion accurately interpret the plot(s) and the summary statistics? [(5)]{style="float:right"}
+* Does the analysis make a convincing case to answer the research question? [(8)]{style="float:right"}
+* EC:  Does the discussion include a probability statement as evidence?  [(5 EC)]{style="float:right"}
