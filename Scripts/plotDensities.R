@@ -69,7 +69,7 @@ illustrate_norm <- function(mu, sigma, x = NA, q = NA){
     p <- p + 
       annotate("text", x = xpos, y = ypos, label = paste0(q*100, "%"), size = 7, color = "red") +
       scale_x_continuous(breaks = xbreaks, labels = xbreaks) + 
-      theme(axis.text.x = element_text(colour = xcols, size = c(rep(10, 7), 20)), panel.grid.minor = element_blank())
+      theme(axis.text.x = element_text(colour = xcols, size = c(rep(10, 7), 15)), panel.grid.minor = element_blank())
       
     
     p
