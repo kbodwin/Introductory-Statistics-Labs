@@ -147,6 +147,13 @@ textInput("a_1.1",
 
 htmlOutput("check_1.1")
 
+textInput("a_1.3",
+           "What is the area below a z-score of -1.38?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.3")
+
 
 ```
 
@@ -166,6 +173,16 @@ output$check_1.2 <- renderText(
   if(input$a_1.2 == ""){
      ""
   }else if(round(as.numeric(input$a_1.2), 2) == round(pnorm(60, mean = 67, sd = 3), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.3 <- renderText(
+  if(input$a_1.3 == ""){
+     ""
+  }else if(round(as.numeric(input$a_1.3), 2) == round(pnorm(-1.38, mean = 0, sd = 1), 2)){
       correct
   }else{
     incorrect
@@ -287,6 +304,13 @@ textInput("a_3.3",
 
 htmlOutput("check_3.3")
 
+textInput("a_3.4",
+           "What z-score has 95% below it?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_3.4")
+
 ```
 
 ```{r, context = "server"}
@@ -316,7 +340,17 @@ output$check_3.2 <- renderText(
 output$check_3.3 <- renderText(
   if(input$a_3.3 == ""){
      ""
-  }else if(round(as.numeric(input$a_3.2),2) == round(qnorm(.75, 1600, 200), 2)){
+  }else if(round(as.numeric(input$a_3.3),2) == round(qnorm(.75, 1600, 200), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_3.4 <- renderText(
+  if(input$a_3.4 == ""){
+     ""
+  }else if(round(as.numeric(input$a_3.4),2) == round(qnorm(.95, 0, 1), 2)){
       correct
   }else{
     incorrect
