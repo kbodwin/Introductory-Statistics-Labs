@@ -83,7 +83,7 @@ illustrate_t <- function(df = 1000, t_score = NA, q = NA){
   t_score = as.numeric(t_score)
   q = as.numeric(q)
   
-  if(is.na(q) & is.na(x)){
+  if(is.na(q) & is.na(t_score)){
     t_score <- 10
     q = 0
   }else if(is.na(q)){
