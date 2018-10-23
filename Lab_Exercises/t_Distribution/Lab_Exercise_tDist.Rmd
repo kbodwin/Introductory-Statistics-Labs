@@ -1,0 +1,520 @@
+---
+title: "Lab Exercise: The t-Distribution"
+output: learnr::tutorial
+tutorial:
+  id: "Lab_tDist"
+  version: 1.0
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+
+if(file.exists("Lab_Exercise_tDist.html")){
+  file.remove("Lab_Exercise_tDist.html")
+}
+
+require(learnr)
+require(ggplot2)
+require(dplyr)
+require(shiny)
+require(tidyr)
+require(httpuv)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+
+source("https://raw.githubusercontent.com/kbodwin/Introductory-Statistics-Labs/master/Scripts/makeStrings.R")
+source("https://raw.githubusercontent.com/kbodwin/Introductory-Statistics-Labs/master/Scripts/plotDensities.R")
+
+correct <- "<font color='red'>Correct!</font><br><br>"
+incorrect <- "<font color='red'>Not quite right...</font><br><br>"
+congrats <- "<font color='red'>You did it!</font><br><br>"
+
+```
+
+
+## Introduction
+
+In this exercise, we will be using **R** to calculate information about *t-scores* and the *t-distribution*.  
+
+## Area below a value
+
+Recall that for Normal random variables, `pnorm()` calculated the probability of getting less than or equal to a certain number of successes.  Similarly, `pt()` will find the probabilities for a t-distribution.  There are two extra complications, however:
+
+1. For a t-distribution, you must also supply the **degrees of freedom**.
+2. `pt()` only calculates areas on the **standard curve**; that is, areas below **t-scores**.  Thus, you must first convert the value you are interested in to a t-score.
+
+Try it below.
+
+
+```{r tscore}
+textInput("mu1",
+          "What is the mean of your random variable?",
+          value = "0",
+          width = '80%', placeholder = NULL)
+
+
+textInput("sigma1",
+          "What is the standard deviation of your random variable?",
+          value = "1",
+          width = '80%', placeholder = NULL)
+
+textInput("x1",
+          "What cutoff value do you want to find the area below?",
+          value = "0",
+          width = '80%', placeholder = NULL)
+
+bs_0 = reactive("t_score <- (%ni - %ni)/%ni \n t_score")
+
+
+```
+
+
+```{r, context="server"}
+
+output$code_0 <- renderText(
+        makePrintText(
+          base_string = bs_0(),
+          old_input = c(),
+          new_input = c(input$x1, input$mu1, input$sigma1)
+        )
+  )
+
+output$output_0 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = bs_0(),
+          old_input = c(),
+          new_input = c(input$x1, input$mu1, input$sigma1)
+    )
+   ))
+})
+
+
+output$t_score_0 <- renderText(
+        makePrintText(
+          base_string = "What is t-score of %ni, if X has a mean of %ni and a standard deviation of %ni?",
+          old_input = c(),
+          new_input = c(input$x1, input$mu1, input$sigma1)
+        )
+  )
+
+
+```
+
+Summary sentence:
+```{r}
+htmlOutput("t_score_0")
+```
+
+Code:
+```{r}
+htmlOutput("code_0")
+```
+
+Result from code:
+```{r}
+verbatimTextOutput("output_0")
+```
+
+
+
+```{r pt}
+textInput("t1",
+          "What is the t-score you calculated above?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+textInput("df1",
+          "How many degrees of freedom do you have?",
+          value = "",
+          width = '80%', placeholder = NULL)
+
+bs_1 = reactive("pt(%ni, df = %ni)")
+
+```
+
+```{r, context="server"}
+
+output$code_1 <- renderText(
+        makePrintText(
+          base_string = bs_1(),
+          old_input = c(),
+          new_input = c(input$t1, input$df1)
+        )
+  )
+
+output$output_1 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = bs_1(),
+          old_input = c(),
+          new_input = c(input$t1, input$df1)
+    )
+   ))
+})
+
+output$t_var_1 <- renderText(
+        makePrintText(
+          base_string = "The t-score is t-distributed with df = %ni \n P(t ≤ %ni) = ?",
+          old_input = c(),
+          new_input = c(input$df1, input$t1)
+        )
+  )
+
+
+output$distn_1 <- renderPlot(
+  illustrate_t(df = input$df1, t_score = input$t1)
+)
+
+```
+
+Random variable and probability statement:
+```{r}
+htmlOutput("t_var_1")
+```
+
+Code:
+```{r}
+htmlOutput("code_1")
+```
+
+Result from code:
+```{r}
+verbatimTextOutput("output_1")
+```
+
+
+Illustration:
+```{r}
+plotOutput("distn_1")
+```
+
+### Your turn
+
+In the box below, you may run any line of **R** code.  Use the box, and/or the exercise above, to answer the following questions.
+
+
+```{r ex_1.1, exercise = TRUE}
+
+```
+
+Suppose you sample 89 people and record their heights.  You find a sample mean of 67 inches and a sample standard deviation of 3 inches.  Use the code box below to calculate your answers to the following questions.  (DRAW PICTURES!)
+
+*Round your answers to 2 decimals*
+
+```{r q_1}
+textInput("a_1.2",
+           "What would be your p-value for testing the alternate hypothesis \"The true average height of humans is less than 65 inches\"?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.2")
+
+textInput("a_1.1",
+           "What is the probability that a randomly sampled person is at least 71 inches tall?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.1")
+
+textInput("a_1.3",
+           "What is the area below a z-score of -1.38?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.3")
+
+
+```
+
+```{r, context = "server"}
+
+output$check_1.1 <- renderText(
+  if(input$a_1.1 == ""){
+     ""
+  }else if(round(as.numeric(input$a_1.1),2) == round(1-pnorm(71, mean = 67, sd = 3), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.2 <- renderText(
+  if(input$a_1.2 == ""){
+     ""
+  }else if(round(as.numeric(input$a_1.2), 2) == round(pnorm(60, mean = 67, sd = 3), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.3 <- renderText(
+  if(input$a_1.3 == ""){
+     ""
+  }else if(round(as.numeric(input$a_1.3), 2) == round(pnorm(-1.38, mean = 0, sd = 1), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+```
+
+
+
+## Finding values from probabilities
+
+As we saw with the Binomial exercise, sometimes we want to ask probability questions "in reverse".  For example, we might ask "What SAT score puts someone in the 95th percentile of all scores?". (That is, what score is better than 95% of all scores.)  We could answer this via guess-and-check with `pnorm()`, but fortunately, there is a function for it in **R** called `qnorm()`.
+
+
+```{r qnorm}
+textInput("mu2",
+          "What is the mean of your Normal random variable?",
+          value = "0",
+          width = '80%', placeholder = NULL)
+
+
+textInput("sigma2",
+          "What is the standard deviation of your Normal random variable?",
+          value = "0",
+          width = '80%', placeholder = NULL)
+
+textInput("q2",
+          "We want to find the value that has an area of ____ below it.",
+          value = "0",
+          width = '80%', placeholder = NULL)
+
+bs_3 = reactive("qnorm(%ni, mean = %ni, sd = %ni)")
+
+```
+
+```{r, context="server"}
+
+output$code_3 <- renderText(
+        makePrintText(
+          base_string = bs_3(),
+          old_input = c(),
+          new_input = c(input$q2, input$mu2, input$sigma2)
+        )
+  )
+
+output$output_3 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+      base_string = bs_3(), 
+      old_input = c(),
+      new_input = c(input$q2, input$mu2, input$sigma2)
+    )
+   ))
+})
+
+output$norm_var_3 <- renderText(
+        makePrintText(
+          base_string = "X ~ Normal(%ni, %ni) \n P(X ≤ ?) = %ni",
+          old_input = c(),
+          new_input = c(input$mu2, input$sigma2, input$q2)
+        )
+  )
+
+
+output$distn_3 <- renderPlot(
+  illustrate_norm(input$mu2, input$sigma2, q = input$q2)
+)
+
+```
+
+Random variable and probability statement:
+```{r}
+htmlOutput("norm_var_3")
+```
+
+Code:
+```{r}
+htmlOutput("code_3")
+```
+
+Result:
+```{r}
+verbatimTextOutput("output_3")
+```
+
+
+Illustration:
+```{r}
+plotOutput("distn_3")
+```
+
+### Your turn
+
+Suppose SAT scores are Normally distributed with a meand of 1600 and a standard deviation of 200.
+
+```{r ex_3, exercise = TRUE}
+
+```
+
+```{r q_3}
+textInput("a_3.1",
+           "What SAT score would put someone in the 95th percentile?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_3.1")
+
+textInput("a_3.2",
+           "What SAT score is worse than 80% of all scores?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_3.2")
+
+textInput("a_3.3",
+           "What is the third quartile of SAT scores?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_3.3")
+
+textInput("a_3.4",
+           "What z-score has 95% below it?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_3.4")
+
+```
+
+```{r, context = "server"}
+
+output$check_3.1 <- renderText(
+  if(input$a_3.1 == ""){
+     ""
+  }else if(round(as.numeric(input$a_3.1),2) == round(qnorm(.95, 1600, 200), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_3.2 <- renderText(
+  if(input$a_3.2 == ""){
+     ""
+  }else if(round(as.numeric(input$a_3.2),2) == round(qnorm(.20, 1600, 200), 2)){
+      correct
+  }else if(round(as.numeric(input$a_3.2),2) == round(qnorm(.20, 1600, 200), 2)){
+    "<font color='red'>Not quite... draw a picture!</font><br><br>"
+  }else{
+    incorrect
+  }
+)
+
+output$check_3.3 <- renderText(
+  if(input$a_3.3 == ""){
+     ""
+  }else if(round(as.numeric(input$a_3.3),2) == round(qnorm(.75, 1600, 200), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_3.4 <- renderText(
+  if(input$a_3.4 == ""){
+     ""
+  }else if(round(as.numeric(input$a_3.4),2) == round(qnorm(.95, 0, 1), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+```
+
+
+
+## Challenge:  Practice predicting code
+
+A good habit to get into when coding is to "translate" your code to English in your head, and try to predict what the output will be.  This is how to figure out if you are truly asking the computer to calculate what you hoped.  (Remember - computers will almost always output *something*!  It is your responsibility as the scientist to make sure you have asked the right question.)
+
+For the following, try to guess what the output would be.  Do **not** run the code; instead, try to read it as a probability question and think through the answer.
+
+Hint: **DRAW A PICTURE** for each question!
+
+
+*Give answers to 2 decimals*
+
+
+```{r q_4}
+textInput("a_4.1",
+           "pnorm(0, mean = 0, sd = 1)",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_4.1")
+
+textInput("a_4.2",
+           "pnorm(-1, mean = 0, sd = 1)",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_4.2")
+
+textInput("a_4.3",
+           "pnorm(7, mean = 5, sd = 2)",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_4.3")
+
+
+textInput("a_4.4",
+           "qnorm(0.975, mean = 5, sd = 2)",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_4.4")
+
+```
+
+```{r, context = "server"}
+
+output$check_4.1 <- renderText(
+  if(input$a_4.1 == ""){
+     ""
+  }else if(as.numeric(input$a_4.1) == 0.5){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_4.2 <- renderText(
+   if(input$a_4.2 == ""){
+     ""
+  }else if(as.numeric(input$a_4.2) == 0.16){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_4.3 <- renderText(
+  if(input$a_4.3 == ""){
+     ""
+  }else if(as.numeric(input$a_4.3) == 0.84){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_4.4 <- renderText(
+  if(input$a_4.4 == ""){
+     ""
+  }else if(as.numeric(input$a_4.4) == 9){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+```

@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 ### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.width=5, fig.height=5)
 
 source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
 
@@ -51,19 +51,19 @@ Choose two other **categorical** variables that you would like to study.  Use th
 
 Use the code chunk below to create an appropriate plot for each of your three categorical variables.
 
-```{r plot 1 = StudentAbsenceDays, Class}
+```{r}
 
 ```
 
 [In this section, discuss your first plot.]
 
-```{r plot 2 = rasiedhand, Class}
+```{r}
 
 ```
 
 [In this section, discuss your second plot.]
 
-```{r plot 3 = Topic, Class}
+```{r}
 
 ```
 

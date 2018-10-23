@@ -168,7 +168,7 @@ textInput("plot_2_xlab",
 
 
 
-bs_2 <- reactive("ggplot(%oi, aes(x = %ni)) + geom_%oi(bins = %ni, fill = '%ni') + ggtitle('%ni') + xlab('%ni')")
+bs_2 <- reactive("ggplot(%oi, aes(x = %ni)) + geom_%oi(bins = %ni, %ni) + ggtitle('%ni') + xlab('%ni')")
 # 
 htmlOutput("code_2")
 # 
@@ -182,7 +182,7 @@ output$plot_2 <- renderPlot({
     makeEvalText(
       base_string = bs_2(), 
       old_input = c("titanic_full", "histogram"),
-      new_input = c(input$plot_2_var, input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab)
+      new_input = c(input$plot_2_var, input$plot_2_bins, paste0(", fill = '", input$plot_2_color, "'"), input$plot_2_title, input$plot_2_xlab)
     )
    ))
 })
@@ -191,7 +191,7 @@ output$code_2 <- renderText(
         makePrintText( 
       base_string = bs_2(), 
       old_input = c("titanic", "histogram"),
-      new_input = c(input$plot_2_var, input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab)
+      new_input = c(input$plot_2_var, input$plot_2_bins, paste0(", fill = '", input$plot_2_color, "'"), input$plot_2_title, input$plot_2_xlab)
     )
   )
 
@@ -219,7 +219,7 @@ radioButtons("add_density",
                
 
 
-bs_3 <- reactive("ggplot(%oi, aes(x = %oi)) + geom_%oi(%nibins = %oi, fill = '%oi') %ni+ ggtitle('%oi') + xlab('%oi')")
+bs_3 <- reactive("ggplot(%oi, aes(x = %oi)) + geom_%oi(%nibins = %oi%oi) %ni+ ggtitle('%oi') + xlab('%oi')")
 # 
 htmlOutput("code_3")
 # 
@@ -231,7 +231,7 @@ output$plot_3 <- renderPlot({
  eval(parse(text = 
     makeEvalText(
       base_string = bs_3(), 
-      old_input = c("titanic_full", input$plot_2_var, "histogram", input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab),
+      old_input = c("titanic_full", input$plot_2_var, "histogram", input$plot_2_bins, paste0(", fill = '", input$plot_2_color, "'"), input$plot_2_title, input$plot_2_xlab),
       new_input = c(input$count_density, input$add_density)
     )
    ))
@@ -240,7 +240,7 @@ output$plot_3 <- renderPlot({
 output$code_3 <- renderText(
         makePrintText( 
       base_string = bs_3(), 
-      old_input = c("titanic", input$plot_2_var, "histogram", input$plot_2_bins, input$plot_2_color, input$plot_2_title, input$plot_2_xlab),
+      old_input = c("titanic", input$plot_2_var, "histogram", input$plot_2_bins, paste0(", fill = '", input$plot_2_color, "'"), input$plot_2_title, input$plot_2_xlab),
       new_input = c(input$count_density, input$add_density)
     )
   )
