@@ -112,7 +112,7 @@ illustrate_t <- function(df = 1000, t_score = NA, q = NA){
     ypos <- dt(xpos, df = df)/3
   }else{
     xpos <- t_score - (t_score-llim)/2
-    ypos <- dnorm(xpos, df = df)*4
+    ypos <- dt(xpos, df = df)*4
   }
   
   
