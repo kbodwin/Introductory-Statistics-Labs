@@ -1,0 +1,87 @@
+---
+title: "Lab 4: Wine Quality"
+author: "YOUR NAME HERE"
+date: "October 4, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
+knitr::opts_chunk$set(echo = TRUE)
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
+
+require(ggplot2)
+require(dplyr)
+require(tidyr)
+
+wines = read.csv("http://kbodwin.web.unc.edu/files/2017/11/redWines.csv", header = TRUE)
+bball <- tbl_df(wine)
+
+```
+
+
+## Description of Dataset
+
+What chemical properties make a good wine?  In this lab, we will find out!  First, explore and summarize the dataset.
+
+```{r}
+## Explore the data
+```
+
+[Your discussion of the dataset here. Reference the file "wine_dataset_information.txt" for further background on the data.]
+
+Choose three chemical attributes of wine that you are interested in.  Use the code chunk below to `select()` only those attributes, as well as the appropriate response variable. Save this smaller dataset as `wine_sub`.  Also, `mutate` the dataset so that the variable `Wine.Quality` is a factor with values "good" and "bad".  Reference the first lab exercise for help with this step. 
+
+```{r}
+## subset
+wine_sub <- wine %>% select() %>% mutate(
+  Wine.Quality = 
+)
+```
+
+
+## Plots
+
+For each of your chosen chemical properties, make an appropriate plot comparing the good and bad wines.
+
+```{r}
+### code for plots here
+```
+
+Based on these plots, which of your three properties do you think matter for wine quality?  Which don't?
+
+## T-Tests
+
+Use code chunks and text to perform an appropriate hypothesis test for each your three chosen chemical properties, to determine which ones matter to good and bad wines.  Discuss each of the tests - what do you conclude about these chemical properties?
+
+## Confidence intervals
+
+It is not enough to simply know which chemical properties make a difference.  We also need to tell our wine chemists what values they should aim for in creating their wines.  
+
+Let's look at just the good wines, since those are the ones we want to recreate.  In the code chunk below, use `filter()` to create a datset of only the wines rated as good.  Then use `summarize_at` to find the summary statistics you need to make confidence intervals.
+
+```{r}
+# Subset of good wines only
+good_wines <- 
+  
+## summary statistics
+```
+
+This data has a [-----] degrees of freedom, so we will use a t* value of [-----] to make a 95% confidence interval.
+
+```{r}
+## calculate your t* here
+```
+
+
+For each of your 3 chemical properties, make a 95% confidence interval.  Summarize with a statment of the form:
+
+"We are 95% confident that the true mean [-----] of good wines is between [-----]  and  [-----]."
+
+```{r}
+## Show your confidence interval calculations here.
+```
+
+
+*Hint: You can use `t.test()` to automatically make confidence intervals and check your answers.  However, for full credit, you also need to create these intervals without the help of t.test(), and show all your work.*
