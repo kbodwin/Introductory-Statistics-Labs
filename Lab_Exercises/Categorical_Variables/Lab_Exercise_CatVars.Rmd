@@ -469,7 +469,7 @@ textInput("word_3",
 output$code_3_2 <- renderText(  
   makePrintText(
           base_string = "titanic <- titanic %>% mutate( \n \t %oi = factor(%oi, \n \t \t levels = c(1,2,3), \n \t \t labels = c('%ni', '%ni', '%ni')) \n )",
-          old_input = c(input$new_pclass, input$pclass),
+          old_input = c("Passenger.Class", input$pclass),
           new_input = c(input$word_1, input$word_2, input$word_3)
         ))
 ```

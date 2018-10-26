@@ -16,14 +16,14 @@ require(dplyr)
 require(tidyr)
 
 wines = read.csv("http://kbodwin.web.unc.edu/files/2017/11/redWines.csv", header = TRUE)
-bball <- tbl_df(wine)
+wines <- tbl_df(wines)
 
 ```
 
 
 ## Description of Dataset
 
-What chemical properties make a good wine?  In this lab, we will find out!  First, explore and summarize the dataset.
+What chemical properties make a good wine?  In this lab, we will find out!  First, explore and summarize the dataset `wines`.
 
 ```{r}
 ## Explore the data
@@ -35,7 +35,7 @@ Choose three chemical attributes of wine that you are interested in.  Use the co
 
 ```{r}
 ## subset
-wine_sub <- wine %>% select() %>% mutate(
+wine_sub <- wines %>% select() %>% mutate(
   Wine.Quality = 
 )
 ```
