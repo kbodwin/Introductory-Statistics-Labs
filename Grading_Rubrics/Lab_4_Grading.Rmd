@@ -1,0 +1,32 @@
+---
+title: "Lab 3 Grading Guide"
+output:
+  html_document: 
+    css: style.css
+  pdf_document: default
+---
+
+## The Dataset [(19 points)]{style="float:right"}
+
+* Did the student use `head()` and/or `summary()` to examine the data?  [(3)]{style="float:right"}
+* Did the student use class vocabulary to discuss the dataset? [(8)]{style="float:right"}
+* Did the student use `select()` and `mutate()` to create the `wine_sub` dataset?  [(8)]{style="float:right"}
+
+## Plots [(24 points)]{style="float:right"}
+
+* Did the student make an appropriate plot (boxplot or histogram) comparing good and bad wines for each of their three chosen chemical properties?  [(12, 4 each)]{style="float:right"}
+* Are the plots well labeled and titled? [(3, 1 each)]{style="float:right"}
+* Did the student reasonably discuss the three plots?  [(9, 3 each)]{style="float:right"}
+
+## T-tests [(27 points)]{style="float:right"}
+
+* Did the students use `t.test()` to perform a 2-sided, 2-sample test for each of their three chemical properties? [(15, 5 each)]{style="float:right"}
+* Did the students interpret the output correctly, in real-world terms? [(12, 4 each)]{style="float:right"}
+
+## Confidence Intervals [(29 points)]{style="float:right"}
+
+* Did the students use `filter()` to create a dataset of only good wines? [(4)]{style="float:right"}
+* Did the students use `summarize_at()` to find the necessary summary statistics? [(4)]{style="float:right"}
+* Did the students calculate the correct t-star value using `qt()`? [(4)]{style="float:right"}
+* Did the students calculate a confidence interval for each of their three chemical properties, without only using `t.test()`? [(12, 4 each, -2 each for just t.test)]{style="float:right"}
+* Did the students interpret the output correctly by filling in the provided sentence for each of the three intervals? [(6, 2 each)]{style="float:right"}
