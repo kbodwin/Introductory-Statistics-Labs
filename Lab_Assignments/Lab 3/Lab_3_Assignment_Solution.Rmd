@@ -1,0 +1,152 @@
+---
+title: "Lab 3: The Normal Distribution"
+author: "YOUR NAME HERE"
+date: "October 4, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
+knitr::opts_chunk$set(echo = TRUE)
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
+
+require(ggplot2)
+require(dplyr)
+require(tidyr)
+
+bball = read.csv("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/bball.csv", header = TRUE)
+bball <- tbl_df(bball)
+
+```
+
+SETUP:  What is your birthday?  Replace "0" with your birthday below.  For example, my birthday is April 2nd, so I will put "402".
+
+```{r}
+set.seed(402)
+```
+
+
+## The Dataset
+
+This analysis is an exploration of a dataset containing the results of ALL college basketball games in the 2015-2016 season. (Not just Cal Poly's games!). The data has been loaded and named `bball`.
+
+
+```{r}
+bball %>% head()
+bball %>% summary()
+```
+
+[This is an observational dataset of all college basketball games.  It includes the teams that played, their scores, and whether the game was home or away for the first team listed.]
+
+## Checking Normality
+
+Use the code chunk below to make a histogram of the variable `Team.Score`.  Include an estimated density in this plot.  (Hint:  Refer back to the "Histograms" section of the Quantitative Variables lab exercise.)
+
+```{r}
+ggplot(bball, aes(x = Team.Score)) + geom_histogram(fill = "blue", bins = 40, aes(y = ..density..)) + geom_density(size = 2)
+```
+
+Do you think the random variable "Number of points scored by a college basketball team" is Normal?  Why or why not?
+
+
+[Yep, the histogram looks like a bell curve!]
+
+
+## Normal probabilities and evidence
+
+In this data, the mean number of points scored by a single team in a college basketball game is [72.5].  The standard deviation is [13.1].
+
+```{r}
+bball %>% summarize_at(vars(Team.Score), funs(mean, sd))
+pnorm(52, 72.5, 13.1)
+```
+
+Let us assume that this dataset is so large, it is *almost* the whole population.  We will go ahead and assume that the numbers above are our **parameters**.  
+For a Normally distributed random variable, with the mean and standard deviation given above, the probability of observing a value at or below 52 is [5.88%].
+
+
+### UCSB vs. UC Irvine
+
+On January 16, 2016,  UC Santa Barbara lost to UC Irvine.  Ha.  Those losers. Use the code box to fill in the blanks.
+
+```{r}
+bball %>% filter(Team == "UC-Santa Barbara", Opponent == "UC-Irvine")
+bball %>% count(Team.Score <= 52)
+649/nrow(bball)
+```
+
+In the game on January 16, 2016, UCSB scored [52] points.  In the 2015-16 season, [5.57]% of all team scores were below what UCSB scored on January 16th.
+
+
+1.  UCSB is stored as "UC-Santa Barbara" in this dataset, and Irvine is stored as "UC-Irvine"
+2.  Remember `filter()` from the first Lab Exercise.  You can filter by categorical variables (e.g. `Sex == "female"`) or by quantitative variables (e.g. `Fare > 12.5`)
+3.  Remember `nrow()` from the first Lab Exercise.
+
+
+How does your answer compare to the Normal probability you calculated above?  Does this make you think that team scores are normally distributed?
+
+
+[Actual observed percent was close to the Normal probability - makes sense to use Normal distribution as approximation.]
+
+
+Is there evidence that UC Santa Barbara played unusually badly in the game on January 16th?  Why or why not?
+
+
+[Yep - about 95% of the time, teams scored more than UCSB did in that game.]
+
+
+## Samples
+
+Run the code below to randomly sample 27 games and find the mean.
+
+```{r}
+bball %>% sample_n(27) %>% summary()
+```
+
+Assuming team score has a Normal distribution, how lucky did you get?  That is, what percent of the class do you think got a lower sample mean than you?
+
+```{r}
+pnorm(69.48, mean = 72.5, sd = 13.1/sqrt(27))
+```
+
+
+[Only 11% got less than me - mine was very unlucky!]
+
+## Cal Poly's woes
+
+Complete the code below to make a dataset called "cal_poly" that contains only Cal Poly's games.
+
+```{r}
+cal_poly <- bball %>% filter(Team == "Cal Poly")
+```
+
+How good or bad of a team was Cal Poly in 2015-16, based on the average number of points they scored per game?  Make a conclusion using a Normal probability calculation.
+
+```{r}
+cal_poly %>% summary()
+
+pnorm(72.37, mean = 72.5, sd = 13.1/sqrt(30))
+```
+
+[There is a 47.8% chance of a random sample of 30 games having a lower average score than 72.37.  Thus, Cal Poly is not particularly unusual in their scoring.]
+
+
+
+
+## Home versus Away
+
+
+Many sports fans believe that teams tend to play better when they are in their home arena, perhaps because they are more comfortable there or because they are energized by their fans.  This idea is called "Home Court Advantage".  We explored this concept for only Cal Poly in Lab 2.
+
+Using this larger dataset, do you think there is any evidence of Home Court Advantage?  Be creative - think about different ways you might measure if a team is playing "better" at home.  For example, how could you use this dataset to check if the Home team won more often than the Away team?
+
+Write up your answer - including any plots you might like to create - in a way that would be understandable and interesting to someone outside this class.  Your answer should include at least one probability statement!
+
+```{r}
+### Your code here
+```
+
+[YOUR ANSWER HERE]
+
+
