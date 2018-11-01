@@ -111,7 +111,7 @@ output$output_1 <- renderPrint({
    ))
 })
 
-alt1 <- reactive(switch(input$alt_hypo_1, "two.sided" = "not equal to", "greater than" = "greater", "less" = "less than"))
+alt1 <- reactive(switch(input$alt_hypo_1, "two.sided" = "not equal to", "greater" = "greater than", "less" = "less than"))
 
 #df <- reactive(eval(parse(paste0("length(titanic$", input$var_1, ") - 1"))))
 
@@ -119,7 +119,7 @@ output$hypos_1 <- renderText(
         makePrintText(
           base_string = "H0: The true mean of %ni is equal to %ni.\n  Ha: The true mean of %ni is %ni %ni.",
           old_input = c(),
-          new_input = c(input$var_1, input$null_1, input$var_1, alt1() , input$null_1)
+          new_input = c(input$var_1, input$null_1, input$var_1, alt1(), input$null_1)
         )
   )
 
@@ -419,7 +419,7 @@ htmlOutput("check_2.6")
 
 ```{r, context = "server"}
 
-test2 <- reactive(t.test(Age ~ Sex, data = titanic, mu = 30, alternative = "less"))
+test2 <- reactive(t.test(Age ~ Sex, data = titanic, alternative = "two.sided"))
 
 output$check_2.1 <- renderText(
   if(input$a_2.1 == ""){
@@ -456,7 +456,7 @@ output$check_2.3 <- renderText(
 output$check_2.4 <- renderText(
   if(input$a_2.4 == ""){
      ""
-  }else if(round(as.numeric(input$a_2.4), 3) == round(test()$p.value, 3)){
+  }else if(round(as.numeric(input$a_2.4), 3) == round(test2()$p.value, 3)){
       correct
   }else{
     incorrect
@@ -485,3 +485,214 @@ output$check_2.6 <- renderText(
 ```
 
 
+## Paired t-tests
+
+Now explore using `t.test()` to perform hypothesis tests of paired data.
+
+```{r, echo=FALSE}
+textInput("var_3_1", 
+          "Which QUANTITATIVE variable is our first measurement?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("var_3_2", 
+          "Which QUANTITATIVE variable is our second measurement?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+
+radioButtons("alt_hypo_3",
+             "Under the alternate hypothesis, the true mean difference is",
+             choices = c("greater than 0." = "greater", 
+                         "less than 0." = "less",
+                         "not equal to 0." = "two.sided")
+)
+
+
+
+
+bs_3 <- reactive("with(%oi, t.test(%ni, %ni, alternative = '%ni', %oi))")
+
+```
+
+```{r, context="server"}
+
+output$code_3 <- renderText(
+        makePrintText(
+          base_string = bs_3(),
+          old_input = c("titanic", "paired = TRUE"),
+          new_input = c(input$var_3_1, input$var_3_2, input$alt_hypo_3)
+        )
+  )
+
+output$output_3 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = bs_3(),
+          old_input = c("titanic", "paired = TRUE"),
+          new_input = c(input$var_3_1, input$var_3_2, input$alt_hypo_3)
+    )
+   ))
+})
+
+alt3 <- reactive(switch(input$alt_hypo_3, "two.sided" = "not equal to", "greater" = "greater than", "less" = "less than"))
+
+output$hypos_3 <- renderText(
+        makePrintText(
+          base_string = "H0: The true mean difference betweeen %ni and %ni is equal to 0.\n  Ha: The true mean difference of %ni and %ni is %ni 0.",
+          old_input = c(),
+          new_input = c(input$var_3_1, input$var_3_2, input$var_3_1, input$var_3_2, alt3())
+        )
+  )
+
+```
+
+Hypotheses:
+```{r}
+htmlOutput("hypos_3")
+```
+
+Code:
+```{r}
+htmlOutput("code_3")
+```
+
+Result from code:
+```{r}
+verbatimTextOutput("output_3")
+```
+
+### Practice
+
+Use this data to test whether the passengers on the Titanic had more Siblings/Spouses aboard or more Parents/Children aboard.  Round answers to the nearest 2 decimals, except round the p-value to the nearest 3 decimals.
+
+```{r ex_3, exercise = TRUE}
+
+```
+
+```{r q_3}
+
+textInput("a_3.1",
+           "What sample mean did we observe for the difference between Siblings/Spouses aboard and Parents/Children aboard?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_3.1")
+
+# textInput("a_3.2",
+#            "What sample mean did we observe for the number of Parents/Children?",
+#            value = "",
+#            width = '80%', placeholder = NULL)
+# 
+# htmlOutput("check_3.2")
+
+
+textInput("a_3.3",
+           "What was the t-score for this test?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_3.3")
+
+
+
+textInput("a_3.4",
+           "What was the p-value of this test?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_3.4")
+
+
+radioButtons("a_3.5",
+           "At the 0.05 level, we conclude that",
+           choices = c(
+               "There is not enough evidence to make a conclusion." = "no3",
+             "There is evidence that passengers had more Siblings/Spouses aboard." = "yes",
+              "There is evidence that passengers had more Parents/Children aboard." = "no2"
+           )
+)
+
+htmlOutput("check_3.5")
+
+radioButtons("a_3.6",
+           "Will a 95% confidence interval for the true mean difference of Siblings/Spouses versus Parents/Children contain 0?",
+           choices = c(
+             "No way to tell" = "na",
+             "Yes" = "yes",
+              "No" = "no")
+)
+
+htmlOutput("check_3.6")
+
+
+```
+
+```{r, context = "server"}
+
+test3 <- reactive(with(titanic, t.test(Siblings.Spouses.Aboard, Parents.Children.Aboard, alternative = "two.sided", paired = TRUE)))
+
+output$check_3.1 <- renderText(
+  if(input$a_3.1 == ""){
+     ""
+  }else if(round(as.numeric(input$a_3.1),2) == round(mean(titanic$Siblings.Spouses.Aboard - titanic$Parents.Children.Aboard), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+
+# output$check_3.2 <- renderText(
+#   if(input$a_3.2 == ""){
+#      ""
+#   }else if(round(as.numeric(input$a_3.2),2) == round(mean(titanic$Parents.Children.Aboard), 2)){
+#       correct
+#   }else{
+#     incorrect
+#   }
+# )
+
+output$check_3.3 <- renderText(
+  if(input$a_3.3 == ""){
+     ""
+  }else if(round(as.numeric(input$a_3.3), 2) == round(test3()$statistic, 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+
+output$check_3.4 <- renderText(
+  if(input$a_3.4 == ""){
+     ""
+  }else if(round(as.numeric(input$a_3.4), 3) == round(test3()$p.value, 3)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_3.5 <- renderText(
+  if(input$a_3.5 == ""){
+     ""
+  }else if(input$a_3.5 == "yes"){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_3.6 <- renderText(
+  if(input$a_3.6 == ""){
+     ""
+  }else if(input$a_3.6 == "no"){
+      correct
+  }else{
+    incorrect
+  }
+)
+```
