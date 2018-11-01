@@ -30,6 +30,7 @@ incorrect <- "<font color='red'>Not quite right...</font><br><br>"
 congrats <- "<font color='red'>You did it!</font><br><br>"
 
 titanic = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic.csv')
+
 titanic <- titanic %>% mutate(
   Survived = factor(Survived)
 )
