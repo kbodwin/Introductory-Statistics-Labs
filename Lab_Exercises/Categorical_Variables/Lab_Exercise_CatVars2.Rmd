@@ -9,8 +9,8 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 
-if(file.exists("Lab_Exercise_CatVars.html")){
-  file.remove("Lab_Exercise_CatVars.html")
+if(file.exists("Lab_Exercise_CatVars2.html")){
+  file.remove("Lab_Exercise_CatVars2.html")
 }
 
 require(learnr)
