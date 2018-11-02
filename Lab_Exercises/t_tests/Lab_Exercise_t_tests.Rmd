@@ -2,7 +2,7 @@
 title: "Lab Exercise: t-tests and Confidence Intervals"
 output: learnr::tutorial
 tutorial:
-  id: "Lab_Summaries"
+  id: "Lab_ttests"
   version: 1.0
 runtime: shiny_prerendered
 ---
