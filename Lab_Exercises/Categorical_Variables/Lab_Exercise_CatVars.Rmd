@@ -2,8 +2,8 @@
 title: "Lab Exercise: Categorical Variables"
 output: learnr::tutorial
 tutorial:
-  id: "Lab 1"
-  version: 1.0
+  id: "Lab_catvars"
+  version: 2.0
 runtime: shiny_prerendered
 ---
 
