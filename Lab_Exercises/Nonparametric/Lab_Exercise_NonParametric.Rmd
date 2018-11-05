@@ -107,7 +107,9 @@ textInput("num_1",
 
 
 
-bs_1 <- reactive("num_lived <- sum(%oi$%ni == '%ni') \n print(num_lived) \n 1-pbinom(num_lived, size = %ni, p = 0.5)")
+bs_1 <- reactive("num_lived <- sum(%oi$%ni == '%ni')
+print(num_lived) 
+1-pbinom(num_lived, size = %ni, p = 0.5)")
 
 ```
 
