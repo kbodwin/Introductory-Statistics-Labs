@@ -1,0 +1,181 @@
+---
+title: "Lab 5: "
+author: "YOUR NAME HERE"
+date: "October 4, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
+knitr::opts_chunk$set(echo = TRUE)
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
+
+require(ggplot2)
+require(dplyr)
+require(tidyr)
+require(reshape2)
+
+
+data(french_fries)
+french_fries <- french_fries %>% filter(subject == 10, rep == 1, treatment != "3") %>% select(-subject, -rep, -time)
+
+```
+
+
+## Description of Dataset
+
+Today's dataset is about French Fries.  Mmmmm.  Here is what the authors of the dataset have to say about it:
+
+```
+This data was collected from a sensory experiment conducted at Iowa State University in 2004. The investigators were interested in the effect of using two different fryer oils had on the taste of the fries.
+
+Variables:
+
+treatment (type of oil),
+
+potato-y flavour,
+
+buttery flavour,
+
+grassy flavour,
+
+rancid flavour,
+
+painty flavour
+```
+
+```{r}
+## Explore the data
+```
+
+[Briefly discuss this dataset here]
+
+## Potatoey-ness
+
+Suppose we wish to study the differences between the two oil treatments.
+
+### 1
+
+Conduct an appropriate test for whether Oil Treatment 1 results in fries that are more or less "potatoey" than Oil Treatment 2.  You may assume, for now, that "potato-ness" is Normally distributed.
+
+```{r}
+## Your test here
+```
+
+[Discuss your test here.]
+
+### 2
+
+Run the following code to make a QQ plot for the "potato-ness" of a fry.  Then add to it to also make a histogram of potatoeyness.
+
+```{r}
+ggplot(french_fries, aes(sample = potato)) + geom_qq()
+
+# your code for a histogram
+```
+Comment on this QQ plot and histogram.  What did you learn?
+
+
+### 3
+
+Now assume that "potato-ness" is *not* Normally distributed.  Conduct an appropriate test for whether Oil Treatment 1 results in fries that are more or less "potatoey" than Oil Treatment 2. 
+
+
+```{r}
+## Your test here
+```
+
+[Discuss your test here.]
+
+## Do potatoes taste like potatoes?
+
+It seems very strange to me that a french fry, which is made of a potato, would not be rated as tasting like "potato".  Let's look at whether or not each fry was rated as potatoey.
+
+```{r}
+french_fries <- french_fries %>% mutate(
+  is.potato = potato > 0
+)
+```
+
+### 1
+
+Alter the code below to use `count()` to find out how many fries were rated as potatoey.
+
+```{r}
+french_fries %>% count()
+```
+
+There were [-----] fries rated "potato" and [----] fries not rated "potato"
+
+### 2
+
+If fries are equally likely to be rated potatoey as not, what is the distribution of the random variable
+
+X = number of fries out of 20 that are rated as potatoey
+
+
+[Your answer here]
+
+### 3
+
+If fries are equally likely to be rated potatoey as not, how unlikely is it to see as many fries (or more) rated "potato" as we saw in this dataset?
+
+```{r}
+# your calculation here
+```
+
+[Discuss your answer.  What did you learn about potatoeyness of fries?]
+
+
+## Grassy or Painty?
+
+Is a fry from Oil Treatment 1 more likely to be rated higher on the "painty" score or the "grassy" score?  Let's filter our dataset down to only Treatment 1 to find out.
+
+
+```{r}
+fries_1 <- french_fries %>% filter(treatment == 1)
+
+```
+
+### 1
+
+Assume ratings of grassyness and paintyness are Normally distributed, and do an appropriate test.
+
+```{r}
+
+# your test here
+```
+
+[Discuss your test here.]
+
+### 2
+
+Make a qqplot and histogram, and comment on them.
+
+```{r}
+# Your code for plots here
+```
+
+
+### 3
+Now do NOT assume Normality, and do an appropriate test.
+
+```{r}
+
+# your test here
+```
+
+[Discuss your test here.]
+
+
+## Rancid Fries???
+
+Discuss the relationship between how "rancid" a fry is rated, and which oil treatment was used.  Be sure to justify your approach, interpret your results, and create at least one plot to support your answer.
+
+```{r}
+# Your code here
+```
+
+[Your discussion here.]
+
