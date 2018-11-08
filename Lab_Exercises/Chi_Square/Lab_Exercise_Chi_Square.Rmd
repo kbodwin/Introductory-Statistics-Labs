@@ -22,7 +22,7 @@ require(httpuv)
 require(tibble)
 
 if(!require(fmsb)){
-  install.packages("fmsb")
+  install.packages("fmsb", repos = "https://cloud.r-project.org")
 }
 
 require(fmsb)
