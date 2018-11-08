@@ -21,11 +21,11 @@ require(tidyr)
 require(httpuv)
 require(tibble)
 
-if(!require(fmsb)){
-  install.packages("fmsb", repos = "https://cloud.r-project.org")
-}
-
-require(fmsb)
+# if(!require(fmsb)){
+#   install.packages("fmsb", repos = "https://cloud.r-project.org")
+# }
+# 
+# require(fmsb)
 
 knitr::opts_chunk$set(echo = FALSE)
 
@@ -447,156 +447,156 @@ output$check_2.3 <- renderText(
 ```
 
 
-## Relative Risk
+<!-- ## Relative Risk -->
 
-Now explore using `riskratio()` to perform a hypothesis test about gender and survival on the titanic.  You may need to use the code box below to find some of your inputs.
+<!-- Now explore using `riskratio()` to perform a hypothesis test about gender and survival on the titanic.  You may need to use the code box below to find some of your inputs. -->
 
-Note:  By default, this function will calculate p-values for the alternate hypothesis "The risk ratio is greater than one."
+<!-- Note:  By default, this function will calculate p-values for the alternate hypothesis "The risk ratio is greater than one." -->
 
-```{r ex_4_1, exercise = TRUE}
+<!-- ```{r ex_4_1, exercise = TRUE} -->
 
-```
+<!-- ``` -->
 
-```{r, echo=FALSE}
-textInput("count4_1_1", 
-          "How many women are there in this dataset?", 
-          value = "", 
-          width = '80%', 
-          placeholder = NULL)
+<!-- ```{r, echo=FALSE} -->
+<!-- textInput("count4_1_1",  -->
+<!--           "How many women are there in this dataset?",  -->
+<!--           value = "",  -->
+<!--           width = '80%',  -->
+<!--           placeholder = NULL) -->
 
-textInput("count4_1_2", 
-          "How many women in this dataset did NOT survive the sinking?", 
-          value = "", 
-          width = '80%', 
-          placeholder = NULL)
+<!-- textInput("count4_1_2",  -->
+<!--           "How many women in this dataset did NOT survive the sinking?",  -->
+<!--           value = "",  -->
+<!--           width = '80%',  -->
+<!--           placeholder = NULL) -->
 
-textInput("count4_2_1", 
-          "How many men are there in this dataset?", 
-          value = "", 
-          width = '80%', 
-          placeholder = NULL)
+<!-- textInput("count4_2_1",  -->
+<!--           "How many men are there in this dataset?",  -->
+<!--           value = "",  -->
+<!--           width = '80%',  -->
+<!--           placeholder = NULL) -->
 
-textInput("count4_2_2", 
-          "How many men in this dataset did NOT survive the sinking?", 
-          value = "", 
-          width = '80%', 
-          placeholder = NULL)
-
-
-
-bs_4 <- reactive("riskratio(%ni, %ni, %ni, %ni)")
-
-```
-
-```{r, context="server"}
-
-output$code_4 <- renderText(
-        makePrintText(
-          base_string = bs_4(),
-          old_input = c(),
-          new_input = c(input$count4_1_2, input$count4_2_2, input$count4_1_1, input$count4_2_1)
-        )
-  )
-
-output$output_4 <- renderPrint({
- eval(parse(text = 
-    makeEvalText(
-          base_string = bs_4(),
-          old_input = c(),
-          new_input = c(input$count4_1_2, input$count4_2_2, input$count4_1_1, input$count4_2_1)
-    )
-   ))
-})
-
-
-```
-
-Code:
-```{r}
-htmlOutput("code_4")
-```
-
-Result from code:
-```{r}
-verbatimTextOutput("output_4")
-```
-
-
-### Practice
-
-Suppose you want to test the hypothesis that men were more likely to die on the titanic than women.  Use the code box below to answer the questions.
-
-```{r ex_4, exercise = TRUE}
-
-```
-
-```{r q_4}
-
-
-textInput("a_4.1",
-           "What was the test statistic?",
-           value = "",
-           width = '80%', placeholder = NULL)
-
-htmlOutput("check_4.1")
+<!-- textInput("count4_2_2",  -->
+<!--           "How many men in this dataset did NOT survive the sinking?",  -->
+<!--           value = "",  -->
+<!--           width = '80%',  -->
+<!--           placeholder = NULL) -->
 
 
 
-textInput("a_4.2",
-           "What was the p-value of this test?",
-           value = "",
-           width = '80%', placeholder = NULL)
+<!-- bs_4 <- reactive("riskratio(%ni, %ni, %ni, %ni)") -->
 
-htmlOutput("check_4.2")
+<!-- ``` -->
 
+<!-- ```{r, context="server"} -->
 
-radioButtons("a_4.3",
-           "At the 0.05 level, we conclude that",
-           choices = c(
-             "Women were more likely to die on the Titanic than men." = "no1",
-              "Men were more likely to die on the Titanic than women." = "yes",
-             "Women and men were not equally likely to die on the Titanic." = "no2",
-              "There was not strong evidence of a difference in genders and survival." = "no3")
-)
+<!-- output$code_4 <- renderText( -->
+<!--         makePrintText( -->
+<!--           base_string = bs_4(), -->
+<!--           old_input = c(), -->
+<!--           new_input = c(input$count4_1_2, input$count4_2_2, input$count4_1_1, input$count4_2_1) -->
+<!--         ) -->
+<!--   ) -->
 
-htmlOutput("check_4.3")
-
-
-```
-
-```{r, context = "server"}
-
-rr <- reactive(riskratio(464, 81, 464+109, 81+233))
-
-output$check_4.1 <- renderText(
-  if(input$a_4.1 == ""){
-     ""
-  }else if(round(as.numeric(input$a_2.1),2) == round(rr()$estimate, 2)){
-      correct
-  }else{
-    incorrect
-  }
-)
+<!-- output$output_4 <- renderPrint({ -->
+<!--  eval(parse(text =  -->
+<!--     makeEvalText( -->
+<!--           base_string = bs_4(), -->
+<!--           old_input = c(), -->
+<!--           new_input = c(input$count4_1_2, input$count4_2_2, input$count4_1_1, input$count4_2_1) -->
+<!--     ) -->
+<!--    )) -->
+<!-- }) -->
 
 
-output$check_4.2 <- renderText(
-  if(input$a_4.2 == ""){
-     ""
-  }else if(round(as.numeric(input$a_2.2),2) == round(rr()$p.value, 2)){
-      correct
-  }else{
-    incorrect
-  }
-)
+<!-- ``` -->
 
-output$check_4.3 <- renderText(
-  if(input$a_4.3 == ""){
-     ""
-  }else if(input$a_4.3 == "yes"){
-      correct
-  }else{
-    incorrect
-  }
-)
+<!-- Code: -->
+<!-- ```{r} -->
+<!-- htmlOutput("code_4") -->
+<!-- ``` -->
 
-```
+<!-- Result from code: -->
+<!-- ```{r} -->
+<!-- verbatimTextOutput("output_4") -->
+<!-- ``` -->
+
+
+<!-- ### Practice -->
+
+<!-- Suppose you want to test the hypothesis that men were more likely to die on the titanic than women.  Use the code box below to answer the questions. -->
+
+<!-- ```{r ex_4, exercise = TRUE} -->
+
+<!-- ``` -->
+
+<!-- ```{r q_4} -->
+
+
+<!-- textInput("a_4.1", -->
+<!--            "What was the test statistic?", -->
+<!--            value = "", -->
+<!--            width = '80%', placeholder = NULL) -->
+
+<!-- htmlOutput("check_4.1") -->
+
+
+
+<!-- textInput("a_4.2", -->
+<!--            "What was the p-value of this test?", -->
+<!--            value = "", -->
+<!--            width = '80%', placeholder = NULL) -->
+
+<!-- htmlOutput("check_4.2") -->
+
+
+<!-- radioButtons("a_4.3", -->
+<!--            "At the 0.05 level, we conclude that", -->
+<!--            choices = c( -->
+<!--              "Women were more likely to die on the Titanic than men." = "no1", -->
+<!--               "Men were more likely to die on the Titanic than women." = "yes", -->
+<!--              "Women and men were not equally likely to die on the Titanic." = "no2", -->
+<!--               "There was not strong evidence of a difference in genders and survival." = "no3") -->
+<!-- ) -->
+
+<!-- htmlOutput("check_4.3") -->
+
+
+<!-- ``` -->
+
+<!-- ```{r, context = "server"} -->
+
+<!-- rr <- reactive(riskratio(464, 81, 464+109, 81+233)) -->
+
+<!-- output$check_4.1 <- renderText( -->
+<!--   if(input$a_4.1 == ""){ -->
+<!--      "" -->
+<!--   }else if(round(as.numeric(input$a_2.1),2) == round(rr()$estimate, 2)){ -->
+<!--       correct -->
+<!--   }else{ -->
+<!--     incorrect -->
+<!--   } -->
+<!-- ) -->
+
+
+<!-- output$check_4.2 <- renderText( -->
+<!--   if(input$a_4.2 == ""){ -->
+<!--      "" -->
+<!--   }else if(round(as.numeric(input$a_2.2),2) == round(rr()$p.value, 2)){ -->
+<!--       correct -->
+<!--   }else{ -->
+<!--     incorrect -->
+<!--   } -->
+<!-- ) -->
+
+<!-- output$check_4.3 <- renderText( -->
+<!--   if(input$a_4.3 == ""){ -->
+<!--      "" -->
+<!--   }else if(input$a_4.3 == "yes"){ -->
+<!--       correct -->
+<!--   }else{ -->
+<!--     incorrect -->
+<!--   } -->
+<!-- ) -->
+
+<!-- ``` -->
