@@ -1,0 +1,58 @@
+---
+title: "Lab 5: "
+author: "YOUR NAME HERE"
+date: "October 4, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
+knitr::opts_chunk$set(echo = TRUE)
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
+
+require(ggplot2)
+require(dplyr)
+require(tidyr)
+require(reshape2)
+require(fmsb)
+
+data("HairEyeColor")
+
+HairEyeColor <- HairEyeColor %>% tbl_df()
+
+hair_eye <- array(unlist(apply(HairEyeColor, 1, function(x) rep(x[1:3], times = as.integer(x[4])))), dim = c(3,sum(HairEyeColor$n)))
+
+rm(HairEyeColor)
+
+hair_eye = data.frame(t(hair_eye))
+names(hair_eye) = c("Hair.Color", "Eye.Color", "Gender")
+
+set.seed(131)
+hair_eye <- hair_eye %>% sample_n(nrow(hair_eye))
+
+```
+
+
+The dataset `hair_eye` contains hair color, eye color, and gender for several Statistics students.  
+
+Use this dataset to discover something about hair color, eye color, and/or gender.  Your discussion should be thorough but brief - your knitted html should be only 1-2 pages.
+
+Your discussion should include:
+- A general overview and summary of the dataset.
+- A statement of at least one clear research question.
+- A plot that addresses your research question. (Hint: See the "Categorical Variables" exercise.)
+- A Chi-Squared test that addresses your research question.  You should clearly state your hypotheses and your conclusion.
+- A discussion of conditional proportions that address your research question.
+- A clear overall conclusion.
+
+For extra credit, also include:
+- A discussion involving odds.  (Up to 5 points)
+- A Relative Risk test and interpretation.  (Up to 10 points.)
+
+```{r}
+## A code chunk
+```
+
+
+

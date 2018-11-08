@@ -1,0 +1,597 @@
+---
+title: "Lab Exercise: Chi-square and risk ratios"
+output: learnr::tutorial
+tutorial:
+  id: "Lab_chisq"
+  version: 2.0
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+
+if(file.exists("Lab_Exercise_Chi_Square_RR.html")){
+  file.remove("Lab_Exercise_Chi_Square_RR.html")
+}
+
+require(learnr)
+require(ggplot2)
+require(dplyr)
+require(shiny)
+require(tidyr)
+require(httpuv)
+require(tibble)
+require(fmsb)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+tags$style(type="text/css",
+         ".shiny-output-error { visibility: hidden; }",
+         ".shiny-output-error:before { visibility: hidden; }"
+)
+
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/makeStrings.R")
+
+correct <- "<font color='red'>Correct!</font><br><br>"
+incorrect <- "<font color='red'>Not quite right...</font><br><br>"
+congrats <- "<font color='red'>You did it!</font><br><br>"
+
+titanic = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic.csv')
+
+titanic <- titanic %>% mutate(
+   Family.Aboard = Siblings.Spouses.Aboard + Parents.Children.Aboard,
+     Survived = factor(Survived,
+                    levels = c(0,1),
+                    labels = c("Died", "Lived")),
+  Passenger.Class = factor(Pclass, 
+                           levels = c(1,2,3), 
+                           labels = c("First", "Second", "Third"))
+)
+### %ni = new input (red), %oi = old input (blue)
+```
+
+
+## Introduction
+
+By now, you no doubt had the `titanic` dataset nearly memorized!  But just in case, here is some information for your reference in this exercise.
+
+```{r, echo = TRUE}
+titanic %>% head()
+titanic %>% summary()
+```
+
+
+## Two-Way Tables
+
+Let's begin by practicing creating two-way tables, and calculating their important summary distributions, using **R**.  In the `Categorical Variables` Lab Exercise, you learned to use `count()` to find the number of observations in each category of one or more variables.  We will now use `spread()` to reformat this information into a two-way table.  Note that we `spread()` the information horizontally, by the **explanatory** variable.
+
+
+```{r, echo=FALSE}
+textInput("var_1", 
+          "What categorical variable will be your EXPLANATORY variable?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("var_2", 
+          "What categorical variable will be your RESPONSE variable?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+bs_1 <- reactive("%oi %>% count(%ni, %ni) %>% spread(%ni, n)")
+
+```
+
+```{r, context="server"}
+
+output$code_1 <- renderText(
+        makePrintText(
+          base_string = bs_1(),
+          old_input = c("titanic"),
+          new_input = c(input$var_1, input$var_2, input$var_1)
+        )
+  )
+
+output$output_1 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = bs_1(),
+          old_input = c("titanic"),
+          new_input = c(input$var_1, input$var_2, input$var_1)
+    )
+   ))
+})
+
+```
+
+Code:
+```{r}
+htmlOutput("code_1")
+```
+
+Result from code:
+```{r}
+verbatimTextOutput("output_1")
+```
+
+### Row and column sums
+
+Now that we have found the two-way table of counts, we are probably interested in filling in the totals as well.  **R** makes this easy with `sum()`, `rowSums()` and `colSums()`.  Try it below.
+
+Note: we first use `select()` to let **R** know that we want to ignore the row labels, and just find the sum of the counts.
+
+```{r}
+
+radioButtons("sum_type",
+           "We would like to find the",
+           choices = c(
+             "row totals" = "rowSums",
+              "column totals" = "colSums",
+              "overall total" = "sum")
+)
+
+bs_2 <- reactive("tw <- %oi %>% count(%ni, %ni) %>% spread(%ni, n)
+                 tw %>% select(-%ni) %>% %ni()")
+
+```
+
+
+```{r, context="server"}
+
+output$code_2 <- renderText(
+        makePrintText(
+          base_string = bs_2(),
+          old_input = c("titanic"),
+          new_input = c(input$var_1, input$var_2, input$var_1, input$var_2, input$sum_type)
+        )
+  )
+
+output$output_2 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = bs_2(),
+          old_input = c("titanic"),
+          new_input = c(input$var_1, input$var_2, input$var_1, input$var_2, input$sum_type)
+    )
+   ))
+})
+
+```
+
+Code:
+```{r}
+htmlOutput("code_2")
+```
+
+Result from code:
+```{r}
+verbatimTextOutput("output_2")
+```
+
+
+## Joint, marginal, and conditional distributions
+
+Let's now look at using `Sex` as the explanatory variable, and `Survived` as the response.  First, instead of simply calculating our counts and totals, we will have **R** save this information.
+
+```{r, echo = TRUE}
+counts <- titanic %>% count(Sex, Survived) %>% spread(Sex, n) %>% select(-Survived)
+
+column_totals <- counts %>% colSums()
+row_totals <- counts %>% rowSums()
+overall_total <- counts %>% sum()
+
+```
+
+To find the joint distribution, we are interested in the original counts in each subcategory, divided by the overall total number of people.
+
+```{r, echo = TRUE}
+counts/overall_total
+```
+
+To find the marginal distribution of `Sex`, we are interested in the total counts for each category of the explanatory variable (columns) divided by the total number of people.
+
+```{r, echo = TRUE}
+column_totals/overall_total
+```
+
+To find the marginal distribution of `Survived`, we are interested in the total counts for each category of the response variable (rows) divided by the total number of people.
+
+```{r, echo = TRUE}
+row_totals/overall_total
+```
+
+
+Finally, for the conditional distribution, we are interested in focusing on each category of the explanatory variable - `male` or `female`.  Thus, we want to see the counts in each quadrant out of the total number of women or men (column totals).
+
+```{r, echo = TRUE}
+t(t(counts)/column_totals)
+```
+
+
+### Practice
+
+Use the exercises above, and the code box below, to answer the following questions.
+
+```{r ex_1, exercise = TRUE}
+
+```
+
+```{r q_1}
+
+
+textInput("a_1.1",
+           "How many Second Class passengers survived the sinking?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.1")
+
+
+
+textInput("a_1.2",
+           "What proportion of passengers travelled in Second Class?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.2")
+
+textInput("a_1.3",
+           "What proportion of passengers survived the sinking?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.3")
+
+textInput("a_1.4",
+           "What proportion of Second Class passengers survived the sinking?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_1.4")
+
+
+```
+
+```{r, context = "server"}
+
+output$check_1.1 <- renderText(
+  if(input$a_1.1 == ""){
+     ""
+  }else if(as.numeric(input$a_1.1) == sum(titanic$Survived == "Lived" & titanic$Passenger.Class == "Second")){
+      correct
+  }else{
+    incorrect
+  }
+)
+    
+output$check_1.2 <- renderText(
+  if(input$a_1.2 == ""){
+     ""
+  }else if(round(as.numeric(input$a_1.2), 2) == round(sum(titanic$Passenger.Class == "Second")/nrow(titanic), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_1.3 <- renderText(
+  if(input$a_1.3 == ""){
+     ""
+  }else if(round(as.numeric(input$a_1.3), 2) == round(sum(titanic$Survived == "Lived")/nrow(titanic), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+output$check_1.4 <- renderText(
+  if(input$a_1.4 == ""){
+     ""
+  }else if(round(as.numeric(input$a_1.4), 2) == round(sum(titanic$Passenger.Class == "Second" & titanic$Survived == "Lived")/sum(titanic$Passenger.Class == "Second"), 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+```
+
+
+## Chi-Squared Tests
+
+Now explore using `chisq.test()` to perform hypothesis tests on two-way tables.
+
+```{r, echo=FALSE}
+textInput("var3_1", 
+          "What categorical variable will be your EXPLANATORY variable?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+textInput("var3_2", 
+          "What categorical variable will be your RESPONSE variable?", 
+          value = "", 
+          width = '80%', 
+          placeholder = NULL)
+
+bs_3 <- reactive("tw <- %oi %>% count(%ni, %ni) %>% spread(%ni, n) %>% select(-%ni)
+                 chisq.test(tw)")
+
+```
+
+```{r, context="server"}
+
+output$code_3 <- renderText(
+        makePrintText(
+          base_string = bs_3(),
+          old_input = c("titanic"),
+          new_input = c(input$var3_1, input$var3_2, input$var3_1, input$var3_2)
+        )
+  )
+
+output$output_3 <- renderPrint({
+ eval(parse(text = 
+    makeEvalText(
+          base_string = bs_3(),
+          old_input = c("titanic"),
+          new_input = c(input$var3_1, input$var3_2, input$var3_1, input$var3_2)
+    )
+   ))
+})
+
+output$hypos_3 <- renderText(
+        makePrintText(
+          base_string = "H0: There is no relationship between %ni and %ni.\n  Ha: There is a relationship between %ni and %ni.",
+          old_input = c(),
+          new_input = c(input$var3_1, input$var3_2, input$var3_1, input$var3_2)
+        )
+  )
+
+```
+
+Hypotheses:
+```{r}
+htmlOutput("hypos_3")
+```
+
+Code:
+```{r}
+htmlOutput("code_3")
+```
+
+Result from code:
+```{r}
+verbatimTextOutput("output_3")
+```
+
+### Practice
+
+Test whether a person's travel class relates to his or her survival.
+
+```{r ex_2, exercise = TRUE}
+
+```
+
+```{r q_2}
+
+
+textInput("a_2.1",
+           "What was the test statistic?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_2.1")
+
+
+
+textInput("a_2.2",
+           "What was the p-value of this test?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_2.2")
+
+
+radioButtons("a_2.3",
+           "At the 0.05 level, we conclude that",
+           choices = c(
+             "There is not enough evidence that passenger class mattered to survival." = "no1",
+              "There is strong evidence that passenger class mattered to survival." = "yes",
+              "We cannot tell for sure from this test." = "no2")
+)
+
+htmlOutput("check_2.3")
+
+
+```
+
+```{r, context = "server"}
+
+chisq_test <- reactive(titanic %>% count(Passenger.Class, Survived) %>% spread(Survived, n) %>% select(-Passenger.Class) %>% chisq.test())
+
+output$check_2.1 <- renderText(
+  if(input$a_2.1 == ""){
+     ""
+  }else if(round(as.numeric(input$a_2.1),2) == round(chisq_test()$statistic, 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+
+output$check_2.2 <- renderText(
+  if(input$a_2.2 == ""){
+     ""
+  }else if(round(as.numeric(input$a_2.2),2) == round(chisq_test()$p.value, 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_2.3 <- renderText(
+  if(input$a_2.3 == ""){
+     ""
+  }else if(input$a_2.3 == "yes"){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+```
+
+
+## Relative Risk
+
+Now explore using `riskratio()` to perform a hypothesis test about gender and survival on the titanic.  You may need to use the code box below to find some of your inputs.
+
+Note:  By default, this function will calculate p-values for the alternate hypothesis "The risk ratio is greater than one."
+
+```{r ex_4_1, exercise = TRUE}
+
+```
+
+```{r, echo=FALSE}
+textInput("count4_1_1",
+          "How many women are there in this dataset?",
+          value = "",
+          width = '80%',
+          placeholder = NULL)
+
+textInput("count4_1_2",
+          "How many women in this dataset did NOT survive the sinking?",
+          value = "",
+          width = '80%',
+          placeholder = NULL)
+
+textInput("count4_2_1",
+          "How many men are there in this dataset?",
+          value = "",
+          width = '80%',
+          placeholder = NULL)
+
+textInput("count4_2_2",
+          "How many men in this dataset did NOT survive the sinking?",
+          value = "",
+          width = '80%',
+          placeholder = NULL)
+
+
+
+bs_4 <- reactive("riskratio(%ni, %ni, %ni, %ni)")
+
+```
+
+```{r, context="server"}
+
+output$code_4 <- renderText(
+        makePrintText(
+          base_string = bs_4(),
+          old_input = c(),
+          new_input = c(input$count4_1_2, input$count4_2_2, input$count4_1_1, input$count4_2_1)
+        )
+  )
+
+output$output_4 <- renderPrint({
+ eval(parse(text =
+    makeEvalText(
+          base_string = bs_4(),
+          old_input = c(),
+          new_input = c(input$count4_1_2, input$count4_2_2, input$count4_1_1, input$count4_2_1)
+    )
+   ))
+})
+
+
+```
+
+Code:
+```{r}
+htmlOutput("code_4")
+```
+
+Result from code:
+```{r}
+verbatimTextOutput("output_4")
+```
+
+
+### Practice
+
+Suppose you want to test the hypothesis that men were more likely to die on the titanic than women.  Use the code box below to answer the questions.
+
+```{r ex_4, exercise = TRUE}
+
+```
+
+```{r q_4}
+
+
+textInput("a_4.1",
+           "What was the test statistic?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_4.1")
+
+
+
+textInput("a_4.2",
+           "What was the p-value of this test?",
+           value = "",
+           width = '80%', placeholder = NULL)
+
+htmlOutput("check_4.2")
+
+
+radioButtons("a_4.3",
+           "At the 0.05 level, we conclude that",
+           choices = c(
+             "Women were more likely to die on the Titanic than men." = "no1",
+              "Men were more likely to die on the Titanic than women." = "yes",
+             "Women and men were not equally likely to die on the Titanic." = "no2",
+              "There was not strong evidence of a difference in genders and survival." = "no3")
+)
+
+htmlOutput("check_4.3")
+
+
+```
+
+```{r, context = "server"}
+
+rr <- reactive(riskratio(464, 81, 464+109, 81+233))
+
+output$check_4.1 <- renderText(
+  if(input$a_4.1 == ""){
+     ""
+  }else if(round(as.numeric(input$a_2.1),2) == round(rr()$estimate, 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+
+output$check_4.2 <- renderText(
+  if(input$a_4.2 == ""){
+     ""
+  }else if(round(as.numeric(input$a_2.2),2) == round(rr()$p.value, 2)){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+output$check_4.3 <- renderText(
+  if(input$a_4.3 == ""){
+     ""
+  }else if(input$a_4.3 == "yes"){
+      correct
+  }else{
+    incorrect
+  }
+)
+
+```
