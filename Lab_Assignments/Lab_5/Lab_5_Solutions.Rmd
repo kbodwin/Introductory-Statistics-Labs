@@ -1,0 +1,198 @@
+---
+title: "Lab 5: "
+author: "YOUR NAME HERE"
+date: "October 4, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
+knitr::opts_chunk$set(echo = TRUE)
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
+
+require(ggplot2)
+require(dplyr)
+require(tidyr)
+require(reshape2)
+
+
+data(french_fries)
+french_fries <- french_fries %>% filter(subject == 10, rep == 1, treatment != "3") %>% select(-subject, -rep, -time)
+
+```
+
+
+## Description of Dataset
+
+Today's dataset is about French Fries.  Mmmmm.  Here is what the authors of the dataset have to say about it:
+
+```
+This data was collected from a sensory experiment conducted at Iowa State University in 2004. The investigators were interested in the effect of using two different fryer oils had on the taste of the fries.
+
+Variables:
+
+treatment (type of oil),
+
+potato-y flavour,
+
+buttery flavour,
+
+grassy flavour,
+
+rancid flavour,
+
+painty flavour
+```
+
+```{r}
+french_fries %>% head()
+french_fries %>% summary()
+```
+
+This is an experimental dataset.  The units are french fries.  There is one categorical variable showing which Oil Treatment the fry recieved (1 or 2) and several quantitative variables rating the taste of the fry in several categories.
+
+## Potatoey-ness
+
+Suppose we wish to study the differences between the two oil treatments.
+
+### 1
+
+Conduct an appropriate test for whether Oil Treatment 1 results in fries that are more or less "potatoey" than Oil Treatment 2.  You may assume, for now, that "potato-ness" is Normally distributed.
+
+```{r}
+with(french_fries, t.test(potato ~ treatment, alternative = "two.sided"))
+```
+
+No evidence of a difference across treatments.
+
+### 2
+
+Run the following code to make a QQ plot for the "potato-ness" of a fry.  Then add to it to also make a histogram of potatoeyness.
+
+```{r}
+ggplot(french_fries, aes(sample = potato)) + geom_qq()
+
+ggplot(french_fries, aes(x = potato)) + geom_histogram(bins = 5)
+```
+Comment on this QQ plot and histogram.  What did you learn?
+
+Potato ratings are not Normally distributed.  (No straight line, no bell curve shape.)
+
+### 3
+
+Now assume that "potato-ness" is *not* Normally distributed.  Conduct an appropriate test for whether Oil Treatment 1 results in fries that are more or less "potatoey" than Oil Treatment 2. 
+
+
+```{r}
+with(french_fries, wilcox.test(potato ~ treatment, alternative = "two.sided"))
+```
+
+No evidence of a difference across treatments.
+
+## Do potatoes taste like potatoes?
+
+It seems very strange to me that a french fry, which is made of a potato, would not be rated as tasting like "potato".  Let's look at whether or not each fry was rated as potatoey.
+
+```{r}
+french_fries <- french_fries %>% mutate(
+  is.potato = potato > 10
+)
+```
+
+
+
+### 1
+
+Alter the code below to use `count()` to find out how many fries were rated as potatoey.
+
+```{r}
+french_fries %>% count(is.potato)
+```
+
+There were 13 fries rated "potato" and 7 fries not rated "potato"
+
+### 2
+
+If fries are equally likely to be rated potatoey as not, what is the distribution of the random variable
+
+X = number of fries out of 20 that are rated as potatoey
+
+
+X is Binomial(20, 0.5)
+
+### 3
+
+If fries are equally likely to be rated potatoey as not, how unlikely is it to see as many fries (or more) rated "potato" as we saw in this dataset?
+
+```{r}
+# prob of 13 or more = 1-prob of 12 or less
+1 - pbinom(12, 20, 0.5)
+```
+
+There is a 13% chance of seeing 13 or more potatoey fries by random chance, if half of all fries are potatoey.
+
+
+## Grassy or Painty?
+
+Is a fry from Oil Treatment 1 more likely to be rated higher on the "painty" score or the "grassy" score?  Let's filter our dataset down to only Treatment 1 to find out.
+
+
+```{r}
+fries_1 <- french_fries %>% filter(treatment == 1)
+
+```
+
+### 1
+
+Assume ratings of grassyness and paintyness are Normally distributed, and do an appropriate test.
+
+```{r}
+with(french_fries, t.test(grassy, painty, alternative = "two.sided", paired = TRUE))
+```
+
+Some evidence of a difference, but not strong enough.
+
+### 2
+
+Make a qqplot and histogram, and comment on them.
+
+```{r}
+ggplot(french_fries, aes(sample = grassy-painty)) + geom_qq()
+
+ggplot(french_fries, aes(x = grassy-painty)) + geom_histogram(bins = 5)
+
+## (okay if separate plots for grassy and painty)
+```
+
+
+### 3
+Now do NOT assume Normality, and do an appropriate test.
+
+```{r}
+with(french_fries, wilcox.test(grassy, painty, alternative = "two.sided", paired = TRUE))
+```
+
+No strong evidence of a difference.
+
+
+## Rancid Fries???
+
+Discuss the relationship between how "rancid" a fry is rated, and which oil treatment was used.  Be sure to justify your approach, interpret your results, and create at least one plot to support your answer.
+
+Plot:
+```{r}
+ggplot(french_fries, aes(x = treatment, y = rancid, fill = treatment)) + geom_boxplot() + ggtitle('Rancidity by Oil Treatment')
+```
+
+Test: 
+
+```{r}
+ggplot(french_fries, aes(sample = rancid)) + geom_qq()
+ggplot(french_fries, aes(x = rancid)) + geom_histogram(bins = 5)
+
+with(french_fries, wilcox.test(rancid ~ treatment), alternative = "two.sided")
+```
+
+We performed a Wilcox test, because there was a small sample size (10 in each group) and no evidence of Normality.  We could not reject the null at the 0.05 level.  However, the boxplots show lower rancidity for the second oil treatment, and there was some evidence (p = 0.07) in the Wilcox test, so it may be worth investigating further.
+

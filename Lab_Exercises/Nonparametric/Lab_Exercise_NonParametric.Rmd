@@ -286,7 +286,7 @@ output$check_1.5 <- renderText(
 ```
 
 
-## One-sample Wilcox test
+## Wilcox test
 
 Now explore using `wilcox.test()` to more nuanced nonparametric tests.
 

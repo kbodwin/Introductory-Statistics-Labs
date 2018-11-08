@@ -1,0 +1,12 @@
+name: Lab_Exercise_NonParametric
+title: Lab_Exercise_NonParametric
+username:
+account: kbodwin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 553947
+bundleId: 1683896
+url: https://kbodwin.shinyapps.io/Lab_Exercise_NonParametric/
+when: 1541452336.09887
+asMultiple: FALSE
+asStatic: FALSE
