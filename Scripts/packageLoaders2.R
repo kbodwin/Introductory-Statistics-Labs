@@ -18,6 +18,16 @@ if(!require(ggplot2)){
 	library(ggplot2)
 }
 
+if(!require(tibble)){
+  install.packages("tibble")
+  library(tibble)
+}
+
+if(!require(fmsb)){
+  install.packages("fmsb")
+  library(fmsb)
+}
+
 if(!require(devtools)){
 	install.packages("devtools")
 	library(devtools)
