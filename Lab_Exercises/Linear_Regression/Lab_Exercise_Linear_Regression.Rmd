@@ -313,8 +313,6 @@ textInput("plot_var_4_2",
 bs_4 <- reactive("my_lm <- lm(%ni ~ %ni, data = %oi)")
 # 
 htmlOutput("code_4")
-# 
-plotOutput("plot_4")
 ```
 
 
