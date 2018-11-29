@@ -37,8 +37,7 @@ incorrect <- "<font color='red'>Not quite right...</font><br><br>"
 congrats <- "<font color='red'>You did it!</font><br><br>"
 
 babies = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/babies_sub.csv')
-
-Sys.sleep(5)
+kellys <- babies %>% filter(Name == "Kelly", Gender == "F")
 
 # titanic = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/titanic.csv')
 # 
@@ -137,7 +136,7 @@ It appears that my name is getting steadily less popular since 1980.  However, w
 kellys_80 <- babies %>% filter(Name == "Kelly", Gender == "F", Year > 1980)
 ```
 
-Use the code below to run a **linear regression** on the counts of Kellys over time.  For this, we use the **R** command `lm()`, which stands for "linear model".  Typically, we will save the calculations by giving it a name.  You may choose any name you want - but you should choose something descriptive so you remember what it is!  In this example, we will use the name `my_model`.
+Use the code below to run a **linear regression** on the counts of Kellys over time.  For this, we use the **R** command `lm()`, which stands for "linear model". 
 
 
 
@@ -197,7 +196,7 @@ htmlOutput("check_3")
 ```{r, context = "server"}
 
 output$check_3 <- renderText(
-  if(round(input$a_3, 2) == 1565){
+  if(round(as.numeric(input$a_3), 2) == 1565){
       correct
   }else{
     incorrect
@@ -219,7 +218,7 @@ htmlOutput("check_31")
 ```{r, context = "server"}
 
 output$check_31 <- renderText(
-  if(round(input$a_31, 2) == -39.55){
+  if(round(as.numeric(input$a_31), 2) == -39.55){
       correct
   }else{
     incorrect
@@ -240,7 +239,7 @@ htmlOutput("check_4")
 ```{r, context = "server"}
 
 output$check_4 <- renderText(
-  if(input$a_4 == 0){
+  if(as.numeric(input$a_4) == 0){
       correct
   }else{
     incorrect
