@@ -1,0 +1,46 @@
+---
+title: "Lab 7 "
+author: "YOUR NAME HERE"
+date: "November 29, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+### YOU CAN IGNORE EVERYTHING IN THIS CHUNK
+knitr::opts_chunk$set(echo = TRUE)
+
+source("https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Scripts/packageLoaders2.R")
+
+require(ggplot2)
+require(dplyr)
+require(tidyr)
+require(reshape2)
+require(fmsb)
+
+babies = read.csv('https://raw.githubusercontent.com/kbodwin/ShinyLabs/master/Datasets/babies_full.csv')
+
+
+```
+
+
+The dataset `babies` contains baby names in California.   
+
+Use this dataset to discover something interesting about the counts of babies with certain names.  You can consider any question you want - your own name, your family and friends, or something else!
+
+Your discussion should include:
+- A general overview and summary of the dataset.
+- A statement of at least one clear research question that is answered with ANOVA
+- A plot that addresses your research question
+- An ANOVA test, Tukey Test, and discussion
+- A statement of at least one clear research question that is answered with regression.
+- A regression calculation, plot, and discussion.
+
+
+For extra credit up to 10 points, also include a third research question and complete analysis that uses other methods from the class.
+
+```{r}
+## A code chunk
+```
+
+
+

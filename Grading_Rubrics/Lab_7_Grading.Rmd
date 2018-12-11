@@ -1,0 +1,39 @@
+---
+title: "Lab 7 Grading Guide"
+output:
+  html_document: 
+    css: style.css
+  pdf_document: default
+---
+
+## Overview [(5 points)]{style="float:right"}
+
+* Did the student use class vocabulary to discuss the dataset? [(5)]{style="float:right"}
+
+## ANOVA [(45 points)]{style="float:right"}
+
+* Is there a clearly stated research question that can be addressed with ANOVA? [(5)]{style="float:right"}
+* Is there an appropriate plot to address the research question (boxplots)? [(10)]{style="float:right"} 
+* Was the ANOVA test correctly run[(5)]{style="float:right"}
+* Is there a reasonable discussion of the results of the ANOVA test? [(10)]{style="float:right"}
+* Was the Tukey HSD test correctly run? [(5)]{style="float:right"}
+* Is there a reasonable discussion of the results of the Tukey test? [(10)]{style="float:right"}
+
+## Regression [(50 points)]{style="float:right"}
+
+* Is there a clearly stated research question that can be addressed with regression? [(5)]{style="float:right"}
+* Is there a scatterplot? [(10)]{style="float:right"}
+* Was the regression calculation with `lm()` correctly run? [(5)]{style="float:right"}
+* Is there a reasonable discussion of the results of the regression, including:
+  * An interpretation of the slope [(5)]{style="float:right"}
+  * A discussion of either the F-stat or the t-test, and corresponding p-value [(10)]{style="float:right"}
+  * A mention of the R-squared value [(5)]{style="float:right"}
+* Is there a residual plot? [(5)]{style="float:right"}
+* Is there a reasonable discussion of the residual plot? [(5)]{style="float:right"}
+
+
+## EC: Extra Test [(10 points)]{style="float:right"}
+
+* Does the test correctly address the research question? [(3)]{style="float:right"}
+* Is there a reasonable and thorough discussion? [(4)]{style="float:right"}
+* Is there a plot that addresses the research question? [(3)]{style="float:right"}

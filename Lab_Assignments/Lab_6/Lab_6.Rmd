@@ -1,5 +1,5 @@
 ---
-title: "Lab 5: "
+title: "Lab 6: Chi-Square"
 author: "YOUR NAME HERE"
 date: "October 4, 2018"
 output: html_document

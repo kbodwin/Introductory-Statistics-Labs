@@ -1,0 +1,42 @@
+---
+title: "Lab 6 Grading Guide"
+output:
+  html_document: 
+    css: style.css
+  pdf_document: default
+---
+
+## Overview [(10 points)]{style="float:right"}
+
+* Did the student use class vocabulary to discuss the dataset? [(5)]{style="float:right"}
+* Is there a clearly stated research question? [(5)]{style="float:right"}
+
+## Plot [(20 points)]{style="float:right"}
+
+* Is there an appropriate plot (barplot of some kind)? [(10)]{style="float:right"}
+* Is there a reasonable discussion of the plot? [(10)]{style="float:right"}
+
+## Chi-Square Test [(30 points)]{style="float:right"}
+
+* Is the Chi-Square Test conducted correctly? [(10)]{style="float:right"}
+* Are the hypotheses clearly stated? [(5)]{style="float:right"}
+* Is the conclusion correct and reasonably discussed? [(15)]{style="float:right"}
+
+## Conditional Probabilities [(30 points)]{style="float:right"}
+
+* Are conditional probabilities correctly calculated? [(10)]{style="float:right"}
+* Do the conditional probabilities address the research question? [(5)]{style="float:right"}
+* Is there a reasonable discussion that accurately interprets the conditionals?  [(15)]{style="float:right"}
+
+## Overall Conclusion [(10 points)]{style="float:right"}
+
+* Is there a "final story" that accurately makes a real-world conclusion? [(10)]{style="float:right"}
+
+## EC 1: Odds [(5 points)]{style="float:right"}
+
+* Is there an accurately calculated and interpreted odds? [(5)]{style="float:right"}
+
+## EC 2: Relative Risk [(10 points)]{style="float:right"}
+
+* Is the relative risk accurately interpreted? [(5)]{style="float:right"}
+* Is there a hypothesis test and correct conclusion? [(5)]{style="float:right"}
