@@ -16,7 +16,7 @@ makePrintText <- function(base_string, old_input = "", new_input = ""){
 
 makeEvalText <- function(base_string, old_input = "", new_input = ""){
   
-  # old inputs evaluate first, can contain %ni's
+  # new inputs evaluate first, can contain %oi's
   print_string <- Reduce(function(x,y) sub("%ni", y, x), c(base_string, new_input))
   print_string <- Reduce(function(x,y) sub("%oi", y, x), c(print_string, old_input))
   

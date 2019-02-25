@@ -1,0 +1,12 @@
+name: Lab_Exercise_Normal
+title: Lab_Exercise_Normal
+username:
+account: kbodwin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 651109
+bundleId: 1820536
+url: https://kbodwin.shinyapps.io/Lab_Exercise_Normal/
+when: 1547749489.46825
+asMultiple: FALSE
+asStatic: FALSE
